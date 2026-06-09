@@ -2,7 +2,6 @@
 FROM node:22-alpine AS frontend-builder
 WORKDIR /frontend/
 
-# 使用国内镜像加速，避免网络超时
 RUN npm config set registry https://registry.npmmirror.com
 
 COPY frontend/ ./
@@ -17,8 +16,7 @@ RUN pnpm build
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
 
-# Go 代理（国内直连优先，失败自动回退官方）
-ENV GOPROXY=https://goproxy.cn,https://proxy.golang.org,direct
+ENV GOPROXY=https://goproxy.cn,direct
 
 RUN apk add --no-cache gcc musl-dev
 COPY ./ ./
