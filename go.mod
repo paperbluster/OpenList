@@ -39,7 +39,6 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
-	github.com/hekmon/transmissionrpc/v3 v3.0.0
 	github.com/itsHenry35/gofakes3 v0.0.8
 	github.com/jlaffaye/ftp v0.2.1-0.20240918233326-1b970516f5d3
 	github.com/json-iterator/go v1.1.12

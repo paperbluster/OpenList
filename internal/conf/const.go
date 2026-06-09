@@ -66,13 +66,7 @@ const (
 	IgnorePaths     = "ignore_paths"
 	MaxIndexDepth   = "max_index_depth"
 
-	// aria2
-	Aria2Uri    = "aria2_uri"
-	Aria2Secret = "aria2_secret"
 
-	// transmission
-	TransmissionUri      = "transmission_uri"
-	TransmissionSeedtime = "transmission_seedtime"
 
 
 
@@ -102,12 +96,8 @@ const (
 	S3AccessKeyId     = "s3_access_key_id"
 	S3SecretAccessKey = "s3_secret_access_key"
 
-	// qbittorrent
-	QbittorrentUrl      = "qbittorrent_url"
-	QbittorrentSeedtime = "qbittorrent_seedtime"
 
 	// 123 open offline download
-	Pan123OpenOfflineDownloadCallbackUrl = "123_open_callback_url"
 	Pan123OpenTempDir                    = "123_open_temp_dir"
 
 	// ftp
@@ -120,8 +110,6 @@ const (
 	SFTPDisablePasswordLogin = "sftp_disable_password_login"
 
 	// traffic
-	TaskOfflineDownloadThreadsNum         = "offline_download_task_threads_num"
-	TaskOfflineDownloadTransferThreadsNum = "offline_download_transfer_task_threads_num"
 	TaskUploadThreadsNum                  = "upload_task_threads_num"
 	TaskCopyThreadsNum                    = "copy_task_threads_num"
 	TaskMoveThreadsNum                    = "move_task_threads_num"

@@ -151,9 +151,6 @@ func admin(g *gin.RouterGroup) {
 	setting.POST("/delete", handles.DeleteSetting)
 	setting.POST("/default", handles.DefaultSettings)
 	setting.POST("/reset_token", handles.ResetToken)
-	setting.POST("/set_aria2", handles.SetAria2)
-	setting.POST("/set_qbit", handles.SetQbittorrent)
-	setting.POST("/set_transmission", handles.SetTransmission)
 
 	// retain /admin/task API to ensure compatibility with legacy automation scripts
 	_task(g.Group("/task"))
