@@ -1,14 +1,25 @@
 # ============ Stage 1: Build frontend ============
 FROM node:22-alpine AS frontend-builder
-RUN corepack enable && corepack prepare pnpm@11.5.1 --activate
 WORKDIR /frontend/
+
+# 使用国内镜像加速，避免网络超时
+RUN npm config set registry https://registry.npmmirror.com
+
 COPY frontend/ ./
-RUN pnpm install --frozen-lockfile
+
+# 安装 pnpm 并安装依赖（带重试）
+RUN npm install -g pnpm@11.5.1 && \
+    pnpm install --no-frozen-lockfile
+
 RUN pnpm build
 
 # ============ Stage 2: Build backend ============
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
+
+# Go 镜像加速
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
 RUN apk add --no-cache gcc musl-dev
 COPY go.mod go.sum ./
 RUN go mod download

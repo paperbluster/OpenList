@@ -42,7 +42,13 @@ mkdir -p data
 
 ## Docker 部署
 
-一个 `docker compose up -d` 搞定，Dockerfile 会自动先编译前端再编译后端。
+一条命令搞定前端+后端编译打包：
+
+```bash
+docker compose up -d
+```
+
+Dockerfile 已配置国内镜像加速（npmmirror + goproxy.cn），避免容器内网络超时。
 
 ### host 模式（推荐，支持挂载宿主机本地目录）
 
