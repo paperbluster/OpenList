@@ -154,14 +154,6 @@ func admin(g *gin.RouterGroup) {
 	setting.POST("/set_aria2", handles.SetAria2)
 	setting.POST("/set_qbit", handles.SetQbittorrent)
 	setting.POST("/set_transmission", handles.SetTransmission)
-	setting.POST("/set_115", handles.Set115)
-	setting.POST("/set_115_open", handles.Set115Open)
-	setting.POST("/set_123_pan", handles.Set123Pan)
-	setting.POST("/set_123_open", handles.Set123Open)
-	setting.POST("/set_pikpak", handles.SetPikPak)
-	setting.POST("/set_thunder", handles.SetThunder)
-	setting.POST("/set_thunderx", handles.SetThunderX)
-	setting.POST("/set_thunder_browser", handles.SetThunderBrowser)
 
 	// retain /admin/task API to ensure compatibility with legacy automation scripts
 	_task(g.Group("/task"))

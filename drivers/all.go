@@ -25,10 +25,6 @@ import (
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/s3"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/uss"
 
-	// PikPak
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/pikpak"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/pikpak_share"
-
 	// 基础设施 (被上述驱动内部依赖)
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/autoindex"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/chunk"

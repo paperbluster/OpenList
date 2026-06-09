@@ -13,7 +13,6 @@ require (
 	github.com/OpenListTeam/sftpd-openlist v1.0.1
 	github.com/OpenListTeam/tache v0.2.2
 	github.com/OpenListTeam/times v0.1.0
-	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/antchfx/htmlquery v1.3.5
 	github.com/antchfx/xpath v1.3.5
 	github.com/avast/retry-go v3.0.0+incompatible

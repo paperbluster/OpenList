@@ -8,14 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	_115 "github.com/OpenListTeam/OpenList/v4/drivers/115"
-	_115_open "github.com/OpenListTeam/OpenList/v4/drivers/115_open"
-	_123 "github.com/OpenListTeam/OpenList/v4/drivers/123"
-	_123_open "github.com/OpenListTeam/OpenList/v4/drivers/123_open"
-	"github.com/OpenListTeam/OpenList/v4/drivers/pikpak"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunder"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunder_browser"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunderx"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/errs"
 	"github.com/OpenListTeam/OpenList/v4/internal/fs"
@@ -111,11 +103,6 @@ func AddURL(ctx context.Context, args *AddURLArgs) (task.TaskExtensionInfo, erro
 	deletePolicy := args.DeletePolicy
 
 	// 如果当前 storage 是对应网盘，则直接下载到目标路径，无需转存
-	switch args.Tool {
-	case "115 Cloud":
-		if _, ok := storage.(*_115.Pan115); ok {
-			tempDir = args.DstDirPath
-		} else {
 			tempDir = filepath.Join(setting.GetStr(conf.Pan115TempDir), uid)
 		}
 	case "115 Open":

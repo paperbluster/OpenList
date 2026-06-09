@@ -3,14 +3,6 @@ package handles
 import (
 	"strings"
 
-	_115 "github.com/OpenListTeam/OpenList/v4/drivers/115"
-	_115_open "github.com/OpenListTeam/OpenList/v4/drivers/115_open"
-	_123 "github.com/OpenListTeam/OpenList/v4/drivers/123"
-	_123_open "github.com/OpenListTeam/OpenList/v4/drivers/123_open"
-	"github.com/OpenListTeam/OpenList/v4/drivers/pikpak"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunder"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunder_browser"
-	"github.com/OpenListTeam/OpenList/v4/drivers/thunderx"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/errs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
