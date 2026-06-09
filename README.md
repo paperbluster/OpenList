@@ -15,25 +15,24 @@
 ## 项目结构
 
 ```
-个人自研项目/
-├── OpenList/          ← 后端 (Go)
-└── OpenList-Frontend/ ← 前端 (Vite + Solid.js)
+├── cmd/            ← Go 命令行
+├── drivers/        ← 存储驱动
+├── internal/       ← 核心逻辑
+├── server/         ← HTTP 服务
+├── frontend/       ← 前端源码 (Vite + Solid.js)，构建产物 → public/dist/
+├── public/         ← 前端静态资源 + 内嵌资源
+└── main.go         ← 入口
 ```
-
-前后端是两个独立项目。后端编译后内嵌前端编译产物（`public/dist/`）。
 
 ## 快速开始（本地开发）
 
 ```bash
 # 1. 构建前端
-cd ../OpenList-Frontend
+cd frontend
 pnpm install && pnpm build
 
-# 2. 把前端产物复制到后端
-cp -r dist/ ../OpenList/public/dist/
-
-# 3. 编译并启动后端
-cd ../OpenList
+# 2. 编译并启动后端
+cd ..
 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 mkdir -p data
 ./openlist server --debug
@@ -43,45 +42,24 @@ mkdir -p data
 
 ## Docker 部署
 
-Dockerfile 会自动编译前端+后端，一步打包。
+一个 `docker compose up -d` 搞定，Dockerfile 会自动先编译前端再编译后端。
 
-**项目结构需要保持：** 两个目录在同一个父目录下，因为 Dockerfile 的 context 需要同时访问前后端源码。
-
-```
-some-dir/
-├── OpenList/             ← docker compose 在这里执行
-│   ├── Dockerfile
-│   └── docker-compose.yml
-└── OpenList-Frontend/    ← 前端源码
-```
-
-### host 模式（推荐）
+### host 模式（推荐，支持挂载宿主机本地目录）
 
 ```bash
-cd OpenList
 docker compose up -d
 ```
 
-docker-compose.yml 已配置 `network_mode: host`，直接访问宿主机端口 `5244`。
-
 ### bridge 模式
 
+修改 `docker-compose.yml`，把 `network_mode: host` 替换为：
+
 ```yaml
-services:
-  openlist:
-    build:
-      context: ..
-      dockerfile: OpenList/Dockerfile
-    restart: always
-    ports:
-      - '5244:5244'
-    volumes:
-      - './data:/opt/openlist/data'
-    environment:
-      - TZ=Asia/Shanghai
+ports:
+  - '5244:5244'
 ```
 
-> bridge 模式下如需挂载宿主机本地文件，需要额外 `-v /host/path:/container/path` 映射。
+> bridge 模式下挂载宿主机本地文件需额外 `-v /host/path:/container/path`。
 
 ## 访问
 

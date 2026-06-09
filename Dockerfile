@@ -1,9 +1,9 @@
 # ============ Stage 1: Build frontend ============
 FROM node:22-alpine AS frontend-builder
 WORKDIR /frontend/
-COPY ../OpenList-Frontend/package.json ../OpenList-Frontend/pnpm-lock.yaml ../OpenList-Frontend/pnpm-workspace.yaml ./
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile
-COPY ../OpenList-Frontend/ ./
+COPY frontend/ ./
 RUN pnpm build
 
 # ============ Stage 2: Build backend ============

@@ -1,8 +1,6 @@
 services:
   openlist:
-    build:
-      context: ..
-      dockerfile: OpenList/Dockerfile
+    build: .
     restart: always
     network_mode: host
     volumes:
