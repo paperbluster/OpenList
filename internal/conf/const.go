@@ -99,22 +99,6 @@ const (
 	Token         = "token"
 	IndexProgress = "index_progress"
 
-	// SSO
-	SSOClientId          = "sso_client_id"
-	SSOClientSecret      = "sso_client_secret"
-	SSOLoginEnabled      = "sso_login_enabled"
-	SSOLoginPlatform     = "sso_login_platform"
-	SSOOIDCUsernameKey   = "sso_oidc_username_key"
-	SSOOrganizationName  = "sso_organization_name"
-	SSOApplicationName   = "sso_application_name"
-	SSOEndpointName      = "sso_endpoint_name"
-	SSOJwtPublicKey      = "sso_jwt_public_key"
-	SSOExtraScopes       = "sso_extra_scopes"
-	SSOAutoRegister      = "sso_auto_register"
-	SSODefaultDir        = "sso_default_dir"
-	SSODefaultPermission = "sso_default_permission"
-	SSOCompatibilityMode = "sso_compatibility_mode"
-
 	// ldap
 	LdapLoginEnabled      = "ldap_login_enabled"
 	LdapServer            = "ldap_server"

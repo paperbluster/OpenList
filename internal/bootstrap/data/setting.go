@@ -114,8 +114,8 @@ func InitialSettings() []model.SettingItem {
 		{Key: conf.AllowMounted, Value: "true", Type: conf.TypeBool, Group: model.SITE},
 		{Key: conf.RobotsTxt, Value: "User-agent: *\nAllow: /", Type: conf.TypeText, Group: model.SITE},
 		// style settings
-		{Key: conf.Logo, Value: "https://res.oplist.org/logo/logo.svg", MigrationValue: "https://cdn.oplist.org/gh/OpenListTeam/Logo@main/logo.svg", Type: conf.TypeText, Group: model.STYLE},
-		{Key: conf.Favicon, Value: "https://res.oplist.org/logo/logo.svg", MigrationValue: "https://cdn.oplist.org/gh/OpenListTeam/Logo@main/logo.svg", Type: conf.TypeString, Group: model.STYLE},
+		{Key: conf.Logo, Value: "/builtin_static/logo/logo.svg", Type: conf.TypeText, Group: model.STYLE},
+		{Key: conf.Favicon, Value: "/builtin_static/logo/logo.svg", Type: conf.TypeString, Group: model.STYLE},
 		{Key: conf.MainColor, Value: "#1890ff", Type: conf.TypeString, Group: model.STYLE},
 		{Key: "home_icon", Value: "🏠", Type: conf.TypeString, Group: model.STYLE},
 		{Key: "share_icon", Value: "🎁", Type: conf.TypeString, Group: model.STYLE},
@@ -139,10 +139,10 @@ func InitialSettings() []model.SettingItem {
 		"Google":"https://docs.google.com/gview?url=$e_url&embedded=true"
 	},
 	"pdf": {
-		"PDF.js":"https://res.oplist.org/pdf.js/web/viewer.html?file=$e_url"
+		"PDF.js":"/builtin_static/pdf.js/web/viewer.html?file=$e_url"
 	},
 	"epub": {
-		"EPUB.js":"https://res.oplist.org/epub.js/viewer.html?url=$e_url"
+		"EPUB.js":"/builtin_static/epub.js/viewer.html?url=$e_url"
 	}
 }`, Type: conf.TypeText, Group: model.PREVIEW},
 		//		{Key: conf.OfficeViewers, Value: `{
@@ -152,7 +152,7 @@ func InitialSettings() []model.SettingItem {
 		//		{Key: conf.PdfViewers, Value: `{
 		//	"pdf.js":"https://openlistteam.github.io/pdf.js/web/viewer.html?file=$url"
 		//}`, Type: conf.TypeText, Group: model.PREVIEW},
-		{Key: "audio_cover", Value: "https://res.oplist.org/logo/logo.svg", MigrationValue: "https://cdn.oplist.org/gh/OpenListTeam/Logo@main/logo.svg", Type: conf.TypeString, Group: model.PREVIEW},
+		{Key: "audio_cover", Value: "/builtin_static/logo/logo.svg", Type: conf.TypeString, Group: model.PREVIEW},
 		{Key: conf.AudioAutoplay, Value: "true", Type: conf.TypeBool, Group: model.PREVIEW},
 		{Key: conf.VideoAutoplay, Value: "true", Type: conf.TypeBool, Group: model.PREVIEW},
 		{Key: conf.PreviewDownloadByDefault, Value: "false", Type: conf.TypeBool, Group: model.PREVIEW},
@@ -165,7 +165,7 @@ func InitialSettings() []model.SettingItem {
 		// global settings
 		{Key: conf.HideFiles, Value: "/\\/README.md/i", Type: conf.TypeText, Group: model.GLOBAL},
 		{Key: "package_download", Value: "true", Type: conf.TypeBool, Group: model.GLOBAL},
-		{Key: conf.CustomizeHead, MigrationValue: `<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=String.prototype.replaceAll"></script>`, Type: conf.TypeText, Group: model.GLOBAL, Flag: model.PRIVATE},
+		{Key: conf.CustomizeHead, Type: conf.TypeText, Group: model.GLOBAL, Flag: model.PRIVATE},
 		{Key: conf.CustomizeBody, Type: conf.TypeText, Group: model.GLOBAL, Flag: model.PRIVATE},
 		{Key: conf.LinkExpiration, Value: "0", Type: conf.TypeNumber, Group: model.GLOBAL, Flag: model.PRIVATE},
 		{Key: conf.SignAll, Value: "true", Type: conf.TypeBool, Group: model.GLOBAL, Flag: model.PRIVATE},
@@ -195,22 +195,6 @@ func InitialSettings() []model.SettingItem {
 		{Key: conf.IgnorePaths, Value: "", Type: conf.TypeText, Group: model.INDEX, Flag: model.PRIVATE, Help: `one path per line`},
 		{Key: conf.MaxIndexDepth, Value: "20", Type: conf.TypeNumber, Group: model.INDEX, Flag: model.PRIVATE, Help: `max depth of index`},
 		{Key: conf.IndexProgress, Value: "{}", Type: conf.TypeText, Group: model.SINGLE, Flag: model.PRIVATE},
-
-		// SSO settings
-		{Key: conf.SSOLoginEnabled, Value: "false", Type: conf.TypeBool, Group: model.SSO, Flag: model.PUBLIC},
-		{Key: conf.SSOLoginPlatform, Type: conf.TypeSelect, Options: "Casdoor,Github,Microsoft,Google,Dingtalk,OIDC", Group: model.SSO, Flag: model.PUBLIC},
-		{Key: conf.SSOClientId, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOClientSecret, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOOIDCUsernameKey, Value: "name", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOOrganizationName, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOApplicationName, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOEndpointName, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOJwtPublicKey, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOExtraScopes, Value: "", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOAutoRegister, Value: "false", Type: conf.TypeBool, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSODefaultDir, Value: "/", Type: conf.TypeString, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSODefaultPermission, Value: "0", Type: conf.TypeNumber, Group: model.SSO, Flag: model.PRIVATE},
-		{Key: conf.SSOCompatibilityMode, Value: "false", Type: conf.TypeBool, Group: model.SSO, Flag: model.PUBLIC},
 
 		// ldap settings
 		{Key: conf.LdapLoginEnabled, Value: "false", Type: conf.TypeBool, Group: model.LDAP, Flag: model.PUBLIC},

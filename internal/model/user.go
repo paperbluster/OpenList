@@ -66,7 +66,6 @@ type User struct {
 	//   15: can customize share id
 	Permission int32  `json:"permission"`
 	OtpSecret  string `json:"-"`
-	SsoID      string `json:"sso_id"` // unique by sso platform
 	Authn      string `gorm:"type:text" json:"-"`
 	AllowLdap  bool   `json:"allow_ldap" gorm:"default:true"`
 }
@@ -268,5 +267,5 @@ func (u *User) WebAuthnCredentials() []webauthn.Credential {
 }
 
 func (u *User) WebAuthnIcon() string {
-	return "https://res.oplist.org/logo/logo.svg"
+	return "/builtin_static/logo/logo.svg"
 }

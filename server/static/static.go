@@ -91,6 +91,8 @@ func initIndex(siteConfig SiteConfig) {
 		conf.RawIndexHtml = string(index)
 		utils.Log.Debug("Successfully read index.html from static files system")
 	}
+	// Normalize legacy CDN URLs in frontend HTML to local paths
+	normalizeFrontendURLs()
 	utils.Log.Debug("Replacing placeholders in index.html...")
 	// Construct the correct manifest path based on basePath
 	manifestPath := "/manifest.json"
@@ -116,8 +118,8 @@ func UpdateIndex() {
 	mainColor := setting.GetStr(conf.MainColor)
 	utils.Log.Debug("Applying replacements for default pages...")
 	replaceMap1 := map[string]string{
-		"https://res.oplist.org/logo/logo.svg": favicon,
-		"https://res.oplist.org/logo/logo.png": logo,
+		"/builtin_static/logo/logo.svg": favicon,
+		"/builtin_static/logo/logo.png": logo,
 		"Loading...":                           title,
 		"main_color: undefined":                fmt.Sprintf("main_color: '%s'", mainColor),
 	}
@@ -180,6 +182,16 @@ func Static(r *gin.RouterGroup, noRoute func(handlers ...gin.HandlerFunc)) {
 	siteConfig := getSiteConfig()
 	initStatic()
 	initIndex(siteConfig)
+
+	// Serve builtin static assets (logo, pdf.js, epub.js) from embedded FS
+	// Always available regardless of CDN or custom DistDir configuration
+	builtinStaticFS, err := fs.Sub(public.BuiltinStatic, "builtin_static")
+	if err != nil {
+		utils.Log.Fatalf("failed to read builtin_static dir: %v", err)
+	}
+	r.StaticFS("/builtin_static/", http.FS(builtinStaticFS))
+	utils.Log.Debug("Builtin static assets registered at /builtin_static/")
+
 	folders := []string{"assets", "images", "streamer", "static"}
 	
 	if conf.Conf.Cdn == "" {

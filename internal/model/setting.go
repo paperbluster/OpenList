@@ -8,7 +8,6 @@ const (
 	GLOBAL
 	OFFLINE_DOWNLOAD
 	INDEX
-	SSO
 	LDAP
 	S3
 	FTP
