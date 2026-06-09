@@ -1,36 +1,29 @@
-### Default image is base. You can add other support by modifying BASE_IMAGE_TAG. The following parameters are supported: base (default), aria2, ffmpeg, aio
-ARG BASE_IMAGE_TAG=base
+# ============ Stage 1: Build frontend ============
+FROM node:22-alpine AS frontend-builder
+WORKDIR /frontend/
+COPY ../OpenList-Frontend/package.json ../OpenList-Frontend/pnpm-lock.yaml ../OpenList-Frontend/pnpm-workspace.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
+COPY ../OpenList-Frontend/ ./
+RUN pnpm build
 
-FROM alpine:edge AS builder
-LABEL stage=go-builder
+# ============ Stage 2: Build backend ============
+FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
-RUN apk add --no-cache bash curl jq gcc git go musl-dev
+RUN apk add --no-cache gcc musl-dev
 COPY go.mod go.sum ./
 RUN go mod download
 COPY ./ ./
-RUN bash build.sh release docker
+COPY --from=frontend-builder /frontend/dist/ ./public/dist/
+RUN CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 
-FROM openlistteam/openlist-base-image:${BASE_IMAGE_TAG}
-LABEL MAINTAINER="OpenList"
-ARG INSTALL_FFMPEG=false
-ARG INSTALL_ARIA2=false
-ARG USER=openlist
-ARG UID=1001
-ARG GID=1001
-
+# ============ Stage 3: Runtime ============
+FROM alpine:edge
+RUN apk add --no-cache ca-certificates tzdata
 WORKDIR /opt/openlist/
+COPY --from=backend-builder /app/openlist ./
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
-RUN addgroup -g ${GID} ${USER} && \
-    adduser -D -u ${UID} -G ${USER} ${USER} && \
-    mkdir -p /opt/openlist/data
-
-COPY --from=builder --chmod=755 --chown=${UID}:${GID} /app/bin/openlist ./
-COPY --chmod=755 --chown=${UID}:${GID} entrypoint.sh /entrypoint.sh
-
-USER ${USER}
-RUN /entrypoint.sh version
-
-ENV UMASK=022 RUN_ARIA2=${INSTALL_ARIA2}
+ENV UMASK=022 TZ=Asia/Shanghai
 VOLUME /opt/openlist/data/
-EXPOSE 5244 5245
+EXPOSE 5244
 CMD [ "/entrypoint.sh" ]

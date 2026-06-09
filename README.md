@@ -12,47 +12,66 @@
 | 网盘 | PikPak, PikPak 分享 |
 | 本地/虚拟 | 本地存储, 别名(快捷方式), 加密存储, URL 树, .strm 流媒体索引, 虚拟聚合 |
 
-## 快速开始
+## 项目结构
 
-### 直接运行
+```
+个人自研项目/
+├── OpenList/          ← 后端 (Go)
+└── OpenList-Frontend/ ← 前端 (Vite + Solid.js)
+```
+
+前后端是两个独立项目。后端编译后内嵌前端编译产物（`public/dist/`）。
+
+## 快速开始（本地开发）
 
 ```bash
-# 1. 编译
+# 1. 构建前端
+cd ../OpenList-Frontend
+pnpm install && pnpm build
+
+# 2. 把前端产物复制到后端
+cp -r dist/ ../OpenList/public/dist/
+
+# 3. 编译并启动后端
+cd ../OpenList
 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
-
-# 2. 准备数据目录
 mkdir -p data
-
-# 3. 启动
 ./openlist server --debug
 ```
 
-### Docker 部署
+> 访问：**http://localhost:5244**，管理后台：**http://localhost:5244/@manage**
 
-**推荐方式 (docker compose)**，`host` 网络模式可避免端口映射问题：
+## Docker 部署
 
-```yaml
-# docker-compose.yml
-services:
-  openlist:
-    restart: always
-    network_mode: host
-    volumes:
-      - './data:/opt/openlist/data'
-    environment:
-      - TZ=Asia/Shanghai
-    image: openlistteam/openlist:latest
+Dockerfile 会自动编译前端+后端，一步打包。
+
+**项目结构需要保持：** 两个目录在同一个父目录下，因为 Dockerfile 的 context 需要同时访问前后端源码。
+
+```
+some-dir/
+├── OpenList/             ← docker compose 在这里执行
+│   ├── Dockerfile
+│   └── docker-compose.yml
+└── OpenList-Frontend/    ← 前端源码
 ```
 
+### host 模式（推荐）
+
 ```bash
+cd OpenList
 docker compose up -d
 ```
 
-**bridge 模式**：
+docker-compose.yml 已配置 `network_mode: host`，直接访问宿主机端口 `5244`。
+
+### bridge 模式
 
 ```yaml
 services:
   openlist:
+    build:
+      context: ..
+      dockerfile: OpenList/Dockerfile
     restart: always
     ports:
       - '5244:5244'
@@ -60,10 +79,9 @@ services:
       - './data:/opt/openlist/data'
     environment:
       - TZ=Asia/Shanghai
-    image: openlistteam/openlist:latest
 ```
 
-> 注意：bridge 模式下访问 `localhost` 时实际指向容器内部。如需挂载宿主机本地目录，应使用 `network_mode: host` 或挂载对应卷。
+> bridge 模式下如需挂载宿主机本地文件，需要额外 `-v /host/path:/container/path` 映射。
 
 ## 访问
 
