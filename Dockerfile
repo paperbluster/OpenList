@@ -1,5 +1,6 @@
 # ============ Stage 1: Build frontend ============
 FROM node:22-alpine AS frontend-builder
+RUN apk add --no-cache git
 WORKDIR /frontend/
 
 RUN npm config set registry https://registry.npmmirror.com

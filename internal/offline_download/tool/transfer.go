@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 	"time"
 
-	_189pc "github.com/OpenListTeam/OpenList/v4/drivers/189pc"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/fs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
@@ -374,13 +373,9 @@ func removeObjTemp(t *TransferTask) {
 // 返回上传成功的对象和错误，如果不支持秒传则返回 nil, error
 func tryRapidUpload189(t *TransferTask, file *os.File, fileSize int64) (model.Obj, error) {
 	// 检查目标存储是否是天翼云 PC 驱动
-	cloud189PC, ok := t.DstStorage.(*_189pc.Cloud189PC)
 	if !ok {
-		return nil, fmt.Errorf("not 189pc storage")
-	}
 
 	// 计算整文件 MD5（旧接口只需要 fileMD5）
-	fileMD5, _, err := _189pc.ComputeSliceMD5sFromReader(file, torrent.DefaultPieceSize)
 	if err != nil {
 		return nil, fmt.Errorf("计算 MD5 失败: %w", err)
 	}

@@ -6,7 +6,6 @@ import (
 	"io"
 	"strings"
 
-	_189pc "github.com/OpenListTeam/OpenList/v4/drivers/189pc"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/errs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
@@ -215,7 +214,6 @@ func TorrentRapidUpload(c *gin.Context) {
 	}
 
 	// 检查是否是天翼云 PC 驱动
-	cloud189PC, ok := storage.(*_189pc.Cloud189PC)
 	if !ok {
 		common.ErrorResp(c, fmt.Errorf("目标存储不是天翼云PC驱动，不支持 CAS 秒传"), 400)
 		return
@@ -360,7 +358,6 @@ func GenerateTorrentForPath(c *gin.Context) {
 
 	// with_cas 仅支持天翼云PC驱动
 	if req.WithCAS {
-		if _, is189pc := storage.(*_189pc.Cloud189PC); !is189pc {
 			common.ErrorResp(c, fmt.Errorf("CAS 秒传扩展仅支持天翼云PC驱动"), 400)
 			return
 		}
