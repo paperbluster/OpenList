@@ -40,7 +40,6 @@ func Init(e *gin.Engine) {
 		g.Use(middlewares.MaxAllowed(conf.Conf.MaxConnections))
 	}
 	WebDav(g.Group("/dav"))
-	S3(g.Group("/s3"))
 
 	downloadLimiter := middlewares.DownloadRateLimiter(stream.ClientDownloadLimit)
 	signCheck := middlewares.Down(sign.Verify)
@@ -234,7 +233,3 @@ func Cors(r *gin.Engine) {
 	r.Use(cors.New(config))
 }
 
-func InitS3(e *gin.Engine) {
-	Cors(e)
-	S3Server(e.Group("/"))
-}

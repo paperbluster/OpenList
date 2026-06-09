@@ -9,7 +9,6 @@ const (
 	OFFLINE_DOWNLOAD
 	INDEX
 	LDAP
-	S3
 	FTP
 	TRAFFIC
 )

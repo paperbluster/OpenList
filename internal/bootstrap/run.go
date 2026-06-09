@@ -74,8 +74,6 @@ func IsRunning(t string) bool {
 		return unixRunning
 	case "quic":
 		return quicRunning
-	case "s3":
-		return s3Running
 	case "sftp":
 		return sftpRunning
 	case "ftp":
