@@ -17,13 +17,14 @@ RUN pnpm build
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
 
-# Go 镜像加速
-RUN go env -w GOPROXY=https://goproxy.cn,direct
+# Go 代理（国内直连优先，失败自动回退官方）
+ENV GOPROXY=https://goproxy.cn,https://proxy.golang.org,direct
 
 RUN apk add --no-cache gcc musl-dev
-COPY go.mod go.sum ./
-RUN go mod download
 COPY ./ ./
+
+# 清理已删除驱动的残留依赖，然后下载
+RUN go mod tidy && go mod download
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
 RUN CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 
