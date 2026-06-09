@@ -16,7 +16,9 @@ RUN pnpm build
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
 
-ENV GOPROXY=https://goproxy.cn,direct
+ENV GOPROXY=https://goproxy.cn,direct \
+    GOSUMDB=off \
+    GONOSUMCHECK=*
 
 RUN apk add --no-cache gcc musl-dev
 COPY ./ ./
