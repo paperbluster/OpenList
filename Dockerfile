@@ -33,6 +33,7 @@ COPY cmd/ ./cmd/
 COPY drivers/ ./drivers/
 COPY internal/ ./internal/
 COPY pkg/ ./pkg/
+COPY public/ ./public/
 COPY server/ ./server/
 # tidy 会生成 go.sum，然后 download 下载依赖
 RUN go mod tidy && go mod download
