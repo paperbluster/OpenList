@@ -24,6 +24,7 @@ output/
 *.json
 !frontend/package.json
 !frontend/pnpm-lock.yaml
+!frontend/src/lang/en/*.json
 /build
 /data/
 /tmp/
