@@ -445,50 +445,15 @@ func (d *Alias) getMoveObjs(ctx context.Context, srcObj, dstDir model.Obj) (Bala
 }
 
 func (d *Alias) getArchiveMeta(ctx context.Context, reqPath string, args model.ArchiveArgs) (model.ArchiveMeta, error) {
-	storage, reqActualPath, err := op.GetStorageAndActualPath(reqPath)
-	if err != nil {
-		return nil, err
-	}
-	if _, ok := storage.(driver.ArchiveReader); ok {
-		return op.GetArchiveMeta(ctx, storage, reqActualPath, model.ArchiveMetaArgs{
-			ArchiveArgs: args,
-			Refresh:     true,
-		})
-	}
 	return nil, errs.NotImplement
 }
 
 func (d *Alias) listArchive(ctx context.Context, reqPath string, args model.ArchiveInnerArgs) ([]model.Obj, error) {
-	storage, reqActualPath, err := op.GetStorageAndActualPath(reqPath)
-	if err != nil {
-		return nil, err
-	}
-	if _, ok := storage.(driver.ArchiveReader); ok {
-		return op.ListArchive(ctx, storage, reqActualPath, model.ArchiveListArgs{
-			ArchiveInnerArgs: args,
-			Refresh:          true,
-		})
-	}
 	return nil, errs.NotImplement
 }
 
 func (d *Alias) extract(ctx context.Context, reqPath string, args model.ArchiveInnerArgs) (*model.Link, error) {
-	storage, reqActualPath, err := op.GetStorageAndActualPath(reqPath)
-	if err != nil {
-		return nil, err
-	}
-	if _, ok := storage.(driver.ArchiveReader); !ok {
-		return nil, errs.NotImplement
-	}
-	if args.Redirect && common.ShouldProxy(storage, stdpath.Base(reqPath)) {
-		_, err := fs.Get(ctx, reqPath, &fs.GetArgs{NoLog: true})
-		if err == nil {
-			return nil, err
-		}
-		return nil, nil
-	}
-	link, _, err := op.DriverExtract(ctx, storage, reqActualPath, args)
-	return link, err
+	return nil, errs.NotImplement
 }
 
 func getAllSort(dirs []model.Obj) model.Sort {

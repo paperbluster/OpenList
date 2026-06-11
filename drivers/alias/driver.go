@@ -507,15 +507,7 @@ func (d *Alias) Extract(ctx context.Context, obj model.Obj, args model.ArchiveIn
 }
 
 func (d *Alias) ArchiveDecompress(ctx context.Context, srcObj, dstDir model.Obj, args model.ArchiveDecompressArgs) error {
-	srcs, dsts, err := d.getCopyObjs(ctx, srcObj, dstDir)
-	if err == nil {
-		for i, src := range srcs {
-			dst := dsts[i]
-			_, e := fs.ArchiveDecompress(ctx, src.GetPath(), dst.GetPath(), args)
-			err = errors.Join(err, e)
-		}
-	}
-	return err
+	return errs.NotImplement
 }
 
 func (d *Alias) GetDetails(ctx context.Context) (*model.StorageDetails, error) {

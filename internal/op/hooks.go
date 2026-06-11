@@ -24,6 +24,10 @@ type ObjsUpdateHook func(ctx context.Context, fullPath string, files []model.Obj
 
 var objsUpdateHooks []ObjsUpdateHook
 
+func RegisterObjsUpdateHook(hook ObjsUpdateHook) {
+	objsUpdateHooks = append(objsUpdateHooks, hook)
+}
+
 func HandleObjsUpdateHook(ctx context.Context, fullPath string, files []model.Obj) {
 	for _, hook := range objsUpdateHooks {
 		hook(ctx, fullPath, files)

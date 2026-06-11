@@ -358,9 +358,8 @@ func GenerateTorrentForPath(c *gin.Context) {
 
 	// with_cas 仅支持天翼云PC驱动
 	if req.WithCAS {
-			common.ErrorResp(c, fmt.Errorf("CAS 秒传扩展仅支持天翼云PC驱动"), 400)
-			return
-		}
+		common.ErrorResp(c, fmt.Errorf("CAS 秒传扩展仅支持天翼云PC驱动"), 400)
+		return
 	}
 
 	// 获取文件对象
