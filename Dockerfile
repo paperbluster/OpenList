@@ -9,11 +9,12 @@ WORKDIR /frontend/
 
 COPY frontend/ ./
 
-# 安装 pnpm 并安装依赖（带重试）
+# 安装依赖 + 构建 + 清理：合并为一个 RUN，构建完立刻删 node_modules
+# 前端产物 dist/ 是唯一需要保留的（Stage 2 通过 --from 引用）
 RUN npm install -g pnpm@11.5.1 && \
-    pnpm install --no-frozen-lockfile
-
-RUN pnpm build
+    pnpm install --no-frozen-lockfile && \
+    pnpm build && \
+    rm -rf node_modules /root/.local/share/pnpm /root/.npm
 
 # ============ Stage 2: Build backend ============
 FROM golang:1.24-alpine AS backend-builder
