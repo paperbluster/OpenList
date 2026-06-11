@@ -1,21 +1,13 @@
-# root @ Jakie in /mnt/OpenList [23:14:32] 
 $ docker build --network host -t openlist .
 Sending build context to Docker daemon  16.06MB
-Step 1/30 : FROM node:22-alpine AS frontend-builder
-22-alpine: Pulling from library/node
-c05efffaed61: Pull complete 
-cfaeb0c76c46: Pull complete 
-198f639c4c10: Pull complete 
-0363f589b8e9: Pull complete 
-Digest: sha256:9385cd9f3001dfc3431e8ead12c43e9e1f87cc1b9b5c6cfd0f73865d405b27c4
-Status: Downloaded newer image for node:22-alpine
+Step 1/29 : FROM node:22-alpine AS frontend-builder
  ---> 058413782f92
-Step 2/30 : ENV NODE_OPTIONS="--max-old-space-size=2048"
- ---> Running in 6456f2980994
-Removing intermediate container 6456f2980994
- ---> 3954e3b406cc
-Step 3/30 : RUN apk add --no-cache git
- ---> Running in 49ccfd9aff0b
+Step 2/29 : ENV NODE_OPTIONS="--max-old-space-size=2048"
+ ---> Running in ee4f3cb6ad87
+Removing intermediate container ee4f3cb6ad87
+ ---> 2d5d770e2a56
+Step 3/29 : RUN apk add --no-cache git
+ ---> Running in 9bf199efdc2c
 ( 1/12) Installing brotli-libs (1.2.0-r1)
 ( 2/12) Installing c-ares (1.34.6-r0)
 ( 3/12) Installing libunistring (1.4.2-r0)
@@ -30,16 +22,16 @@ Step 3/30 : RUN apk add --no-cache git
 (12/12) Installing git-init-template (2.54.0-r0)
 Executing busybox-1.37.0-r31.trigger
 OK: 24.0 MiB in 30 packages
-Removing intermediate container 49ccfd9aff0b
- ---> 74c71f8c1898
-Step 4/30 : WORKDIR /frontend/
- ---> Running in 1eb011cec5cc
-Removing intermediate container 1eb011cec5cc
- ---> fd817ebc6a1b
-Step 5/30 : COPY frontend/ ./
- ---> 130009a5861c
-Step 6/30 : RUN npm install -g pnpm@11.5.1 &&     pnpm install --no-frozen-lockfile
- ---> Running in 439c39caa9ff
+Removing intermediate container 9bf199efdc2c
+ ---> a540fdc79d59
+Step 4/29 : WORKDIR /frontend/
+ ---> Running in 06645cbbb3aa
+Removing intermediate container 06645cbbb3aa
+ ---> d5f993d201ca
+Step 5/29 : COPY frontend/ ./
+ ---> 5c0c9b747f77
+Step 6/29 : RUN npm install -g pnpm@11.5.1 &&     pnpm install --no-frozen-lockfile &&     pnpm build &&     rm -rf node_modules /root/.local/share/pnpm /root/.npm
+ ---> Running in c0af6b073bc4
 
 added 1 package in 4s
 
@@ -60,371 +52,372 @@ npm notice
    │                                         │
    ╰─────────────────────────────────────────╯
 
-✓ Lockfile passes supply-chain policies (790 entries in 14.7s)
+✓ Lockfile passes supply-chain policies (790 entries in 13.7s)
 Progress: resolved 1, reused 0, downloaded 0, added 0
-Progress: resolved 32, reused 0, downloaded 13, added 0
-Progress: resolved 51, reused 0, downloaded 31, added 0
+Progress: resolved 30, reused 0, downloaded 14, added 0
+Progress: resolved 34, reused 0, downloaded 23, added 0
+Progress: resolved 57, reused 0, downloaded 31, added 0
 Packages are hard linked from the content-addressable store to the virtual store.
   Content-addressable store is at: /root/.local/share/pnpm/store/v11
   Virtual store is at:             node_modules/.pnpm
-Progress: resolved 54, reused 0, downloaded 42, added 0
-Progress: resolved 65, reused 0, downloaded 53, added 0
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install$ npm install
+Progress: resolved 63, reused 0, downloaded 47, added 0
+Progress: resolved 64, reused 0, downloaded 55, added 0
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install$ npm install
+Progress: resolved 65, reused 0, downloaded 63, added 0
 Progress: resolved 67, reused 0, downloaded 65, added 0
-Progress: resolved 67, reused 0, downloaded 66, added 0
 Progress: resolved 67, reused 0, downloaded 67, added 0
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: > mpegts.js@1.8.1 prepare
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: > webpack --mode=production --progress
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 0% compiling
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 0/0 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 0/1 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/index.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 1/1 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 1/2 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/mpegts.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/2 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/3 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/polyfill.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/4 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/logging-control.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/5 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/exception.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/6 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/features.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/7 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/8 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/native-player.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/9 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-errors.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/10 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/mse-player.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 2/11 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 3/11 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 4/11 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 5/11 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 6/11 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 7/11 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 10% building 8/11 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 9/11 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 10/11 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 11/11 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 11/12 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/logger.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 11/13 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/io-controller.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 11/14 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/config.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 11/15 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/demux-errors.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 12/15 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/demux-errors.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 13/15 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/demux-errors.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 13/16 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/events/events.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 14/16 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/events/events.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 14/17 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-engine-main-thread.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 14/18 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-engine-dedicated-thread.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/18 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-engine-dedicated-thread.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/19 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/speed-sampler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/20 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/fetch-stream-loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/21 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/xhr-moz-chunked-loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/22 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/xhr-msstream-loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/23 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/xhr-range-loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/24 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/websocket-loader.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/25 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/range-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 15/26 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 11% building 16/26 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 17/26 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 18/26 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 19/26 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 20/26 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 21/26 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 22/26 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 23/26 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 12% building 24/26 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 25/26 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/io/param-seek-handler.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/26 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/27 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/mse-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/28 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxing-events.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/29 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/seeking-handler.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/30 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/loading-controller.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/31 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/startup-stall-jumper.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/32 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/live-latency-chaser.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/33 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/live-latency-synchronizer.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/34 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/player/player-engine-worker.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/35 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/browser.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/36 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/es6-promise/dist/es6-promise.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/37 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/mse-controller.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 26/38 modules 12 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 27/38 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 28/38 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 29/38 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 30/38 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 31/38 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 32/38 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 33/38 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 13% building 33/39 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/webworkify-webpack.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 34/39 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/webworkify-webpack.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 35/39 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/webworkify-webpack.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 36/39 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/webworkify-webpack.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 37/39 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/webworkify-webpack.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 38/39 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/es6-promise/dist/es6-promise.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 38/40 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxing-controller.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 38/41 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/transmuxing-worker.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 38/42 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 39/42 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 39/43 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-segment-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 40/43 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-segment-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 14% building 41/43 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-segment-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 42/43 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/core/media-segment-info.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/43 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/44 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/flv-demuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/45 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/remux/mp4-remuxer.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/46 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/process/browser.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/47 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/ts-demuxer.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 43/48 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/webpack/buildin/global.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 44/48 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/webpack/buildin/global.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 45/48 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/webpack/buildin/global.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 46/48 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/webpack/buildin/global.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 47/48 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/webpack/buildin/global.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/48 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/49 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/amf-parser.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/50 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sps-parser.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/51 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/h265-parser.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/52 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/typedarray-equality.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/53 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/av1-parser.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/54 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/exp-golomb.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/55 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/remux/mp4-generator.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/56 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/remux/aac-silent.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 48/57 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 15% building 49/57 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 50/57 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 51/57 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 52/57 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 53/57 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/57 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/sei.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/58 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/base-demuxer.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/59 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pat-pmt-pes.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/60 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/h264.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/61 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/aac.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/62 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pes-private-data.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/63 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/scte35.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/64 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/h265.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/65 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/smpte2038.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/66 modules 12 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/mp3.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/67 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/ac3.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/68 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/klv.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/69 modules 15 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/av1.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 54/70 modules 16 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pgs-data.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 55/70 modules 15 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pgs-data.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 56/70 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pgs-data.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 57/70 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/pgs-data.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 57/71 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 16% building 58/71 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 59/71 modules 12 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 60/71 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 61/71 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 62/71 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 63/71 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 64/71 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 65/71 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 17% building 66/71 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 67/71 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 68/71 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 69/71 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 70/71 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/utils/utf8-conv.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 71/71 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 71/72 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_1_f011a71c823550d57fd78ae204213322/src/demux/mpeg4-audio.ts
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 18% building 72/72 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% building 72/72 modules 0 active 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% finish module graph
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% finish module graph FlagDependencyExportsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% finish module graph WasmFinalizeExportsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% sealing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 70% sealing WarnCaseSensitiveModulesPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 72% basic dependencies optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 72% dependencies optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 72% dependencies optimization SideEffectsFlagPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 72% dependencies optimization FlagDependencyUsagePlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 73% advanced dependencies optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 73% after dependencies optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 71% chunk graph
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 71% after chunk graph
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 71% after chunk graph WebAssemblyModulesPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 74% optimizing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 74% basic module optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 75% module optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 75% advanced module optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% after module optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% basic chunk optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% basic chunk optimization EnsureChunkConditionsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% basic chunk optimization RemoveParentModulesPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% basic chunk optimization RemoveEmptyChunksPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 76% basic chunk optimization MergeDuplicateChunksPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 77% chunk optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization SplitChunksPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization RemoveEmptyChunksPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 77% after chunk optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 78% module and chunk tree optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 78% after module and chunk tree optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 79% basic chunk modules optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 80% chunk modules optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 80% chunk modules optimization ModuleConcatenationPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 80% advanced chunk modules optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 81% after chunk modules optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 81% module reviving
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 81% module reviving RecordIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 82% module order optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 82% module order optimization OccurrenceOrderModuleIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 82% advanced module order optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 83% before module ids
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 83% module ids
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 84% module id optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 84% module id optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 85% chunk reviving
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 85% chunk reviving RecordIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 85% chunk order optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 85% chunk order optimization OccurrenceOrderChunkIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 86% before chunk ids
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 86% chunk id optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 86% chunk id optimization FlagIncludedChunksPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 87% after chunk id optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 87% record modules
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 87% record modules RecordIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 87% record chunks
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 87% record chunks RecordIdsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 88% hashing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 88% after hashing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 89% record hash
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 89% module assets processing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 90% chunk assets processing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 90% additional chunk assets processing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 91% recording
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 92% additional asset processing
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 92% chunk asset optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 92% chunk asset optimization TerserPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin mpegts.js generate SourceMap
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin resolve sources
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin mpegts.js attach SourceMap
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 93% asset optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 94% after asset optimization
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 94% after seal
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 95% emitting
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 98% after emitting
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 98% after emitting SizeLimitsPlugin
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: <s> [webpack.Progress] 100% 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Hash: aeeebe50dea6b488a729
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Version: webpack 4.47.0
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Time: 39404ms
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Built at: 06/11/2026 3:18:48 PM
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                                                  Asset       Size  Chunks                          Chunk Names
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                       ../d.ts/src/core/mse-events.d.ts  248 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:               ../d.ts/src/core/transmuxing-events.d.ts   1.02 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/aac.d.ts   1.37 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/ac3.d.ts      2 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                      ../d.ts/src/demux/av1-parser.d.ts   2.51 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/av1.d.ts  366 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                    ../d.ts/src/demux/base-demuxer.d.ts   2.11 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                            ../d.ts/src/demux/h264.d.ts  989 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                            ../d.ts/src/demux/h265.d.ts   2.16 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/klv.d.ts  376 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/mp3.d.ts  132 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                     ../d.ts/src/demux/mpeg4-audio.d.ts  569 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                     ../d.ts/src/demux/pat-pmt-pes.d.ts   2.06 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                ../d.ts/src/demux/pes-private-data.d.ts  301 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                        ../d.ts/src/demux/pgs-data.d.ts  166 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                          ../d.ts/src/demux/scte35.d.ts    7.1 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                             ../d.ts/src/demux/sei.d.ts  243 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                       ../d.ts/src/demux/smpte2038.d.ts  519 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                      ../d.ts/src/demux/ts-demuxer.d.ts   2.94 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:            ../d.ts/src/player/live-latency-chaser.d.ts  344 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      ../d.ts/src/player/live-latency-synchronizer.d.ts  295 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:             ../d.ts/src/player/loading-controller.d.ts  701 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                     ../d.ts/src/player/mse-player.d.ts  912 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: ../d.ts/src/player/player-engine-dedicated-thread.d.ts   1.58 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      ../d.ts/src/player/player-engine-main-thread.d.ts   1.61 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   ../d.ts/src/player/player-engine-worker-cmd-def.d.ts  922 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   ../d.ts/src/player/player-engine-worker-msg-def.d.ts   2.33 KiB          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:           ../d.ts/src/player/player-engine-worker.d.ts  113 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                  ../d.ts/src/player/player-engine.d.ts  547 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                  ../d.ts/src/player/player-events.d.ts  907 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                ../d.ts/src/player/seeking-handler.d.ts  762 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:           ../d.ts/src/player/startup-stall-jumper.d.ts  442 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:             ../d.ts/src/utils/typedarray-equality.d.ts  105 bytes          [emitted]               
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                                              mpegts.js    271 KiB       0  [emitted]        [big]  main
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:                                          mpegts.js.map      1 MiB       0  [emitted] [dev]         main
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Entrypoint main [big] = mpegts.js mpegts.js.map
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [0] ./src/utils/logger.js 3.22 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [1] ./src/core/transmuxing-events.ts 2.14 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [2] ./src/io/loader.js 4.68 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [3] ./src/utils/exception.js 3.62 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [4] ./src/player/player-events.ts 1.85 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [6] ./src/demux/demux-errors.js 841 bytes {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [7] ./src/core/mse-events.ts 1.01 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [8] ./src/utils/logging-control.js 5.6 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:  [9] ./node_modules/events/events.js 15.6 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [10] ./src/player/player-errors.js 1.34 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [14] ./src/io/io-controller.js + 8 modules 81.2 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/io-controller.js 25 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/speed-sampler.js 3.55 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/fetch-stream-loader.js 10.9 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/xhr-moz-chunked-loader.js 7.84 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/xhr-msstream-loader.js 11.4 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/xhr-range-loader.js 13 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/websocket-loader.js 5.48 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/range-seek-handler.js 1.59 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/io/param-seek-handler.js 2.46 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [15] ./src/utils/polyfill.js 2.25 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [20] ./src/index.js 121 bytes {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [21] ./node_modules/es6-promise/dist/es6-promise.js 34.7 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: [25] ./src/mpegts.js + 11 modules 77.3 KiB {0} [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/mpegts.js 2.63 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/core/features.js 3.73 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/mse-player.ts 5.13 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/native-player.js 9.68 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/config.js 1.78 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/player-engine-main-thread.ts 17.9 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/player-engine-dedicated-thread.ts 16.4 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/seeking-handler.ts 7.3 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/loading-controller.ts 4.59 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/startup-stall-jumper.ts 3.27 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/live-latency-chaser.ts 2.26 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:      | ./src/player/live-latency-synchronizer.ts 2.61 KiB [built]
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:     + 11 hidden modules
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: This can impact web performance.
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Assets: 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   mpegts.js (271 KiB)
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Entrypoints:
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   main (271 KiB)
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:       mpegts.js
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: WARNING in webpack performance recommendations: 
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: For more info visit https://webpack.js.org/guides/code-splitting/
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: added 777 packages, and audited 778 packages in 3m
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: 39 packages are looking for funding
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   run `npm fund` for details
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: 56 vulnerabilities (11 low, 15 moderate, 27 high, 3 critical)
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: To address issues that do not require attention, run:
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   npm audit fix
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: To address all issues (including breaking changes), run:
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install:   npm audit fix --force
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Run `npm audit` for details.
-...mp_1_f011a71c823550d57fd78ae204213322 npm-install: Done
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: > mpegts.js@1.8.1 prepare
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: > webpack --mode=production --progress
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 0% compiling
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 0/0 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 0/1 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/index.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 1/1 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 1/2 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/mpegts.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/2 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/3 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/polyfill.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/4 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/logging-control.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/5 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/exception.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/6 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/features.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/7 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/8 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/native-player.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/9 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-errors.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/10 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/mse-player.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 2/11 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 3/11 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 4/11 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 5/11 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 6/11 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 7/11 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 10% building 8/11 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 9/11 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 10/11 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 11/11 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 11/12 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/logger.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 11/13 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/io-controller.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 11/14 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/config.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 11/15 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/demux-errors.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 12/15 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/demux-errors.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 12/16 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/events/events.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 13/16 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/events/events.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 14/16 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/events/events.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 14/17 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-engine-main-thread.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 14/18 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-engine-dedicated-thread.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/18 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-engine-dedicated-thread.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/19 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/speed-sampler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/20 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/fetch-stream-loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/21 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/xhr-moz-chunked-loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/22 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/xhr-msstream-loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/23 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/xhr-range-loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/24 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/websocket-loader.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/25 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/range-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 15/26 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 11% building 16/26 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 17/26 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 18/26 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 19/26 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 20/26 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 21/26 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 22/26 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 23/26 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 12% building 24/26 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 25/26 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/io/param-seek-handler.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/26 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/27 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/mse-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/28 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/transmuxing-events.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/29 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/seeking-handler.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/30 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/loading-controller.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/31 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/startup-stall-jumper.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/32 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/live-latency-chaser.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/33 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/live-latency-synchronizer.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/34 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/player/player-engine-worker.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/35 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/browser.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/36 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/es6-promise/dist/es6-promise.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 26/37 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 27/37 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 28/37 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 29/37 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 30/37 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 31/37 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 32/37 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 13% building 33/37 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 34/37 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/webworkify-webpack.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 34/38 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/transmuxer.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 34/39 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/mse-controller.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 35/39 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/mse-controller.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 36/39 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/mse-controller.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 37/39 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/transmuxer.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 38/39 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/es6-promise/dist/es6-promise.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 38/40 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/transmuxing-controller.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 38/41 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/transmuxing-worker.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 38/42 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 39/42 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 39/43 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-segment-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 40/43 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-segment-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 14% building 41/43 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-segment-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 42/43 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/core/media-segment-info.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/43 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/44 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/flv-demuxer.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/45 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/remux/mp4-remuxer.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/46 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/process/browser.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/47 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/ts-demuxer.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 43/48 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/webpack/buildin/global.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 44/48 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/webpack/buildin/global.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 45/48 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/webpack/buildin/global.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 46/48 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/webpack/buildin/global.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 47/48 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/webpack/buildin/global.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/48 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/49 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/amf-parser.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/50 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sps-parser.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/51 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/h265-parser.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/52 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/typedarray-equality.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/53 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/av1-parser.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/54 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/exp-golomb.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/55 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/remux/mp4-generator.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/56 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/remux/aac-silent.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 48/57 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 15% building 49/57 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 50/57 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 51/57 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 52/57 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 53/57 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/57 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/sei.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/58 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/base-demuxer.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/59 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pat-pmt-pes.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/60 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/h264.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/61 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/aac.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/62 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pes-private-data.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/63 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/scte35.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/64 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/h265.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/65 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/smpte2038.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/66 modules 12 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/mp3.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/67 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/ac3.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/68 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/klv.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/69 modules 15 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/av1.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 54/70 modules 16 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pgs-data.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 55/70 modules 15 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pgs-data.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 56/70 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pgs-data.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 57/70 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/pgs-data.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 57/71 modules 14 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 16% building 58/71 modules 13 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 59/71 modules 12 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 60/71 modules 11 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 61/71 modules 10 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 62/71 modules 9 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 63/71 modules 8 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 64/71 modules 7 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 65/71 modules 6 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 17% building 66/71 modules 5 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 67/71 modules 4 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 68/71 modules 3 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 69/71 modules 2 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 70/71 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/source-map-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/utils/utf8-conv.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 71/71 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 71/72 modules 1 active /root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/node_modules/ts-loader/index.js!/root/.local/share/pnpm/store/v11/tmp/_tmp_20_8585423e95a97fc7b5dcc2d1dce07647/src/demux/mpeg4-audio.ts
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 18% building 72/72 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% building 72/72 modules 0 active 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% finish module graph
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% finish module graph FlagDependencyExportsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% finish module graph WasmFinalizeExportsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% sealing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 70% sealing WarnCaseSensitiveModulesPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 72% basic dependencies optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 72% dependencies optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 72% dependencies optimization SideEffectsFlagPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 72% dependencies optimization FlagDependencyUsagePlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 73% advanced dependencies optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 73% after dependencies optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 71% chunk graph
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 71% after chunk graph
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 71% after chunk graph WebAssemblyModulesPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 74% optimizing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 74% basic module optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 75% module optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 75% advanced module optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% after module optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% basic chunk optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% basic chunk optimization EnsureChunkConditionsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% basic chunk optimization RemoveParentModulesPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% basic chunk optimization RemoveEmptyChunksPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 76% basic chunk optimization MergeDuplicateChunksPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 77% chunk optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization SplitChunksPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 77% advanced chunk optimization RemoveEmptyChunksPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 77% after chunk optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 78% module and chunk tree optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 78% after module and chunk tree optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 79% basic chunk modules optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 80% chunk modules optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 80% chunk modules optimization ModuleConcatenationPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 80% advanced chunk modules optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 81% after chunk modules optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 81% module reviving
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 81% module reviving RecordIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 82% module order optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 82% module order optimization OccurrenceOrderModuleIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 82% advanced module order optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 83% before module ids
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 83% module ids
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 84% module id optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 84% module id optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 85% chunk reviving
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 85% chunk reviving RecordIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 85% chunk order optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 85% chunk order optimization OccurrenceOrderChunkIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 86% before chunk ids
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 86% chunk id optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 86% chunk id optimization FlagIncludedChunksPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 87% after chunk id optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 87% record modules
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 87% record modules RecordIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 87% record chunks
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 87% record chunks RecordIdsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 88% hashing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 88% after hashing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 89% record hash
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 89% module assets processing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 90% chunk assets processing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 90% additional chunk assets processing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 91% recording
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 92% additional asset processing
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 92% chunk asset optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 92% chunk asset optimization TerserPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin mpegts.js generate SourceMap
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin resolve sources
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin mpegts.js attach SourceMap
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% after chunk asset optimization SourceMapDevToolPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 93% asset optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 94% after asset optimization
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 94% after seal
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 95% emitting
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 98% after emitting
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 98% after emitting SizeLimitsPlugin
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: <s> [webpack.Progress] 100% 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Hash: aeeebe50dea6b488a729
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Version: webpack 4.47.0
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Time: 39696ms
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Built at: 06/11/2026 3:44:46 PM
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                                                  Asset       Size  Chunks                          Chunk Names
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                       ../d.ts/src/core/mse-events.d.ts  248 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:               ../d.ts/src/core/transmuxing-events.d.ts   1.02 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/aac.d.ts   1.37 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/ac3.d.ts      2 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                      ../d.ts/src/demux/av1-parser.d.ts   2.51 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/av1.d.ts  366 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                    ../d.ts/src/demux/base-demuxer.d.ts   2.11 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                            ../d.ts/src/demux/h264.d.ts  989 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                            ../d.ts/src/demux/h265.d.ts   2.16 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/klv.d.ts  376 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/mp3.d.ts  132 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                     ../d.ts/src/demux/mpeg4-audio.d.ts  569 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                     ../d.ts/src/demux/pat-pmt-pes.d.ts   2.06 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                ../d.ts/src/demux/pes-private-data.d.ts  301 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                        ../d.ts/src/demux/pgs-data.d.ts  166 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                          ../d.ts/src/demux/scte35.d.ts    7.1 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                             ../d.ts/src/demux/sei.d.ts  243 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                       ../d.ts/src/demux/smpte2038.d.ts  519 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                      ../d.ts/src/demux/ts-demuxer.d.ts   2.94 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:            ../d.ts/src/player/live-latency-chaser.d.ts  344 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      ../d.ts/src/player/live-latency-synchronizer.d.ts  295 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:             ../d.ts/src/player/loading-controller.d.ts  701 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                     ../d.ts/src/player/mse-player.d.ts  912 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: ../d.ts/src/player/player-engine-dedicated-thread.d.ts   1.58 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      ../d.ts/src/player/player-engine-main-thread.d.ts   1.61 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   ../d.ts/src/player/player-engine-worker-cmd-def.d.ts  922 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   ../d.ts/src/player/player-engine-worker-msg-def.d.ts   2.33 KiB          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:           ../d.ts/src/player/player-engine-worker.d.ts  113 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                  ../d.ts/src/player/player-engine.d.ts  547 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                  ../d.ts/src/player/player-events.d.ts  907 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                ../d.ts/src/player/seeking-handler.d.ts  762 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:           ../d.ts/src/player/startup-stall-jumper.d.ts  442 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:             ../d.ts/src/utils/typedarray-equality.d.ts  105 bytes          [emitted]               
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                                              mpegts.js    271 KiB       0  [emitted]        [big]  main
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:                                          mpegts.js.map      1 MiB       0  [emitted] [dev]         main
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Entrypoint main [big] = mpegts.js mpegts.js.map
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [0] ./src/utils/logger.js 3.22 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [1] ./src/core/transmuxing-events.ts 2.14 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [2] ./src/io/loader.js 4.68 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [3] ./src/utils/exception.js 3.62 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [4] ./src/player/player-events.ts 1.85 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [6] ./src/demux/demux-errors.js 841 bytes {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [7] ./src/core/mse-events.ts 1.01 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [8] ./src/utils/logging-control.js 5.6 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:  [9] ./node_modules/events/events.js 15.6 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [10] ./src/player/player-errors.js 1.34 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [14] ./src/io/io-controller.js + 8 modules 81.2 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/io-controller.js 25 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/speed-sampler.js 3.55 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/fetch-stream-loader.js 10.9 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/xhr-moz-chunked-loader.js 7.84 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/xhr-msstream-loader.js 11.4 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/xhr-range-loader.js 13 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/websocket-loader.js 5.48 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/range-seek-handler.js 1.59 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/io/param-seek-handler.js 2.46 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [15] ./src/utils/polyfill.js 2.25 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [20] ./src/index.js 121 bytes {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [21] ./node_modules/es6-promise/dist/es6-promise.js 34.7 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: [25] ./src/mpegts.js + 11 modules 77.3 KiB {0} [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/mpegts.js 2.63 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/core/features.js 3.73 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/mse-player.ts 5.13 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/native-player.js 9.68 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/config.js 1.78 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/player-engine-main-thread.ts 17.9 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/player-engine-dedicated-thread.ts 16.4 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/seeking-handler.ts 7.3 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/loading-controller.ts 4.59 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/startup-stall-jumper.ts 3.27 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/live-latency-chaser.ts 2.26 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:      | ./src/player/live-latency-synchronizer.ts 2.61 KiB [built]
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:     + 11 hidden modules
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: This can impact web performance.
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Assets: 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   mpegts.js (271 KiB)
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Entrypoints:
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   main (271 KiB)
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:       mpegts.js
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: WARNING in webpack performance recommendations: 
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: For more info visit https://webpack.js.org/guides/code-splitting/
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: added 777 packages, and audited 778 packages in 3m
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: 39 packages are looking for funding
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   run `npm fund` for details
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: 59 vulnerabilities (11 low, 17 moderate, 28 high, 3 critical)
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: To address issues that do not require attention, run:
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   npm audit fix
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: To address all issues (including breaking changes), run:
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install:   npm audit fix --force
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Run `npm audit` for details.
+...p_20_8585423e95a97fc7b5dcc2d1dce07647 npm-install: Done
 Progress: resolved 67, reused 0, downloaded 68, added 0
-Progress: resolved 89, reused 0, downloaded 68, added 0
-Progress: resolved 104, reused 0, downloaded 93, added 0
-Progress: resolved 135, reused 0, downloaded 118, added 0
-Progress: resolved 167, reused 0, downloaded 148, added 0
-Progress: resolved 233, reused 0, downloaded 209, added 0
-Progress: resolved 278, reused 0, downloaded 261, added 0
-Progress: resolved 295, reused 0, downloaded 267, added 0
-Progress: resolved 307, reused 0, downloaded 269, added 0
-Progress: resolved 331, reused 0, downloaded 272, added 0
-Progress: resolved 336, reused 0, downloaded 279, added 0
-Progress: resolved 348, reused 0, downloaded 286, added 0
-Progress: resolved 359, reused 0, downloaded 300, added 0
-Progress: resolved 382, reused 0, downloaded 315, added 0
-Progress: resolved 457, reused 0, downloaded 388, added 0
-Progress: resolved 523, reused 0, downloaded 453, added 0
-Progress: resolved 528, reused 0, downloaded 493, added 0
-Progress: resolved 529, reused 0, downloaded 493, added 0
-Progress: resolved 547, reused 0, downloaded 510, added 0
+Progress: resolved 87, reused 0, downloaded 68, added 0
+Progress: resolved 105, reused 0, downloaded 93, added 0
+Progress: resolved 134, reused 0, downloaded 117, added 0
+Progress: resolved 168, reused 0, downloaded 147, added 0
+Progress: resolved 237, reused 0, downloaded 212, added 0
+Progress: resolved 281, reused 0, downloaded 263, added 0
+Progress: resolved 297, reused 0, downloaded 267, added 0
+Progress: resolved 313, reused 0, downloaded 269, added 0
+Progress: resolved 331, reused 0, downloaded 271, added 0
+Progress: resolved 331, reused 0, downloaded 279, added 0
+Progress: resolved 346, reused 0, downloaded 283, added 0
+Progress: resolved 359, reused 0, downloaded 298, added 0
+Progress: resolved 408, reused 0, downloaded 335, added 0
+Progress: resolved 469, reused 0, downloaded 402, added 0
+Progress: resolved 526, reused 0, downloaded 467, added 0
+Progress: resolved 538, reused 0, downloaded 495, added 0
+Progress: resolved 542, reused 0, downloaded 506, added 0
+Progress: resolved 553, reused 0, downloaded 516, added 0
 [WARN] 2 deprecated subdependencies found: @ungap/structured-clone@1.3.0, scroll-lock@2.1.5
-Progress: resolved 558, reused 0, downloaded 518, added 0
 Packages: +520
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 558, reused 0, downloaded 524, added 244
 Progress: resolved 558, reused 0, downloaded 524, added 520, done
 .../node_modules/@swc/core postinstall$ node postinstall.js
 .../node_modules/@swc/core postinstall: Done
@@ -505,11 +498,7 @@ devDependencies:
 + vite-plugin-solid 2.11.12
 + vite-plugin-static-copy 3.4.0 (4.1.1 is available)
 
-Done in 4m 1.9s using pnpm v11.5.1
-Removing intermediate container 439c39caa9ff
- ---> 75a1d8dc6eb5
-Step 7/30 : RUN pnpm build
- ---> Running in 890da1ac54e4
+Done in 4m 0.9s using pnpm v11.5.1
 $ vite build
 vite v8.0.16 building client environment for production...
 transforming...[plugin rolldown:vite-resolve] Module "crypto" has been externalized for browser compatibility, imported by "/frontend/node_modules/.pnpm/@embedpdf+snippet@2.14.3_react-dom@19.2.3_react@19.2.3__react@19.2.3_svelte@5.46.1_vue@3.5.26_typescript@5.9.3_/node_modules/@embedpdf/snippet/dist/embedpdf-DM0Wgh5n.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
@@ -607,115 +596,113 @@ dist/assets/index-CsiTF2oO.js                      1,881.51 kB │ gzip:   599.1
 - Using dynamic import() to code-split the application
 - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 12.43s
-Removing intermediate container 890da1ac54e4
- ---> ca1b2cb4d0fe
-Step 8/30 : FROM golang:1.24-alpine AS backend-builder
+✓ built in 12.34s
+Removing intermediate container c0af6b073bc4
+ ---> 5803156fd932
+Step 7/29 : FROM golang:1.24-alpine AS backend-builder
  ---> fa0811e6d279
-Step 9/30 : WORKDIR /app/
- ---> Running in 1db1bfb71958
-Removing intermediate container 1db1bfb71958
- ---> e6a3e2683c71
-Step 10/30 : ENV GOPROXY=https://goproxy.cn,direct     GOSUMDB=off     GONOSUMCHECK=*
- ---> Running in f25c3368d2d5
-Removing intermediate container f25c3368d2d5
- ---> e7a3da6e9d79
-Step 11/30 : COPY go.mod ./
- ---> 8171e9167af4
-Step 12/30 : COPY main.go ./
- ---> 994f449559ed
-Step 13/30 : COPY cmd/ ./cmd/
- ---> 503f081bf80f
-Step 14/30 : COPY drivers/ ./drivers/
- ---> 91ba50e59814
-Step 15/30 : COPY internal/ ./internal/
- ---> bb43419467b8
-Step 16/30 : COPY pkg/ ./pkg/
- ---> 8982d76bfcf1
-Step 17/30 : COPY public/ ./public/
- ---> 4a6c289aad71
-Step 18/30 : COPY server/ ./server/
- ---> 2e8a6ea1c6af
-Step 19/30 : RUN go mod tidy && go mod download
- ---> Running in 3aa55423183f
-go: downloading github.com/antchfx/htmlquery v1.3.5
-go: downloading github.com/antchfx/xpath v1.3.5
-go: downloading github.com/pkg/errors v0.9.1
+Step 8/29 : WORKDIR /app/
+ ---> Running in 844dad86251d
+Removing intermediate container 844dad86251d
+ ---> b8ba9033282c
+Step 9/29 : ENV GOPROXY=https://goproxy.cn,direct     GOSUMDB=off     GONOSUMCHECK=*
+ ---> Running in 1e659d6f2b75
+Removing intermediate container 1e659d6f2b75
+ ---> e0b0d7f0b646
+Step 10/29 : COPY go.mod ./
+ ---> aff941f5e6e8
+Step 11/29 : COPY main.go ./
+ ---> bde2ad143124
+Step 12/29 : COPY cmd/ ./cmd/
+ ---> c2be605457c4
+Step 13/29 : COPY drivers/ ./drivers/
+ ---> c182e62d28ff
+Step 14/29 : COPY internal/ ./internal/
+ ---> 366dc8b6d5ee
+Step 15/29 : COPY pkg/ ./pkg/
+ ---> 97b50f0b6518
+Step 16/29 : COPY public/ ./public/
+ ---> de727d0bd4ee
+Step 17/29 : COPY server/ ./server/
+ ---> e341d855e30d
+Step 18/29 : RUN go mod tidy && go mod download
+ ---> Running in 6223009032b0
 go: downloading github.com/go-resty/resty/v2 v2.16.5
 go: downloading github.com/sirupsen/logrus v1.9.3
 go: downloading github.com/spf13/cobra v1.10.2
+go: downloading github.com/pkg/errors v0.9.1
+go: downloading github.com/antchfx/htmlquery v1.3.5
+go: downloading github.com/antchfx/xpath v1.3.5
 go: downloading github.com/OpenListTeam/go-cache v0.1.0
 go: downloading github.com/avast/retry-go v3.0.0+incompatible
-go: downloading github.com/json-iterator/go v1.1.12
 go: downloading github.com/OpenListTeam/reflink v0.0.0-20260520031008-ed3c0dbe8009
+go: downloading github.com/json-iterator/go v1.1.12
 go: downloading github.com/OpenListTeam/times v0.1.0
-go: downloading github.com/tchap/go-patricia/v2 v2.3.3
 go: downloading github.com/disintegration/imaging v1.6.2
 go: downloading golang.org/x/image v0.29.0
+go: downloading github.com/tchap/go-patricia/v2 v2.3.3
 go: downloading golang.org/x/sys v0.40.0
 go: downloading golang.org/x/net v0.48.0
-go: downloading gorm.io/gorm v1.25.11
 go: downloading github.com/OpenListTeam/tache v0.2.2
 go: downloading github.com/caarlos0/env/v9 v9.0.0
 go: downloading github.com/gin-gonic/gin v1.10.1
+go: downloading gorm.io/gorm v1.25.11
 go: downloading github.com/glebarez/sqlite v1.11.0
 go: downloading github.com/google/uuid v1.6.0
 go: downloading github.com/natefinch/lumberjack v2.0.0+incompatible
 go: downloading github.com/shirou/gopsutil/v4 v4.25.5
 go: downloading golang.org/x/time v0.14.0
-go: downloading gorm.io/driver/sqlite v1.5.6
-go: downloading github.com/bmatcuk/doublestar/v4 v4.9.1
 go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+go: downloading gorm.io/driver/sqlite v1.5.6
 go: downloading github.com/dlclark/regexp2 v1.11.5
 go: downloading github.com/maruel/natural v1.1.1
+go: downloading github.com/bmatcuk/doublestar/v4 v4.9.1
+go: downloading go4.org v0.0.0-20260112195520-a5071408f32f
 go: downloading github.com/microcosm-cc/bluemonday v1.0.27
 go: downloading github.com/stretchr/testify v1.11.1
-go: downloading go4.org v0.0.0-20260112195520-a5071408f32f
+go: downloading github.com/gin-contrib/cors v1.7.6
 go: downloading github.com/golang-jwt/jwt/v4 v4.5.2
-go: downloading github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
+go: downloading github.com/pquerna/otp v1.5.0
 go: downloading github.com/inconshreveable/mousetrap v1.1.0
 go: downloading github.com/spf13/pflag v1.0.10
+go: downloading github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
 go: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 go: downloading github.com/modern-go/reflect2 v1.0.2
-go: downloading github.com/gin-contrib/cors v1.7.6
-go: downloading github.com/jinzhu/now v1.1.5
 go: downloading github.com/OpenListTeam/gsync v0.1.0
 go: downloading github.com/matoous/go-nanoid/v2 v2.1.0
-go: downloading github.com/glebarez/go-sqlite v1.21.2
-go: downloading modernc.org/sqlite v1.23.1
-go: downloading github.com/pquerna/otp v1.5.0
+go: downloading github.com/jinzhu/now v1.1.5
 go: downloading github.com/gin-contrib/sse v1.1.0
 go: downloading github.com/mattn/go-isatty v0.0.20
 go: downloading google.golang.org/protobuf v1.36.11
+go: downloading github.com/glebarez/go-sqlite v1.21.2
+go: downloading modernc.org/sqlite v1.23.1
 go: downloading github.com/BurntSushi/toml v1.6.0
 go: downloading gopkg.in/natefinch/lumberjack.v2 v2.0.0
+go: downloading github.com/mattn/go-sqlite3 v1.14.22
 go: downloading github.com/jinzhu/inflection v1.0.0
 go: downloading golang.org/x/text v0.32.0
 go: downloading gopkg.in/yaml.v2 v2.4.0
-go: downloading github.com/mattn/go-sqlite3 v1.14.22
 go: downloading github.com/lufia/plan9stats v0.0.0-20250317134145-8bc96cf8fc35
 go: downloading github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55
 go: downloading github.com/tklauser/go-sysconf v0.3.15
 go: downloading github.com/aymerick/douceur v0.2.0
 go: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 go: downloading github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2
-go: downloading modernc.org/libc v1.22.5
-go: downloading github.com/google/pprof v0.0.0-20230405160723-4a4c7d95572b
-go: downloading modernc.org/mathutil v1.5.0
 go: downloading github.com/go-playground/validator/v10 v10.26.0
 go: downloading github.com/pelletier/go-toml/v2 v2.2.4
 go: downloading github.com/ugorji/go/codec v1.3.0
 go: downloading gopkg.in/yaml.v3 v3.0.1
 go: downloading github.com/bytedance/sonic v1.13.3
 go: downloading github.com/goccy/go-json v0.10.5
+go: downloading modernc.org/libc v1.22.5
+go: downloading github.com/google/pprof v0.0.0-20230405160723-4a4c7d95572b
+go: downloading modernc.org/mathutil v1.5.0
 go: downloading github.com/google/go-cmp v0.7.0
 go: downloading github.com/ebitengine/purego v0.8.4
 go: downloading github.com/yusufpapurcu/wmi v1.2.4
 go: downloading github.com/tklauser/numcpus v0.10.0
 go: downloading github.com/gorilla/css v1.0.1
-go: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
-go: downloading github.com/dustin/go-humanize v1.0.1
-go: downloading modernc.org/memory v1.5.0
+go: downloading github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc
 go: downloading github.com/gabriel-vasile/mimetype v1.4.9
 go: downloading github.com/go-playground/universal-translator v0.18.1
 go: downloading github.com/leodido/go-urn v1.4.0
@@ -723,14 +710,28 @@ go: downloading golang.org/x/crypto v0.46.0
 go: downloading github.com/go-playground/assert/v2 v2.2.0
 go: downloading github.com/go-playground/locales v0.14.1
 go: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
-go: downloading github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc
+go: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
+go: downloading github.com/dustin/go-humanize v1.0.1
+go: downloading modernc.org/memory v1.5.0
 go: downloading github.com/go-ole/go-ole v1.3.0
-go: downloading github.com/kr/pretty v0.3.1
 go: downloading github.com/cloudwego/base64x v0.1.5
 go: downloading golang.org/x/arch v0.18.0
+go: downloading github.com/kr/pretty v0.3.1
 go: downloading github.com/rogpeppe/go-internal v1.10.0
 go: downloading github.com/klauspost/cpuid/v2 v2.2.10
 go: downloading github.com/bytedance/sonic/loader v0.2.4
 go: downloading github.com/twitchyliquid64/golang-asm v0.15.1
 go: downloading github.com/kr/text v0.2.0
-Error processing tar file(exit status 1): write /go/pkg/mod/modernc.org/sqlite@v1.23.1/libtest/sqlite_openbsd_arm64.go: no space left on device
+Removing intermediate container 6223009032b0
+ ---> 1bcbfe51fdb6
+Step 19/29 : COPY --from=frontend-builder /frontend/dist/ ./public/dist/
+ ---> 86a86ee1bf68
+Step 20/29 : RUN CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
+ ---> Running in d419749d4407
+# github.com/OpenListTeam/OpenList/v4/internal/net
+internal/net/request.go:644:10: undefined: jsoniter
+internal/net/request.go:645:6: undefined: jsoniter
+The command '/bin/sh -c CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist .' returned a non-zero code: 1
+
+# root @ Jakie in /mnt/OpenList [23:53:34] C:1
+$ 
