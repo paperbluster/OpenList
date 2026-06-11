@@ -23,19 +23,14 @@ ENV GOPROXY=https://goproxy.cn,direct \
     GOSUMDB=off \
     GONOSUMCHECK=*
 
-# GOMEMLIMIT 限制 Go 编译期内存上限（软限制，触发更激进的 GC）
-# GOMAXPROCS=2 限制并行编译的 CPU 数，降低并发内存峰值
-ENV GOMEMLIMIT=1536MiB \
-    GOMAXPROCS=2
-
-RUN apk add --no-cache gcc musl-dev
+# 无需 CGO（已删除 FUSE 挂载功能），编译内存大幅降低
+# CGO_ENABLED=0 直接跳过 C 编译器，Go 纯静态编译
 COPY ./ ./
 
-# 清理已删除驱动的残留依赖，然后下载
+# 清理残留依赖，然后下载
 RUN go mod tidy && go mod download
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-# -p 2 限制并行编译包数，进一步控制内存峰值
-RUN CGO_ENABLED=1 go build -p 2 -ldflags="-w -s" -tags=jsoniter -o openlist .
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 
 # ============ Stage 3: Runtime ============
 FROM alpine:edge

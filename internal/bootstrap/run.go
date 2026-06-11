@@ -21,7 +21,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/quic-go/quic-go/http3"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -49,8 +48,6 @@ var (
 	httpsRunning bool
 	unixSrv      *http.Server
 	unixRunning  bool
-	quicSrv      *http3.Server
-	quicRunning  bool
 	s3Srv        *http.Server
 	s3Running    bool
 )
@@ -64,8 +61,6 @@ func IsRunning(t string) bool {
 		return httpsRunning
 	case "unix":
 		return unixRunning
-	case "quic":
-		return quicRunning
 	}
 	return running
 }
@@ -128,29 +123,6 @@ func Start() {
 				handleEndpointShutdownHooks("https")
 			}
 		}()
-		if conf.Conf.Scheme.EnableH3 {
-			fmt.Printf("start HTTP3 (quic) server @ %s\n", httpsBase)
-			utils.Log.Infof("start HTTP3 (quic) server @ %s", httpsBase)
-			r.Use(func(c *gin.Context) {
-				if c.Request.TLS != nil {
-					port := conf.Conf.Scheme.HttpsPort
-					c.Header("Alt-Svc", fmt.Sprintf("h3=\":%d\"; ma=86400", port))
-				}
-				c.Next()
-			})
-			quicSrv = &http3.Server{Addr: httpsBase, Handler: r}
-			go func() {
-				quicRunning = true
-				err := quicSrv.ListenAndServeTLS(conf.Conf.Scheme.CertFile, conf.Conf.Scheme.KeyFile)
-				quicRunning = false
-				if err != nil && !errors.Is(err, http.ErrServerClosed) {
-					handleEndpointStartFailedHooks("quic", err)
-					utils.Log.Errorf("failed to start http3 (quic): %s", err.Error())
-				} else {
-					handleEndpointShutdownHooks("quic")
-				}
-			}()
-		}
 	}
 	if conf.Conf.Scheme.UnixFile != "" {
 		fmt.Printf("start unix server @ %s\n", conf.Conf.Scheme.UnixFile)
@@ -236,16 +208,6 @@ func Shutdown(timeout time.Duration) {
 			}
 			httpsSrv = nil
 		}()
-		if quicSrv != nil && conf.Conf.Scheme.EnableH3 {
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
-				if err := quicSrv.Shutdown(ctx); err != nil {
-					utils.Log.Error("HTTP3 (quic) server shutdown err: ", err)
-				}
-				quicSrv = nil
-			}()
-		}
 	}
 	if unixSrv != nil && conf.Conf.Scheme.UnixFile != "" {
 		wg.Add(1)
