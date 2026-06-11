@@ -3,7 +3,6 @@ package server
 import (
 	"github.com/OpenListTeam/OpenList/v4/cmd/flags"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
-	"github.com/OpenListTeam/OpenList/v4/internal/message"
 	"github.com/OpenListTeam/OpenList/v4/internal/sign"
 	"github.com/OpenListTeam/OpenList/v4/internal/stream"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
@@ -66,29 +65,14 @@ func Init(e *gin.Engine) {
 
 	api := g.Group("/api")
 	auth := api.Group("", middlewares.Auth(false))
-	webauthn := api.Group("/authn", middlewares.Authn)
 
 	api.POST("/auth/login", handles.Login)
 	api.POST("/auth/login/hash", handles.LoginHash)
-	api.POST("/auth/login/ldap", handles.LoginLdap)
 	auth.GET("/me", handles.CurrentUser)
 	auth.POST("/me/update", handles.UpdateCurrent)
-	auth.GET("/me/sshkey/list", handles.ListMyPublicKey)
-	auth.POST("/me/sshkey/add", handles.AddMyPublicKey)
-	auth.POST("/me/sshkey/delete", handles.DeleteMyPublicKey)
 	auth.POST("/auth/2fa/generate", handles.Generate2FA)
 	auth.POST("/auth/2fa/verify", handles.Verify2FA)
 	auth.GET("/auth/logout", handles.LogOut)
-
-	// auth
-
-	// webauthn
-	api.GET("/authn/webauthn_begin_login", handles.BeginAuthnLogin)
-	api.POST("/authn/webauthn_finish_login", handles.FinishAuthnLogin)
-	webauthn.GET("/webauthn_begin_registration", handles.BeginAuthnRegistration)
-	webauthn.POST("/webauthn_finish_registration", handles.FinishAuthnRegistration)
-	webauthn.POST("/delete_authn", handles.DeleteAuthnLogin)
-	webauthn.GET("/getcredentials", handles.GetAuthnCredentials)
 
 	// no need auth
 	public := api.Group("/public")
@@ -110,13 +94,6 @@ func Init(e *gin.Engine) {
 }
 
 func admin(g *gin.RouterGroup) {
-	meta := g.Group("/meta")
-	meta.GET("/list", handles.ListMetas)
-	meta.GET("/get", handles.GetMeta)
-	meta.POST("/create", handles.CreateMeta)
-	meta.POST("/update", handles.UpdateMeta)
-	meta.POST("/delete", handles.DeleteMeta)
-
 	user := g.Group("/user")
 	user.GET("/list", handles.ListUsers)
 	user.GET("/get", handles.GetUser)
@@ -125,8 +102,6 @@ func admin(g *gin.RouterGroup) {
 	user.POST("/cancel_2fa", handles.Cancel2FAById)
 	user.POST("/delete", handles.DeleteUser)
 	user.POST("/del_cache", handles.DelUserCache)
-	user.GET("/sshkey/list", handles.ListPublicKeys)
-	user.POST("/sshkey/delete", handles.DeletePublicKey)
 
 	storage := g.Group("/storage")
 	storage.GET("/list", handles.ListStorages)
@@ -153,22 +128,6 @@ func admin(g *gin.RouterGroup) {
 
 	// retain /admin/task API to ensure compatibility with legacy automation scripts
 	_task(g.Group("/task"))
-
-	ms := g.Group("/message")
-	ms.POST("/get", message.HttpInstance.GetHandle)
-	ms.POST("/send", message.HttpInstance.SendHandle)
-
-	index := g.Group("/index")
-	index.POST("/build", middlewares.SearchIndex, handles.BuildIndex)
-	index.POST("/update", middlewares.SearchIndex, handles.UpdateIndex)
-	index.POST("/stop", middlewares.SearchIndex, handles.StopIndex)
-	index.POST("/clear", middlewares.SearchIndex, handles.ClearIndex)
-	index.GET("/progress", middlewares.SearchIndex, handles.GetProgress)
-
-	scan := g.Group("/scan")
-	scan.POST("/start", handles.StartManualScan)
-	scan.POST("/stop", handles.StopManualScan)
-	scan.GET("/progress", handles.GetManualScanProgress)
 }
 
 func fsAndShare(g *gin.RouterGroup) {
@@ -180,7 +139,7 @@ func fsAndShare(g *gin.RouterGroup) {
 }
 
 func _fs(g *gin.RouterGroup) {
-	g.Any("/search", middlewares.SearchIndex, handles.Search)
+tg.Any("/search", handles.Search)
 	g.Any("/other", handles.FsOther)
 	g.Any("/dirs", handles.FsDirs)
 	g.POST("/mkdir", handles.FsMkdir)

@@ -51,13 +51,6 @@ const previews: Preview[] = [
     prior: true,
   },
   {
-    key: "aliyun_video",
-    type: ObjType.VIDEO,
-    provider: /^Aliyundrive(Open)?$/,
-    component: lazy(() => import("./aliyun_video")),
-    prior: true,
-  },
-  {
     key: "markdown",
     type: ObjType.TEXT,
     component: lazy(() => import("./markdown")),
@@ -74,20 +67,6 @@ const previews: Preview[] = [
     type: ObjType.TEXT,
     component: lazy(() => import("./markdown_with_word_wrap")),
     prior: true,
-  },
-  {
-    key: "url_open",
-    exts: ["url"],
-    component: lazy(() => import("./url")),
-    prior: true,
-  },
-  {
-    key: "text_editor",
-    type: ObjType.TEXT,
-    exts: ["url"],
-    component: lazy(() => import("./text-editor")),
-    prior: true,
-    availableInArchive: false,
   },
   {
     key: "image",
@@ -108,33 +87,17 @@ const previews: Preview[] = [
     prior: true,
   },
   {
-    key: "ipa",
-    exts: ["ipa", "tipa"],
-    component: lazy(() => import("./ipa")),
-    prior: true,
-  },
-  {
-    key: "plist",
-    exts: ["plist"],
-    component: lazy(() => import("./plist")),
-    prior: true,
-  },
-  {
     key: "heic",
     exts: ["heic", "heif", "avif", "vvc", "avc", "jpeg", "jpg"],
     component: lazy(() => import("./heic")),
     prior: true,
   },
-  ...(import.meta.env.VITE_LITE === "true"
-    ? []
-    : [
-        {
-          key: "pdf",
-          exts: ["pdf"],
-          component: lazy(() => import("./pdf")),
-          prior: true,
-        },
-      ]),
+  {
+    key: "pdf",
+    exts: ["pdf"],
+    component: lazy(() => import("./pdf")),
+    prior: true,
+  },
   {
     key: "ppt",
     exts: ["pptx"],
@@ -151,24 +114,6 @@ const previews: Preview[] = [
     key: "doc",
     exts: ["docx", "doc"],
     component: lazy(() => import("./doc")),
-    prior: true,
-  },
-  {
-    key: "asciinema",
-    exts: ["cast"],
-    component: lazy(() => import("./asciinema")),
-    prior: true,
-  },
-  {
-    key: "video360",
-    type: ObjType.VIDEO,
-    component: lazy(() => import("./video360")),
-    prior: true,
-  },
-  {
-    key: "torrent",
-    exts: ["torrent"],
-    component: lazy(() => import("./torrent")),
     prior: true,
   },
   {
@@ -279,7 +224,7 @@ export const getPreviews = (
     if (!isShare() || getSettingBool("share_preview")) {
       const textPreviewsToAdd = previews
         .filter((p) =>
-          ["markdown", "markdown_with_word_wrap", "text_editor"].includes(
+          ["markdown", "markdown_with_word_wrap"].includes(
             p.key,
           ),
         )

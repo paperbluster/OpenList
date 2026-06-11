@@ -1,8 +1,6 @@
 package model
 
 import (
-	"encoding/binary"
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -10,7 +8,6 @@ import (
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils/random"
 	"github.com/OpenListTeam/go-cache"
-	"github.com/go-webauthn/webauthn/webauthn"
 	"github.com/pkg/errors"
 )
 
@@ -243,29 +240,3 @@ func TwoHashPwd(password string, salt string) string {
 	return HashPwd(StaticHash(password), salt)
 }
 
-func (u *User) WebAuthnID() []byte {
-	bs := make([]byte, 8)
-	binary.LittleEndian.PutUint64(bs, uint64(u.ID))
-	return bs
-}
-
-func (u *User) WebAuthnName() string {
-	return u.Username
-}
-
-func (u *User) WebAuthnDisplayName() string {
-	return u.Username
-}
-
-func (u *User) WebAuthnCredentials() []webauthn.Credential {
-	var res []webauthn.Credential
-	err := json.Unmarshal([]byte(u.Authn), &res)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return res
-}
-
-func (u *User) WebAuthnIcon() string {
-	return "/builtin_static/logo/logo.svg"
-}

@@ -1,77 +1,72 @@
 package handles
 
 import (
-	"path"
+	"context"
+	stdpath "path"
 	"strings"
+	"time"
 
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
-	"github.com/OpenListTeam/OpenList/v4/internal/errs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
 	"github.com/OpenListTeam/OpenList/v4/internal/op"
-	"github.com/OpenListTeam/OpenList/v4/internal/search"
-	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
 	"github.com/OpenListTeam/OpenList/v4/server/common"
 	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 )
 
-type SearchReq struct {
-	model.SearchReq
-	Password string `json:"password"`
-}
-
-type SearchResp struct {
-	model.SearchNode
-	Type int `json:"type"`
-}
-
 func Search(c *gin.Context) {
-	var (
-		req SearchReq
-		err error
-	)
-	if err = c.ShouldBind(&req); err != nil {
+	var req model.SearchReq
+	if err := c.ShouldBind(&req); err != nil {
 		common.ErrorResp(c, err, 400)
 		return
 	}
+
 	user := c.Request.Context().Value(conf.UserKey).(*model.User)
-	req.Parent, err = user.JoinPath(req.Parent)
+	parent, err := user.JoinPath(req.Parent)
 	if err != nil {
 		common.ErrorResp(c, err, 400)
 		return
 	}
-	if err := req.Validate(); err != nil {
-		common.ErrorResp(c, err, 400)
-		return
-	}
-	nodes, total, err := search.Search(c, req.SearchReq)
+
+	req.Validate()
+
+	ctx, cancel := context.WithTimeout(c, 30*time.Second)
+	defer cancel()
+
+	allResults, err := op.SearchFiles(ctx, parent, req.Keywords, req.Scope)
 	if err != nil {
 		common.ErrorResp(c, err, 500)
 		return
 	}
-	var filteredNodes []model.SearchNode
-	for _, node := range nodes {
+
+	// Filter by user's base path
+	var filtered []model.SearchNode
+	for _, node := range allResults {
+		// Respect hide settings
 		if !strings.HasPrefix(node.Parent, user.BasePath) {
 			continue
 		}
-		meta, err := op.GetNearestMeta(node.Parent)
-		if err != nil && !errors.Is(errors.Cause(err), errs.MetaNotFound) {
-			continue
+		meta, err := op.GetNearestMeta(stdpath.Join(node.Parent, node.Name))
+		if err == nil && meta != nil {
+			if !common.CanAccess(user, meta, stdpath.Join(node.Parent, node.Name), req.Password) {
+				continue
+			}
 		}
-		if !common.CanAccess(user, meta, path.Join(node.Parent, node.Name), req.Password) {
-			continue
-		}
-		filteredNodes = append(filteredNodes, node)
+		filtered = append(filtered, node)
 	}
-	common.SuccessResp(c, common.PageResp{
-		Content: utils.MustSliceConvert(filteredNodes, nodeToSearchResp),
-		Total:   total,
-	})
-}
 
-func nodeToSearchResp(node model.SearchNode) SearchResp {
-	return SearchResp{
-		SearchNode: node,
-		Type:       utils.GetObjType(node.Name, node.IsDir),
+	// Pagination
+	total := len(filtered)
+	start := (req.Page - 1) * req.PerPage
+	end := start + req.PerPage
+	if start > total {
+		start = total
 	}
+	if end > total {
+		end = total
+	}
+
+	common.SuccessResp(c, common.PageResp{
+		Content: filtered[start:end],
+		Total:   int64(total),
+	})
 }

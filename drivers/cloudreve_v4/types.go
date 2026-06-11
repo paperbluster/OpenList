@@ -57,7 +57,6 @@ type SiteLoginConfigResp struct {
 }
 
 type PrepareLoginResp struct {
-	WebauthnEnabled bool `json:"webauthn_enabled"`
 	PasswordEnabled bool `json:"password_enabled"`
 }
 

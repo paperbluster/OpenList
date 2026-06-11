@@ -1,5 +1,6 @@
 # ============ Stage 1: Build frontend ============
 FROM node:22-alpine AS frontend-builder
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN apk add --no-cache git
 WORKDIR /frontend/
 

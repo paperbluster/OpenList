@@ -1,7 +1,6 @@
-import { Anchor, Box, List, ListItem, useColorModeValue } from "@hope-ui/solid"
+import { Anchor, Box, List, ListItem } from "@hope-ui/solid"
 import { createStorageSignal } from "@solid-primitives/storage"
 import { clsx } from "clsx"
-import once from "just-once"
 import rehypeRaw from "rehype-raw"
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize"
 import rehypeStringify from "rehype-stringify"
@@ -11,19 +10,16 @@ import remarkRehype from "remark-rehype"
 import { For, Show, createEffect, createMemo, createSignal, on } from "solid-js"
 import { Motion } from "solid-motionone"
 import { unified } from "unified"
-import { useCDN, useParseText, useRouter } from "~/hooks"
+import { useParseText, useRouter } from "~/hooks"
 import { useScrollListener } from "~/pages/home/toolbar/BackTop.jsx"
 import { getMainColor, getSettingBool, me } from "~/store"
-import { api, notify, pathDir, pathJoin, pathResolve } from "~/utils"
+import { api, pathDir, pathJoin, pathResolve } from "~/utils"
 import { isMobile } from "~/utils/compatibility.js"
 import hljs from "highlight.js"
 import { EncodingSelect } from "."
 import "./markdown.css"
 
 type TocItem = { indent: number; text: string; tagName: string; key: string }
-
-const MERMAID_PATTERN = /```mermaid[\s\S]*?```/i
-const MATH_PATTERN = /\$\$[\s\S]+?\$\$|\$[^$\n]+?\$/
 
 const [isTocVisible, setVisible] = createSignal(false)
 const [isTocDisabled, setTocDisabled] = createStorageSignal(
@@ -146,49 +142,14 @@ function MarkdownToc(props: {
   )
 }
 
-const { katexCSSPath, mermaidJSPath } = useCDN()
-
-const insertKatexCSS = once(() => {
-  const link = document.createElement("link")
-  link.rel = "stylesheet"
-  link.href = katexCSSPath()
-  document.head.appendChild(link)
-})
-
-const loadMermaidJS = once(
-  () =>
-    new Promise<void>((resolve, reject) => {
-      if (window.mermaid) return resolve()
-      const script = document.createElement("script")
-      script.src = mermaidJSPath()
-      script.onload = () => resolve()
-      script.onerror = () => reject(new Error("Failed to load mermaid"))
-      document.body.appendChild(script)
-    }),
-)
 
 async function renderMarkdown(
   content: string,
   sanitize: boolean,
-): Promise<{ html: string; hasMermaid: boolean }> {
+): Promise<{ html: string }> {
   let processor = unified()
 
   processor.use(remarkParse).use(remarkGfm)
-
-  const hasMermaid = MERMAID_PATTERN.test(content)
-  const hasMath = MATH_PATTERN.test(content)
-  if (hasMath) {
-    const { default: remarkMath } = await import("remark-math")
-    processor.use(remarkMath)
-    insertKatexCSS()
-  }
-  if (hasMermaid) {
-    await loadMermaidJS().catch(() =>
-      notify.error(
-        "Failed to load mermaid.js, mermaid diagrams will not be rendered",
-      ),
-    )
-  }
 
   processor.use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw)
 
@@ -197,22 +158,14 @@ async function renderMarkdown(
       ...defaultSchema,
       attributes: {
         ...defaultSchema.attributes,
-        code: [
-          ["className", /^language-[\w-]+$/, "math-inline", "math-display"],
-        ],
       },
     })
-
-  if (hasMath) {
-    const { default: rehypeKatex } = await import("rehype-katex")
-    processor.use(rehypeKatex)
-  }
 
   processor.use(rehypeStringify)
 
   const result = await processor.process(content)
 
-  return { html: String(result), hasMermaid }
+  return { html: String(result) }
 }
 
 export function Markdown(props: {
@@ -226,7 +179,6 @@ export function Markdown(props: {
   const [encoding, setEncoding] = createSignal<string>("utf-8")
   const [show, setShow] = createSignal(true)
   const [markdownHTML, setMarkdownHTML] = createSignal<string>("")
-  const mermaidTheme = useColorModeValue("default", "dark")
   const { isString, text } = useParseText(props.children)
   const { pathname } = useRouter()
 
@@ -262,10 +214,10 @@ export function Markdown(props: {
   })
 
   createEffect(
-    on([md, mermaidTheme], async () => {
+    on([md], async () => {
       setShow(false)
 
-      const { html, hasMermaid } = await renderMarkdown(
+      const { html } = await renderMarkdown(
         md(),
         props.sanitize || getSettingBool("filter_readme_scripts"),
       )
@@ -274,14 +226,6 @@ export function Markdown(props: {
       setTimeout(() => {
         setShow(true)
         hljs.highlightAll()
-        if (hasMermaid && window.mermaid) {
-          window.mermaid.initialize({
-            startOnLoad: false,
-            theme: mermaidTheme(),
-          })
-          window.mermaid.run({ querySelector: ".language-mermaid" })
-        }
-
         window.onMDRender?.()
       })
     }),

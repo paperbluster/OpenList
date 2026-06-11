@@ -103,11 +103,6 @@ func (d *SftpDriver) PasswordAuth(conn ssh.ConnMetadata, password []byte) (*ssh.
 	userObj, err := op.GetUserByName(conn.User())
 	if err == nil {
 		err = userObj.ValidateRawPassword(pass)
-		if err != nil && setting.GetBool(conf.LdapLoginEnabled) && userObj.AllowLdap {
-			err = common.HandleLdapLogin(conn.User(), pass)
-		}
-	} else if setting.GetBool(conf.LdapLoginEnabled) && model.CanFTPAccess(int32(setting.GetInt(conf.LdapDefaultPermission, 0))) {
-		userObj, err = tryLdapLoginAndRegister(conn.User(), pass)
 	}
 	if err != nil {
 		model.LoginCache.Set(ip, count+1)
@@ -129,23 +124,8 @@ func (d *SftpDriver) PublicKeyAuth(conn ssh.ConnMetadata, key ssh.PublicKey) (*s
 	if userObj.Disabled || !userObj.CanFTPAccess() {
 		return nil, errors.New("user is not allowed to access via SFTP")
 	}
-	keys, _, err := op.GetSSHPublicKeyByUserId(userObj.ID, 1, -1)
-	if err != nil {
-		return nil, err
-	}
-	marshal := string(key.Marshal())
-	for _, sk := range keys {
-		if marshal != sk.KeyStr {
-			pubKey, _, _, _, e := ssh.ParseAuthorizedKey([]byte(sk.KeyStr))
-			if e != nil || marshal != string(pubKey.Marshal()) {
-				continue
-			}
-		}
-		sk.LastUsedTime = time.Now()
-		_ = op.UpdateSSHPublicKey(&sk)
-		return nil, nil
-	}
-	return nil, errors.New("public key refused")
+t	// Public key authentication removed — use password-only SFTP
+		return nil, errors.New("public key auth not supported")
 }
 
 func (d *SftpDriver) AuthLogCallback(conn ssh.ConnMetadata, method string, err error) {

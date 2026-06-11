@@ -51,7 +51,6 @@ const (
 	FilenameCharMapping     = "filename_char_mapping"
 	ForwardDirectLinkParams = "forward_direct_link_params"
 	IgnoreDirectLinkParams  = "ignore_direct_link_params"
-	WebauthnLoginEnabled    = "webauthn_login_enabled"
 	SharePreview            = "share_preview"
 	ShareArchivePreview     = "share_archive_preview"
 	ShareForceProxy         = "share_force_proxy"
@@ -60,36 +59,9 @@ const (
 	HandleHookRateLimit     = "handle_hook_rate_limit"
 	IgnoreSystemFiles       = "ignore_system_files"
 
-	// index
-	SearchIndex     = "search_index"
-	AutoUpdateIndex = "auto_update_index"
-	IgnorePaths     = "ignore_paths"
-	MaxIndexDepth   = "max_index_depth"
-
-
-
-
-
-
-
-
-
-
 	// single
 	Token         = "token"
 	IndexProgress = "index_progress"
-
-	// ldap
-	LdapLoginEnabled      = "ldap_login_enabled"
-	LdapServer            = "ldap_server"
-	LdapSkipTlsVerify     = "ldap_skip_tls_verify"
-	LdapManagerDN         = "ldap_manager_dn"
-	LdapManagerPassword   = "ldap_manager_password"
-	LdapUserSearchBase    = "ldap_user_search_base"
-	LdapUserSearchFilter  = "ldap_user_search_filter"
-	LdapDefaultPermission = "ldap_default_permission"
-	LdapDefaultDir        = "ldap_default_dir"
-	LdapLoginTips         = "ldap_login_tips"
 
 	// s3
 

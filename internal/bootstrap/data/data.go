@@ -8,6 +8,5 @@ func InitData() {
 	initTasks()
 	if flags.Dev {
 		initDevData()
-		initDevDo()
 	}
 }

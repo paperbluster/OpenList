@@ -130,11 +130,6 @@ func (d *FtpMainDriver) AuthUser(cc ftpserver.ClientContext, user, pass string) 
 		userObj, err = op.GetUserByName(user)
 		if err == nil {
 			err = userObj.ValidateRawPassword(pass)
-			if err != nil && setting.GetBool(conf.LdapLoginEnabled) && userObj.AllowLdap {
-				err = common.HandleLdapLogin(user, pass)
-			}
-		} else if setting.GetBool(conf.LdapLoginEnabled) && model.CanFTPAccess(int32(setting.GetInt(conf.LdapDefaultPermission, 0))) {
-			userObj, err = tryLdapLoginAndRegister(user, pass)
 		}
 		if err != nil {
 			model.LoginCache.Set(ip, count+1)

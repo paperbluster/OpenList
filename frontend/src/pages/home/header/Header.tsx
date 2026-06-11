@@ -55,7 +55,6 @@ export const Header = () => {
           </HStack>
           <HStack class="header-right" spacing="$2">
             <Show when={objStore.state === State.Folder}>
-              <Show when={getSetting("search_index") !== "none"}>
                 <HStack
                   bg="$neutral4"
                   w="$32"
@@ -79,7 +78,7 @@ export const Header = () => {
                     <Kbd>K</Kbd>
                   </HStack>
                 </HStack>
-              </Show>
+
               <Layout />
             </Show>
           </HStack>

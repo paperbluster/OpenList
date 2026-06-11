@@ -10,19 +10,16 @@ import {
   BsFingerprint,
   BsFront,
   BsCloudUploadFill,
-  BsSearch,
   BsBucket,
   BsHddNetwork,
   BsArrowLeftRight,
 } from "solid-icons/bs"
-import { FiLogIn } from "solid-icons/fi"
-import { SiMetabase } from "solid-icons/si"
 import { CgDatabase, CgShare } from "solid-icons/cg"
 import { OcWorkflow2 } from "solid-icons/oc"
 import { IoCopy, IoMove, IoHome, IoMagnetOutline } from "solid-icons/io"
 import { Component, lazy } from "solid-js"
 import { Group, UserRole } from "~/types"
-import { FaSolidBook, FaSolidDatabase } from "solid-icons/fa"
+import { FaSolidBook } from "solid-icons/fa"
 import { TbArchive } from "solid-icons/tb"
 
 export type SideMenuItem = SideMenuItemProps & {
@@ -70,18 +67,6 @@ export const side_menu_items: SideMenuItem[] = [
         component: () => <CommonSettings group={Group.GLOBAL} />,
       },
       {
-        title: "manage.sidemenu.sso",
-        icon: FiLogIn,
-        to: "/@manage/settings/sso",
-        component: () => <CommonSettings group={Group.SSO} />,
-      },
-      {
-        title: "manage.sidemenu.ldap",
-        icon: FiLogIn,
-        to: "/@manage/settings/ldap",
-        component: () => <CommonSettings group={Group.LDAP} />,
-      },
-      {
         title: "manage.sidemenu.s3",
         icon: BsBucket,
         to: "/@manage/settings/s3",
@@ -120,18 +105,6 @@ export const side_menu_items: SideMenuItem[] = [
         role: UserRole.GENERAL,
         component: lazy(() => import("./tasks/offline_download")),
       },
-      // {
-      //   title: "manage.sidemenu.aria2",
-      //   icon: BsCloudArrowDownFill,
-      //   to: "/@manage/tasks/aria2",
-      //   component: lazy(() => import("./tasks/Aria2")),
-      // },
-      // {
-      //   title: "manage.sidemenu.qbit",
-      //   icon: FaBrandsQuinscape,
-      //   to: "/@manage/tasks/qbit",
-      //   component: lazy(() => import("./tasks/Qbit")),
-      // },
       {
         title: "manage.sidemenu.upload",
         icon: BsCloudUploadFill,
@@ -180,24 +153,6 @@ export const side_menu_items: SideMenuItem[] = [
     to: "/@manage/shares",
     role: UserRole.GENERAL,
     component: lazy(() => import("./shares/Shares")),
-  },
-  {
-    title: "manage.sidemenu.metas",
-    icon: SiMetabase,
-    to: "/@manage/metas",
-    component: lazy(() => import("./metas/Metas")),
-  },
-  {
-    title: "manage.sidemenu.indexes",
-    icon: BsSearch,
-    to: "/@manage/indexes",
-    component: lazy(() => import("./indexes/index_page")),
-  },
-  {
-    title: "manage.sidemenu.backup-restore",
-    to: "/@manage/backup-restore",
-    icon: FaSolidDatabase,
-    component: lazy(() => import("./backup-restore")),
   },
   {
     title: "manage.sidemenu.about",

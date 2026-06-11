@@ -147,9 +147,6 @@ func (d *CloudreveV4) login() error {
 	if !prepareLogin.PasswordEnabled {
 		return errors.New("password not enabled")
 	}
-	if prepareLogin.WebauthnEnabled {
-		return errors.New("webauthn not support")
-	}
 	for range 5 {
 		err = d.doLogin(siteConfig.LoginCaptcha)
 		if err == nil {
