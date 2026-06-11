@@ -30,8 +30,13 @@ ENV GOPROXY=https://goproxy.cn,direct \
 COPY go.mod go.sum ./
 RUN go mod download
 
-# 再复制源码（.dockerignore 已排除 frontend/，不会把前端源码拉进来）
-COPY ./ ./
+# 只复制 Go 源码目录，不碰 frontend/
+COPY main.go ./
+COPY cmd/ ./cmd/
+COPY drivers/ ./drivers/
+COPY internal/ ./internal/
+COPY pkg/ ./pkg/
+COPY server/ ./server/
 RUN go mod tidy
 
 # 将前端构建产物嵌入
