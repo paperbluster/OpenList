@@ -26,18 +26,16 @@ ENV GOPROXY=https://goproxy.cn,direct \
 # 无需 CGO（已删除 FUSE 挂载功能），编译内存大幅降低
 # CGO_ENABLED=0 直接跳过 C 编译器，Go 纯静态编译
 
-# 先只复制 go.mod/go.sum，利用 Docker 缓存层
-COPY go.mod go.sum ./
-RUN go mod download
-
-# 只复制 Go 源码目录，不碰 frontend/
+# 先复制 go.mod，再复制 Go 源码目录（不碰 frontend/）
+COPY go.mod ./
 COPY main.go ./
 COPY cmd/ ./cmd/
 COPY drivers/ ./drivers/
 COPY internal/ ./internal/
 COPY pkg/ ./pkg/
 COPY server/ ./server/
-RUN go mod tidy
+# tidy 会生成 go.sum，然后 download 下载依赖
+RUN go mod tidy && go mod download
 
 # 将前端构建产物嵌入
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
