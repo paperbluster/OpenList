@@ -3,6 +3,7 @@ package op
 import (
 	"context"
 
+	"github.com/OpenListTeam/OpenList/v4/internal/driver"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
 )
 
@@ -38,4 +39,15 @@ func HandleSettingItemHook(item *model.SettingItem) (bool, error) {
 		}
 	}
 	return false, nil
+}
+
+// StorageHook is called when a storage is added, deleted, or updated.
+type StorageHook func(action string, storage driver.Driver)
+
+var storageHooks []StorageHook
+
+func callStorageHooks(action string, storage driver.Driver) {
+	for _, hook := range storageHooks {
+		hook(action, storage)
+	}
 }
