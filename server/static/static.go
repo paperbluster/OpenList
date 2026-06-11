@@ -91,8 +91,6 @@ func initIndex(siteConfig SiteConfig) {
 		conf.RawIndexHtml = string(index)
 		utils.Log.Debug("Successfully read index.html from static files system")
 	}
-	// Normalize legacy CDN URLs in frontend HTML to local paths
-	normalizeFrontendURLs()
 	utils.Log.Debug("Replacing placeholders in index.html...")
 	// Construct the correct manifest path based on basePath
 	manifestPath := "/manifest.json"

@@ -2,9 +2,14 @@ package op
 
 import (
 	"context"
+	stdpath "path"
+	"strings"
 
+	"github.com/OpenListTeam/OpenList/v4/internal/db"
 	"github.com/OpenListTeam/OpenList/v4/internal/driver"
+	"github.com/OpenListTeam/OpenList/v4/internal/errs"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
+	"github.com/pkg/errors"
 )
 
 // objWithLink is a cache entry that pairs a file link with its object info.
@@ -49,5 +54,24 @@ var storageHooks []StorageHook
 func callStorageHooks(action string, storage driver.Driver) {
 	for _, hook := range storageHooks {
 		hook(action, storage)
+	}
+}
+
+// GetNearestMeta walks up the path hierarchy and returns the nearest meta
+// (password-protected folder) that covers the given path.
+func GetNearestMeta(path string) (*model.Meta, error) {
+	path = strings.TrimRight(path, "/")
+	for {
+		meta, err := db.GetMetaByPath(path)
+		if err == nil {
+			return meta, nil
+		}
+		if path == "" || path == "/" {
+			return nil, errors.WithStack(errs.MetaNotFound)
+		}
+		path = stdpath.Dir(path)
+		if path == "." {
+			path = "/"
+		}
 	}
 }
