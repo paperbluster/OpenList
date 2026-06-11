@@ -42,30 +42,21 @@ mkdir -p data
 
 ## Docker 部署
 
-一条命令搞定前端+后端编译打包：
+### 编译镜像
+
+```bash
+docker build --network host -t openlist .
+```
+
+> **必须使用 `--network host`**，容器内访问外网依赖宿主机网络。
+
+### 启动
 
 ```bash
 docker compose up -d
 ```
 
-Dockerfile 已配置国内镜像加速（npmmirror + goproxy.cn），避免容器内网络超时。
 
-### host 模式（推荐，支持挂载宿主机本地目录）
-
-```bash
-docker compose up -d
-```
-
-### bridge 模式
-
-修改 `docker-compose.yml`，把 `network_mode: host` 替换为：
-
-```yaml
-ports:
-  - '5244:5244'
-```
-
-> bridge 模式下挂载宿主机本地文件需额外 `-v /host/path:/container/path`。
 
 ## 访问
 
