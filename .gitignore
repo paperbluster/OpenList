@@ -22,6 +22,8 @@ output/
 # vendor/
 /bin/*
 *.json
+!frontend/package.json
+!frontend/pnpm-lock.yaml
 /build
 /data/
 /tmp/

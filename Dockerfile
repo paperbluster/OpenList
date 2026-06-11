@@ -4,7 +4,7 @@ ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN apk add --no-cache git
 WORKDIR /frontend/
 
-RUN npm config set registry https://registry.npmmirror.com
+# 安装 pnpm 并安装依赖（若国内网络慢可使用 --network host）
 
 COPY frontend/ ./
 
