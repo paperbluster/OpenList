@@ -25,10 +25,16 @@ ENV GOPROXY=https://goproxy.cn,direct \
 
 # 无需 CGO（已删除 FUSE 挂载功能），编译内存大幅降低
 # CGO_ENABLED=0 直接跳过 C 编译器，Go 纯静态编译
-COPY ./ ./
 
-# 清理残留依赖，然后下载
-RUN go mod tidy && go mod download
+# 先只复制 go.mod/go.sum，利用 Docker 缓存层
+COPY go.mod go.sum ./
+RUN go mod download
+
+# 再复制源码（.dockerignore 已排除 frontend/，不会把前端源码拉进来）
+COPY ./ ./
+RUN go mod tidy
+
+# 将前端构建产物嵌入
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 
