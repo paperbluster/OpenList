@@ -1,6 +1,7 @@
 # ============ Stage 1: Build frontend ============
 FROM node:22-alpine AS frontend-builder
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+# 限制 Node.js 堆内存为 2GB（原 4GB 过高，容易 OOM）
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN apk add --no-cache git
 WORKDIR /frontend/
 
@@ -22,13 +23,19 @@ ENV GOPROXY=https://goproxy.cn,direct \
     GOSUMDB=off \
     GONOSUMCHECK=*
 
+# GOMEMLIMIT 限制 Go 编译期内存上限（软限制，触发更激进的 GC）
+# GOMAXPROCS=2 限制并行编译的 CPU 数，降低并发内存峰值
+ENV GOMEMLIMIT=1536MiB \
+    GOMAXPROCS=2
+
 RUN apk add --no-cache gcc musl-dev
 COPY ./ ./
 
 # 清理已删除驱动的残留依赖，然后下载
 RUN go mod tidy && go mod download
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-RUN CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
+# -p 2 限制并行编译包数，进一步控制内存峰值
+RUN CGO_ENABLED=1 go build -p 2 -ldflags="-w -s" -tags=jsoniter -o openlist .
 
 # ============ Stage 3: Runtime ============
 FROM alpine:edge

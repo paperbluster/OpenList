@@ -25,23 +25,7 @@ func Get(ctx context.Context, sid, path string, args model.SharingListArgs) (*mo
 	return sharing, res, nil
 }
 
-func ArchiveMeta(ctx context.Context, sid, path string, args model.SharingArchiveMetaArgs) (*model.Sharing, *model.ArchiveMetaProvider, error) {
-	sharing, res, err := archiveMeta(ctx, sid, path, args)
-	if err != nil {
-		log.Warnf("failed get sharing archive meta %s/%s: %s", sid, path, err)
-		return nil, nil, err
-	}
-	return sharing, res, nil
-}
 
-func ArchiveList(ctx context.Context, sid, path string, args model.SharingArchiveListArgs) (*model.Sharing, []model.Obj, error) {
-	sharing, res, err := archiveList(ctx, sid, path, args)
-	if err != nil {
-		log.Warnf("failed list sharing archive %s/%s: %s", sid, path, err)
-		return nil, nil, err
-	}
-	return sharing, res, nil
-}
 
 type LinkArgs struct {
 	model.SharingListArgs

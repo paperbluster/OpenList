@@ -9,9 +9,6 @@ import (
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/virtual"
 
 	// 标准协议
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/ftp"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/sftp"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/smb"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/webdav"
 
 	// 开放平台

@@ -11,9 +11,6 @@ import (
 	"github.com/OpenListTeam/OpenList/v4/internal/bootstrap"
 	"github.com/OpenListTeam/OpenList/v4/internal/db"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
-	"github.com/charmbracelet/bubbles/table"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -82,44 +79,6 @@ var deleteStorageCmd = &cobra.Command{
 	},
 }
 
-var baseStyle = lipgloss.NewStyle().
-	BorderStyle(lipgloss.NormalBorder()).
-	BorderForeground(lipgloss.Color("240"))
-
-type model struct {
-	table table.Model
-}
-
-func (m model) Init() tea.Cmd { return nil }
-
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	var cmd tea.Cmd
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "esc":
-			if m.table.Focused() {
-				m.table.Blur()
-			} else {
-				m.table.Focus()
-			}
-		case "q", "ctrl+c":
-			return m, tea.Quit
-			//case "enter":
-			//	return m, tea.Batch(
-			//		tea.Printf("Let's go to %s!", m.table.SelectedRow()[1]),
-			//	)
-		}
-	}
-	m.table, cmd = m.table.Update(msg)
-	return m, cmd
-}
-
-func (m model) View() string {
-	return baseStyle.Render(m.table.View()) + "\n"
-}
-
-var storageTableHeight int
 var listStorageCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all storages",
@@ -129,53 +88,16 @@ var listStorageCmd = &cobra.Command{
 		storages, _, err := db.GetStorages(1, -1)
 		if err != nil {
 			return fmt.Errorf("failed to query storages: %+v", err)
-		} else {
-			fmt.Printf("Found %d storages\n", len(storages))
-			columns := []table.Column{
-				{Title: "ID", Width: 4},
-				{Title: "Driver", Width: 16},
-				{Title: "Mount Path", Width: 30},
-				{Title: "Enabled", Width: 7},
+		}
+		fmt.Printf("Found %d storages\n", len(storages))
+		fmt.Printf("%-4s %-16s %-30s %-7s\n", "ID", "Driver", "Mount Path", "Enabled")
+		for i := range storages {
+			s := storages[i]
+			enabled := "true"
+			if s.Disabled {
+				enabled = "false"
 			}
-
-			var rows []table.Row
-			for i := range storages {
-				storage := storages[i]
-				enabled := "true"
-				if storage.Disabled {
-					enabled = "false"
-				}
-				rows = append(rows, table.Row{
-					strconv.Itoa(int(storage.ID)),
-					storage.Driver,
-					storage.MountPath,
-					enabled,
-				})
-			}
-			t := table.New(
-				table.WithColumns(columns),
-				table.WithRows(rows),
-				table.WithFocused(true),
-				table.WithHeight(storageTableHeight),
-			)
-
-			s := table.DefaultStyles()
-			s.Header = s.Header.
-				BorderStyle(lipgloss.NormalBorder()).
-				BorderForeground(lipgloss.Color("240")).
-				BorderBottom(true).
-				Bold(false)
-			s.Selected = s.Selected.
-				Foreground(lipgloss.Color("229")).
-				Background(lipgloss.Color("57")).
-				Bold(false)
-			t.SetStyles(s)
-
-			m := model{t}
-			if _, err := tea.NewProgram(m).Run(); err != nil {
-				fmt.Printf("failed to run program: %+v\n", err)
-				os.Exit(1)
-			}
+			fmt.Printf("%-4d %-16s %-30s %-7s\n", s.ID, s.Driver, s.MountPath, enabled)
 		}
 		return nil
 	},
@@ -186,16 +108,6 @@ func init() {
 	RootCmd.AddCommand(storageCmd)
 	storageCmd.AddCommand(disableStorageCmd)
 	storageCmd.AddCommand(listStorageCmd)
-	storageCmd.PersistentFlags().IntVarP(&storageTableHeight, "height", "H", 10, "Table height")
 	storageCmd.AddCommand(deleteStorageCmd)
 	deleteStorageCmd.Flags().BoolP("force", "f", false, "Force delete without confirmation")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// storageCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// storageCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

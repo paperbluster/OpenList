@@ -46,22 +46,11 @@ func Init(e *gin.Engine) {
 	g.GET("/p/*path", middlewares.PathParse, signCheck, downloadLimiter, handles.Proxy)
 	g.HEAD("/d/*path", middlewares.PathParse, signCheck, handles.Down)
 	g.HEAD("/p/*path", middlewares.PathParse, signCheck, handles.Proxy)
-	archiveSignCheck := middlewares.Down(sign.VerifyArchive)
-	g.GET("/ad/*path", middlewares.PathParse, archiveSignCheck, downloadLimiter, handles.ArchiveDown)
-	g.GET("/ap/*path", middlewares.PathParse, archiveSignCheck, downloadLimiter, handles.ArchiveProxy)
-	g.GET("/ae/*path", middlewares.PathParse, archiveSignCheck, downloadLimiter, handles.ArchiveInternalExtract)
-	g.HEAD("/ad/*path", middlewares.PathParse, archiveSignCheck, handles.ArchiveDown)
-	g.HEAD("/ap/*path", middlewares.PathParse, archiveSignCheck, handles.ArchiveProxy)
-	g.HEAD("/ae/*path", middlewares.PathParse, archiveSignCheck, handles.ArchiveInternalExtract)
 
 	g.GET("/sd/:sid", middlewares.EmptyPathParse, middlewares.SharingIdParse, downloadLimiter, handles.SharingDown)
 	g.GET("/sd/:sid/*path", middlewares.PathParse, middlewares.SharingIdParse, downloadLimiter, handles.SharingDown)
 	g.HEAD("/sd/:sid", middlewares.EmptyPathParse, middlewares.SharingIdParse, handles.SharingDown)
 	g.HEAD("/sd/:sid/*path", middlewares.PathParse, middlewares.SharingIdParse, handles.SharingDown)
-	g.GET("/sad/:sid", middlewares.EmptyPathParse, middlewares.SharingIdParse, downloadLimiter, handles.SharingArchiveExtract)
-	g.GET("/sad/:sid/*path", middlewares.PathParse, middlewares.SharingIdParse, downloadLimiter, handles.SharingArchiveExtract)
-	g.HEAD("/sad/:sid", middlewares.EmptyPathParse, middlewares.SharingIdParse, handles.SharingArchiveExtract)
-	g.HEAD("/sad/:sid/*path", middlewares.PathParse, middlewares.SharingIdParse, handles.SharingArchiveExtract)
 
 	api := g.Group("/api")
 	auth := api.Group("", middlewares.Auth(false))
@@ -77,8 +66,6 @@ func Init(e *gin.Engine) {
 	// no need auth
 	public := api.Group("/public")
 	public.Any("/settings", handles.PublicSettings)
-	public.Any("/offline_download_tools", handles.OfflineDownloadTools)
-	public.Any("/archive_extensions", handles.ArchiveExtensions)
 
 	_fs(auth.Group("/fs"))
 	fsAndShare(api.Group("/fs", middlewares.Auth(true)))
@@ -133,9 +120,6 @@ func admin(g *gin.RouterGroup) {
 func fsAndShare(g *gin.RouterGroup) {
 	g.Any("/list", handles.FsListSplit)
 	g.Any("/get", handles.FsGetSplit)
-	a := g.Group("/archive")
-	a.Any("/meta", handles.FsArchiveMetaSplit)
-	a.Any("/list", handles.FsArchiveListSplit)
 }
 
 func _fs(g *gin.RouterGroup) {
@@ -158,8 +142,6 @@ tg.Any("/search", handles.Search)
 	// g.POST("/add_aria2", handles.AddOfflineDownload)
 	// g.POST("/add_qbit", handles.AddQbittorrent)
 	// g.POST("/add_transmission", handles.SetTransmission)
-	g.POST("/add_offline_download", handles.AddOfflineDownload)
-	g.POST("/archive/decompress", handles.FsArchiveDecompress)
 	// Torrent 相关接口
 	g.POST("/torrent/parse", handles.ParseTorrent)
 	g.POST("/torrent/upload_parse", handles.UploadTorrentAndParse)

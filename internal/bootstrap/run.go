@@ -18,8 +18,6 @@ import (
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
 	"github.com/OpenListTeam/OpenList/v4/server"
 	"github.com/OpenListTeam/OpenList/v4/server/middlewares"
-	"github.com/OpenListTeam/sftpd-openlist"
-	ftpserver "github.com/fclairamb/ftpserverlib"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -55,12 +53,6 @@ var (
 	quicRunning  bool
 	s3Srv        *http.Server
 	s3Running    bool
-	ftpDriver    *server.FtpMainDriver
-	ftpServer    *ftpserver.FtpServer
-	ftpRunning   bool
-	sftpDriver   *server.SftpDriver
-	sftpServer   *sftpd.SftpServer
-	sftpRunning  bool
 )
 
 // Called by OpenList-Mobile
@@ -74,10 +66,6 @@ func IsRunning(t string) bool {
 		return unixRunning
 	case "quic":
 		return quicRunning
-	case "sftp":
-		return sftpRunning
-	case "ftp":
-		return ftpRunning
 	}
 	return running
 }
@@ -87,7 +75,6 @@ func Start() {
 		utils.Log.Infof("delayed start for %d seconds", conf.Conf.DelayedStart)
 		time.Sleep(time.Duration(conf.Conf.DelayedStart) * time.Second)
 	}
-	InitOfflineDownloadTools()
 	LoadStorages()
 	InitTaskManager()
 	if !flags.Debug && !flags.Dev {
@@ -222,56 +209,11 @@ func Start() {
 			}
 		}()
 	}
-	if conf.Conf.FTP.Listen != "" && conf.Conf.FTP.Enable {
-		var err error
-		ftpDriver, err = server.NewMainDriver()
-		if err != nil {
-			utils.Log.Errorf("failed to start ftp driver: %s", err.Error())
-		} else {
-			fmt.Printf("start ftp server on %s\n", conf.Conf.FTP.Listen)
-			utils.Log.Infof("start ftp server on %s", conf.Conf.FTP.Listen)
-			go func() {
-				ftpServer = ftpserver.NewFtpServer(ftpDriver)
-				ftpRunning = true
-				err = ftpServer.ListenAndServe()
-				ftpRunning = false
-				if err != nil {
-					handleEndpointStartFailedHooks("ftp", err)
-					utils.Log.Errorf("problem ftp server listening: %s", err.Error())
-				} else {
-					handleEndpointShutdownHooks("ftp")
-				}
-			}()
-		}
-	}
-	if conf.Conf.SFTP.Listen != "" && conf.Conf.SFTP.Enable {
-		var err error
-		sftpDriver, err = server.NewSftpDriver()
-		if err != nil {
-			utils.Log.Errorf("failed to start sftp driver: %s", err.Error())
-		} else {
-			fmt.Printf("start sftp server on %s", conf.Conf.SFTP.Listen)
-			utils.Log.Infof("start sftp server on %s", conf.Conf.SFTP.Listen)
-			go func() {
-				sftpServer = sftpd.NewSftpServer(sftpDriver)
-				sftpRunning = true
-				err = sftpServer.RunServer()
-				sftpRunning = false
-				if err != nil {
-					handleEndpointStartFailedHooks("sftp", err)
-					utils.Log.Errorf("problem sftp server listening: %s", err.Error())
-				} else {
-					handleEndpointShutdownHooks("sftp")
-				}
-			}()
-		}
-	}
 	running = true
 }
 
 func Shutdown(timeout time.Duration) {
 	utils.Log.Println("Shutdown server...")
-	fs.ArchiveContentUploadTaskManager.RemoveAll()
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	var wg sync.WaitGroup
@@ -323,31 +265,6 @@ func Shutdown(timeout time.Duration) {
 				utils.Log.Error("S3 server shutdown err: ", err)
 			}
 			s3Srv = nil
-		}()
-	}
-	if conf.Conf.FTP.Listen != "" && conf.Conf.FTP.Enable && ftpServer != nil {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			if ftpDriver != nil {
-				ftpDriver.Stop()
-				ftpDriver = nil
-			}
-			if err := ftpServer.Stop(); err != nil {
-				utils.Log.Error("FTP server shutdown err: ", err)
-			}
-			ftpServer = nil
-		}()
-	}
-	if conf.Conf.SFTP.Listen != "" && conf.Conf.SFTP.Enable && sftpServer != nil {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			if err := sftpServer.Close(); err != nil {
-				utils.Log.Error("SFTP server shutdown err: ", err)
-			}
-			sftpServer = nil
-			sftpDriver = nil
 		}()
 	}
 	wg.Wait()

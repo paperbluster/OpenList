@@ -2,14 +2,12 @@ package data
 
 import (
 	"fmt"
-	"sort"
 	"strconv"
 
 	"github.com/OpenListTeam/OpenList/v4/cmd/flags"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/db"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
-	"github.com/OpenListTeam/OpenList/v4/internal/offline_download/tool"
 	"github.com/OpenListTeam/OpenList/v4/internal/op"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils/random"
@@ -211,12 +209,6 @@ func InitialSettings() []model.SettingItem {
 		{Key: conf.StreamMaxServerDownloadSpeed, Value: "-1", Type: conf.TypeNumber, Group: model.TRAFFIC, Flag: model.PRIVATE},
 		{Key: conf.StreamMaxServerUploadSpeed, Value: "-1", Type: conf.TypeNumber, Group: model.TRAFFIC, Flag: model.PRIVATE},
 	}
-	additionalSettingItems := tool.Tools.Items()
-	// 固定顺序
-	sort.Slice(additionalSettingItems, func(i, j int) bool {
-		return additionalSettingItems[i].Key < additionalSettingItems[j].Key
-	})
-	initialSettingItems = append(initialSettingItems, additionalSettingItems...)
 	if flags.Dev {
 		initialSettingItems = append(initialSettingItems, []model.SettingItem{
 			{Key: "test_deprecated", Value: "test_value", Type: conf.TypeString, Flag: model.DEPRECATED},
