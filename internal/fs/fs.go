@@ -2,7 +2,6 @@ package fs
 
 import (
 	"context"
-	"io"
 
 	log "github.com/sirupsen/logrus"
 
