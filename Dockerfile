@@ -51,7 +51,8 @@ FROM alpine:edge
 RUN apk add --no-cache ca-certificates tzdata
 WORKDIR /opt/openlist/
 COPY --from=backend-builder /app/openlist ./
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
 
 ENV UMASK=022 TZ=Asia/Shanghai
 VOLUME /opt/openlist/data/
