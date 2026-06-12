@@ -52,9 +52,46 @@ docker build --network host -t openlist .
 
 ### 启动
 
+**方式一：docker compose（推荐）**
+
 ```bash
 docker compose up -d
 ```
+
+**方式二：docker run（host 网络模式）**
+
+```bash
+docker run -d \
+  --name openlist \
+  --network host \
+  --restart always \
+  -v /mnt/alist:/opt/openlist/data \
+  -e TZ=Asia/Shanghai \
+  openlist
+```
+
+**方式三：docker run（桥接模式 + 端口映射）**
+
+```bash
+docker run -d \
+  --name openlist \
+  -p 5244:5244 \
+  --restart always \
+  -v /mnt/alist:/opt/openlist/data \
+  -e TZ=Asia/Shanghai \
+  openlist
+```
+
+> **挂载说明**：`/mnt/alist` 为宿主机数据目录，可按需替换；Windows 下改用 `D:/mnt/alist` 风格路径。
+>
+> **常用管理命令**：
+> ```bash
+> docker logs -f openlist   # 查看日志
+> docker restart openlist   # 重启容器
+> docker stop openlist      # 停止容器
+> docker rm openlist        # 删除容器
+> docker exec -it openlist sh   # 进入容器
+> ```
 
 
 
