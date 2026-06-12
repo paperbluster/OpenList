@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/OpenListTeam/OpenList/v4/internal/bootstrap"

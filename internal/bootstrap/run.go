@@ -14,7 +14,6 @@ import (
 	"github.com/OpenListTeam/OpenList/v4/internal/bootstrap/data"
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/db"
-	"github.com/OpenListTeam/OpenList/v4/internal/fs"
 	"github.com/OpenListTeam/OpenList/v4/pkg/utils"
 	"github.com/OpenListTeam/OpenList/v4/server"
 	"github.com/OpenListTeam/OpenList/v4/server/middlewares"
@@ -32,7 +31,6 @@ func Init() {
 	InitDB()
 	data.InitData()
 	InitStreamLimit()
-	InitIndex()
 	InitUpgradePatch()
 }
 
@@ -48,8 +46,6 @@ var (
 	httpsRunning bool
 	unixSrv      *http.Server
 	unixRunning  bool
-	s3Srv        *http.Server
-	s3Running    bool
 )
 
 // Called by OpenList-Mobile
@@ -155,32 +151,6 @@ func Start() {
 			}
 		}()
 	}
-	if conf.Conf.S3.Port != -1 && conf.Conf.S3.Enable {
-		s3r := gin.New()
-		s3r.Use(gin.LoggerWithWriter(log.StandardLogger().Out), gin.RecoveryWithWriter(log.StandardLogger().Out))
-		server.InitS3(s3r)
-		s3Base := fmt.Sprintf("%s:%d", conf.Conf.Scheme.Address, conf.Conf.S3.Port)
-		fmt.Printf("start S3 server @ %s\n", s3Base)
-		utils.Log.Infof("start S3 server @ %s", s3Base)
-		go func() {
-			s3Running = true
-			var err error
-			if conf.Conf.S3.SSL {
-				s3Srv = &http.Server{Addr: s3Base, Handler: s3r}
-				err = s3Srv.ListenAndServeTLS(conf.Conf.Scheme.CertFile, conf.Conf.Scheme.KeyFile)
-			} else {
-				s3Srv = &http.Server{Addr: s3Base, Handler: s3r}
-				err = s3Srv.ListenAndServe()
-			}
-			s3Running = false
-			if err != nil && !errors.Is(err, http.ErrServerClosed) {
-				handleEndpointStartFailedHooks("s3", err)
-				utils.Log.Errorf("failed to start s3 server: %s", err.Error())
-			} else {
-				handleEndpointShutdownHooks("s3")
-			}
-		}()
-	}
 	running = true
 }
 
@@ -217,16 +187,6 @@ func Shutdown(timeout time.Duration) {
 				utils.Log.Error("Unix server shutdown err: ", err)
 			}
 			unixSrv = nil
-		}()
-	}
-	if s3Srv != nil && conf.Conf.S3.Port != -1 && conf.Conf.S3.Enable {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			if err := s3Srv.Shutdown(ctx); err != nil {
-				utils.Log.Error("S3 server shutdown err: ", err)
-			}
-			s3Srv = nil
 		}()
 	}
 	wg.Wait()
