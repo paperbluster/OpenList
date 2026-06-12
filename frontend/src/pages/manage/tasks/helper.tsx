@@ -26,64 +26,6 @@ export const getPath = (
   )
 }
 
-export const getOfflineDownloadNameAnalyzer = (): TaskNameAnalyzer => {
-  const t = useT()
-  const [underline, setUnderline] = createSignal(false)
-  return {
-    regex: /^download (.+) to \((.+)\)$/,
-    title: (matches) => matches[1],
-    attrs: {
-      [t(`tasks.attr.offline_download.url`)]: (matches) => (
-        <a
-          style={underline() ? "text-decoration: underline" : ""}
-          onMouseOver={() => setUnderline(true)}
-          onMouseOut={() => setUnderline(false)}
-          href={matches[1]}
-          target="_blank"
-        >
-          {matches[1]}
-        </a>
-      ),
-      [t(`tasks.attr.offline_download.path`)]: (matches) =>
-        getPath("", matches[2]),
-    },
-  }
-}
-
-export const getOfflineDownloadTransferNameAnalyzer = (): TaskNameAnalyzer => {
-  const t = useT()
-  const [underline, setUnderline] = createSignal(false)
-  return {
-    regex: /^(transfer|upload) \[(.*)]\((.*\/([^\/]+))\) to \[(.+)]\((.+)\)$/,
-    title: (matches) => (matches[1] === "upload" ? matches[2] : matches[4]),
-    attrs: {
-      [t(`tasks.attr.offline_download.transfer_src`)]: (matches) => {
-        return matches[1] !== "transfer" || matches[2] === ""
-          ? undefined
-          : getPath(matches[2], matches[3])
-      },
-      [t(`tasks.attr.offline_download.transfer_src_local`)]: (matches) => {
-        return matches[2] === "" ? matches[3] : undefined
-      },
-      [t(`tasks.attr.offline_download.url`)]: (matches) => {
-        return matches[1] === "upload" ? (
-          <a
-            style={underline() ? "text-decoration: underline" : ""}
-            onMouseOver={() => setUnderline(true)}
-            onMouseOut={() => setUnderline(false)}
-            href={matches[3]}
-            target="_blank"
-          >
-            {matches[3]}
-          </a>
-        ) : undefined
-      },
-      [t(`tasks.attr.offline_download.transfer_dst`)]: (matches) =>
-        getPath(matches[5], matches[6]),
-    },
-  }
-}
-
 export const getDecompressNameAnalyzer = (): TaskNameAnalyzer => {
   const t = useT()
   return {

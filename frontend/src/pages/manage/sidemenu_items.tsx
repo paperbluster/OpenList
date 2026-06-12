@@ -99,13 +99,6 @@ export const side_menu_items: SideMenuItem[] = [
     role: UserRole.GENERAL,
     children: [
       {
-        title: "manage.sidemenu.offline_download",
-        icon: IoMagnetOutline,
-        to: "/@manage/tasks/offline_download",
-        role: UserRole.GENERAL,
-        component: lazy(() => import("./tasks/offline_download")),
-      },
-      {
         title: "manage.sidemenu.upload",
         icon: BsCloudUploadFill,
         to: "/@manage/tasks/upload",
