@@ -28,9 +28,8 @@ ENV GOPROXY=direct \
     GONOSUMCHECK=*
 
 # 切换 CGO SQLite 驱动，砍掉 glebarez/sqlite + modernc.org/* 整条依赖链
-# 节省 ~200MB 磁盘占用
 
-# 先复制 go.mod，再复制 Go 源码目录（不碰 frontend/）
+# 先复制 go.mod + 全部源码
 COPY go.mod ./
 COPY main.go ./
 COPY cmd/ ./cmd/
@@ -40,7 +39,11 @@ COPY pkg/ ./pkg/
 COPY public/ ./public/
 COPY server/ ./server/
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-RUN CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter,sqlite_cgo_compat -o openlist . && \
+# tidy(生成go.sum)→清理缓存→download(按go.sum下载)→build→清理缓存
+RUN go mod tidy && \
+    rm -rf /go/pkg/mod /root/.cache/go-build && \
+    go mod download && \
+    CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter -o openlist . && \
     rm -rf /go/pkg/mod /root/.cache/go-build
 
 # ============ Stage 3: Runtime ============

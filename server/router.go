@@ -120,7 +120,7 @@ func fsAndShare(g *gin.RouterGroup) {
 }
 
 func _fs(g *gin.RouterGroup) {
-tg.Any("/search", handles.Search)
+	g.Any("/search", handles.Search)
 	g.Any("/other", handles.FsOther)
 	g.Any("/dirs", handles.FsDirs)
 	g.POST("/mkdir", handles.FsMkdir)
