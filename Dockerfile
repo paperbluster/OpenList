@@ -20,15 +20,15 @@ RUN npm install -g pnpm@11.5.1 && \
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
 
-# GOPROXY=direct 需要 git 从源码仓库拉取依赖
-RUN apk add --no-cache git
+# GOPROXY=direct 需要 git；CGO SQLite 需要 gcc musl-dev
+RUN apk add --no-cache git gcc musl-dev
 
 ENV GOPROXY=direct \
     GOSUMDB=off \
     GONOSUMCHECK=*
 
-# 无需 CGO（已删除 FUSE 挂载功能），编译内存大幅降低
-# CGO_ENABLED=0 直接跳过 C 编译器，Go 纯静态编译
+# 切换 CGO SQLite 驱动，砍掉 glebarez/sqlite + modernc.org/* 整条依赖链
+# 节省 ~200MB 磁盘占用
 
 # 先复制 go.mod，再复制 Go 源码目录（不碰 frontend/）
 COPY go.mod ./
@@ -39,11 +39,8 @@ COPY internal/ ./internal/
 COPY pkg/ ./pkg/
 COPY public/ ./public/
 COPY server/ ./server/
-# 跳过 go mod tidy（磁盘杀手），直接用 go.mod 已有依赖
-# GONOSUMCHECK=* + GOSUMDB=off 无需 go.sum
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-RUN go mod download && \
-    CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist . && \
+RUN CGO_ENABLED=1 go build -ldflags="-w -s" -tags=jsoniter,sqlite_cgo_compat -o openlist . && \
     rm -rf /go/pkg/mod /root/.cache/go-build
 
 # ============ Stage 3: Runtime ============
