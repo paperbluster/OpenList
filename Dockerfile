@@ -39,10 +39,10 @@ COPY internal/ ./internal/
 COPY pkg/ ./pkg/
 COPY public/ ./public/
 COPY server/ ./server/
-# tidy 会生成 go.sum，然后 download 下载依赖
-# 将前端构建产物嵌入
+# 跳过 go mod tidy（磁盘杀手），直接用 go.mod 已有依赖
+# GONOSUMCHECK=* + GOSUMDB=off 无需 go.sum
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-RUN go mod tidy && go mod download && \
+RUN go mod download && \
     CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist . && \
     rm -rf /go/pkg/mod /root/.cache/go-build
 

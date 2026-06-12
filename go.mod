@@ -31,7 +31,6 @@ require (
 	github.com/shirou/gopsutil/v4 v4.25.5
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.10.2
-	github.com/stretchr/testify v1.11.1
 	golang.org/x/crypto v0.46.0
 	golang.org/x/image v0.29.0
 	golang.org/x/net v0.48.0
@@ -103,7 +102,6 @@ require (
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/go-chi/chi/v5 v5.2.2 // indirect
@@ -143,7 +141,6 @@ require (
 	github.com/muesli/termenv v0.16.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_golang v1.22.0 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
