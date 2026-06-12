@@ -1,22 +1,16 @@
 package handles
 
 import (
-	"bytes"
-	"encoding/base64"
-	"image/png"
-
 	"github.com/OpenListTeam/OpenList/v4/internal/conf"
 	"github.com/OpenListTeam/OpenList/v4/internal/model"
 	"github.com/OpenListTeam/OpenList/v4/internal/op"
 	"github.com/OpenListTeam/OpenList/v4/server/common"
 	"github.com/gin-gonic/gin"
-	"github.com/pquerna/otp/totp"
 )
 
 type LoginReq struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password"`
-	OtpCode  string `json:"otp_code"`
 }
 
 // Login Deprecated
@@ -62,15 +56,6 @@ func loginHash(c *gin.Context, req *LoginReq) {
 		model.LoginCache.Set(ip, count+1)
 		return
 	}
-	// check 2FA
-	if user.OtpSecret != "" {
-		if !totp.Validate(req.OtpCode, user.OtpSecret) {
-			// 402 - need opt
-			common.ErrorStrResp(c, model.Invalid2FACode, 402)
-			model.LoginCache.Set(ip, count+1)
-			return
-		}
-	}
 	// generate token
 	token, err := common.GenerateToken(user)
 	if err != nil {
@@ -83,7 +68,6 @@ func loginHash(c *gin.Context, req *LoginReq) {
 
 type UserResp struct {
 	model.User
-	Otp bool `json:"otp"`
 }
 
 // CurrentUser get current user by token
@@ -94,9 +78,6 @@ func CurrentUser(c *gin.Context) {
 		User: *user,
 	}
 	userResp.Password = ""
-	if userResp.OtpSecret != "" {
-		userResp.Otp = true
-	}
 	common.SuccessResp(c, userResp)
 }
 
@@ -115,63 +96,6 @@ func UpdateCurrent(c *gin.Context) {
 	if req.Password != "" {
 		user.SetPassword(req.Password)
 	}
-	if err := op.UpdateUser(user); err != nil {
-		common.ErrorResp(c, err, 500)
-	} else {
-		common.SuccessResp(c)
-	}
-}
-
-func Generate2FA(c *gin.Context) {
-	user := c.Request.Context().Value(conf.UserKey).(*model.User)
-	if user.IsGuest() {
-		common.ErrorStrResp(c, model.GuestCannotGenerate2FA, 403)
-		return
-	}
-	key, err := totp.Generate(totp.GenerateOpts{
-		Issuer:      "OpenList",
-		AccountName: user.Username,
-	})
-	if err != nil {
-		common.ErrorResp(c, err, 500)
-		return
-	}
-	img, err := key.Image(400, 400)
-	if err != nil {
-		common.ErrorResp(c, err, 500)
-		return
-	}
-	// to base64
-	var buf bytes.Buffer
-	png.Encode(&buf, img)
-	b64 := base64.StdEncoding.EncodeToString(buf.Bytes())
-	common.SuccessResp(c, gin.H{
-		"qr":     "data:image/png;base64," + b64,
-		"secret": key.Secret(),
-	})
-}
-
-type Verify2FAReq struct {
-	Code   string `json:"code" binding:"required"`
-	Secret string `json:"secret" binding:"required"`
-}
-
-func Verify2FA(c *gin.Context) {
-	var req Verify2FAReq
-	if err := c.ShouldBind(&req); err != nil {
-		common.ErrorResp(c, err, 400)
-		return
-	}
-	user := c.Request.Context().Value(conf.UserKey).(*model.User)
-	if user.IsGuest() {
-		common.ErrorStrResp(c, model.GuestCannotGenerate2FA, 403)
-		return
-	}
-	if !totp.Validate(req.Code, req.Secret) {
-		common.ErrorStrResp(c, model.Invalid2FACode, 400)
-		return
-	}
-	user.OtpSecret = req.Secret
 	if err := op.UpdateUser(user); err != nil {
 		common.ErrorResp(c, err, 500)
 	} else {

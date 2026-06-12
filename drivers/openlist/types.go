@@ -80,7 +80,6 @@ type MeResp struct {
 	Disabled   bool   `json:"disabled"`
 	Permission int    `json:"permission"`
 	SsoId      string `json:"sso_id"`
-	Otp        bool   `json:"otp"`
 }
 
 type ArchiveMetaReq struct {

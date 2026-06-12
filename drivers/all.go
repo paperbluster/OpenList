@@ -4,8 +4,6 @@ import (
 	// 本地与虚拟存储
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/alias"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/local"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/strm"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/url_tree"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/virtual"
 
 	// 标准协议
@@ -13,8 +11,6 @@ import (
 
 	// 开放平台
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/alist_v3"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/cloudreve"
-	_ "github.com/OpenListTeam/OpenList/v4/drivers/cloudreve_v4"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/openlist"
 	_ "github.com/OpenListTeam/OpenList/v4/drivers/openlist_share"
 

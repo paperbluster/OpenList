@@ -20,7 +20,10 @@ RUN npm install -g pnpm@11.5.1 && \
 FROM golang:1.24-alpine AS backend-builder
 WORKDIR /app/
 
-ENV GOPROXY=https://goproxy.cn,direct \
+# GOPROXY=direct 需要 git 从源码仓库拉取依赖
+RUN apk add --no-cache git
+
+ENV GOPROXY=direct \
     GOSUMDB=off \
     GONOSUMCHECK=*
 

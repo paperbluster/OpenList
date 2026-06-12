@@ -1,8 +1,7 @@
 import { Component, lazy } from "solid-js"
-import { getIframePreviews, me, getSettingBool, isArchive } from "~/store"
-import { Obj, ObjType, UserMethods, UserPermissions, ArchiveObj } from "~/types"
+import { me, getSettingBool } from "~/store"
+import { Obj, ObjType } from "~/types"
 import { ext } from "~/utils"
-import { generateIframePreview } from "./iframe"
 import { useRouter, useT } from "~/hooks"
 
 type Ext = string[] | "*" | ((name: string) => boolean)
@@ -51,24 +50,6 @@ const previews: Preview[] = [
     prior: true,
   },
   {
-    key: "markdown",
-    type: ObjType.TEXT,
-    component: lazy(() => import("./markdown")),
-    prior: true,
-  },
-  {
-    key: "flash",
-    exts: ["swf"],
-    component: lazy(() => import("./flash")),
-    prior: true,
-  },
-  {
-    key: "markdown_with_word_wrap",
-    type: ObjType.TEXT,
-    component: lazy(() => import("./markdown_with_word_wrap")),
-    prior: true,
-  },
-  {
     key: "image",
     type: ObjType.IMAGE,
     component: lazy(() => import("./image")),
@@ -86,61 +67,6 @@ const previews: Preview[] = [
     component: lazy(() => import("./audio")),
     prior: true,
   },
-  {
-    key: "heic",
-    exts: ["heic", "heif", "avif", "vvc", "avc", "jpeg", "jpg"],
-    component: lazy(() => import("./heic")),
-    prior: true,
-  },
-  {
-    key: "pdf",
-    exts: ["pdf"],
-    component: lazy(() => import("./pdf")),
-    prior: true,
-  },
-  {
-    key: "ppt",
-    exts: ["pptx"],
-    component: lazy(() => import("./ppt")),
-    prior: true,
-  },
-  {
-    key: "xls",
-    exts: ["xlsx", "xls"],
-    component: lazy(() => import("./xls")),
-    prior: true,
-  },
-  {
-    key: "doc",
-    exts: ["docx", "doc"],
-    component: lazy(() => import("./doc")),
-    prior: true,
-  },
-  {
-    key: "archive",
-    exts: (name: string) => {
-      const index = UserPermissions.findIndex(
-        (item) => item === "read_archives",
-      )
-      const { isShare } = useRouter()
-      if (!isShare() && !UserMethods.can(me(), index)) return false
-      if (isShare() && !getSettingBool("share_archive_preview")) return false
-      return isArchive(name)
-    },
-    component: lazy(() => import("./archive")),
-    prior: () => {
-      const { isShare } = useRouter()
-      return (
-        (!isShare() &&
-          getSettingBool("preview_archives_by_default") &&
-          !getSettingBool("preview_download_by_default")) ||
-        (isShare() &&
-          getSettingBool("share_preview_archives_by_default") &&
-          !getSettingBool("share_preview_download_by_default"))
-      )
-    },
-    availableInArchive: false,
-  },
 ]
 
 export const getPreviews = (
@@ -155,7 +81,6 @@ export const getPreviews = (
   const downloadPrior =
     (!isShare() && getSettingBool("preview_download_by_default")) ||
     (isShare() && getSettingBool("share_preview_download_by_default"))
-  const isInArchive = !!(file as ArchiveObj).archive
   // internal previews
   if (!isShare() || getSettingBool("share_preview")) {
     previews.forEach((preview) => {
@@ -172,10 +97,6 @@ export const getPreviews = (
           name: t(`home.preview.names.${preview.key}`),
           component: preview.component,
         }
-        // Skip previews that are not available in archive when file is in archive
-        if (isInArchive && preview.availableInArchive === false) {
-          return
-        }
         if (!downloadPrior && isPrior(preview.prior)) {
           res.push(r)
         } else {
@@ -184,19 +105,6 @@ export const getPreviews = (
       }
     })
   }
-  // iframe previews
-  const iframePreviews = getIframePreviews(file.name)
-  const matchedIframePreviews = iframePreviews.map((preview) => ({
-    key: `iframe-${preview.key}`,
-    name: preview.key, // TODO: Add name field to backend
-    component: generateIframePreview(preview.value),
-  }))
-  // Condition for iframe previews to respect the "preview_download_by_default" setting
-  if (downloadPrior) {
-    subsequent.push(...matchedIframePreviews)
-  } else {
-    res.push(...matchedIframePreviews)
-  }
 
   // download page
   const downloadComponent: PreviewComponent = {
@@ -204,41 +112,10 @@ export const getPreviews = (
     name: t("home.preview.names.download"),
     component: lazy(() => import("./download")),
   }
-
-  // Condition for the new requirement: a large text file.
-  const isLargeTextFile =
-    file.type === ObjType.TEXT && file.size >= 1 * 1024 * 1024
-
-  // Conditions from the previous logic for small, unrecognized files.
-  const noPreviewsFound = res.length === 0 && subsequent.length === 0
-  const isSmallFile = file.size < 1 * 1024 * 1024
-
-  if (isLargeTextFile) {
-    // Case 1: Large text file. Place "Download" at the very beginning.
-    // The standard text previews (Markdown, etc.) are already in `res` and will appear after it.
-    res.unshift(downloadComponent)
-  } else if (noPreviewsFound && isSmallFile) {
-    // Case 2: No other previews found for a small file.
-    // Add "Download" first, then suggest default text previews.
+  if (res.length > 0 || subsequent.length > 0) {
     res.push(downloadComponent)
-    if (!isShare() || getSettingBool("share_preview")) {
-      const textPreviewsToAdd = previews
-        .filter((p) =>
-          ["markdown", "markdown_with_word_wrap"].includes(
-            p.key,
-          ),
-        )
-        .map((p) => ({
-          key: p.key,
-          name: t(`home.preview.names.${p.key}`),
-          component: p.component,
-        }))
-      res.push(...textPreviewsToAdd)
-    }
   } else {
-    // Case 3: The "normal" case for all other files (images, videos, small text files, etc.).
-    // Add "Download" as the last fallback option in the high-priority list.
-    res.push(downloadComponent)
+    return [downloadComponent]
   }
   return res.concat(subsequent)
 }

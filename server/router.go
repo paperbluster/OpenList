@@ -59,8 +59,6 @@ func Init(e *gin.Engine) {
 	api.POST("/auth/login/hash", handles.LoginHash)
 	auth.GET("/me", handles.CurrentUser)
 	auth.POST("/me/update", handles.UpdateCurrent)
-	auth.POST("/auth/2fa/generate", handles.Generate2FA)
-	auth.POST("/auth/2fa/verify", handles.Verify2FA)
 	auth.GET("/auth/logout", handles.LogOut)
 
 	// no need auth
@@ -86,7 +84,6 @@ func admin(g *gin.RouterGroup) {
 	user.GET("/get", handles.GetUser)
 	user.POST("/create", handles.CreateUser)
 	user.POST("/update", handles.UpdateUser)
-	user.POST("/cancel_2fa", handles.Cancel2FAById)
 	user.POST("/delete", handles.DeleteUser)
 	user.POST("/del_cache", handles.DelUserCache)
 
@@ -139,14 +136,6 @@ tg.Any("/search", handles.Search)
 	g.PUT("/put", middlewares.FsUp, uploadLimiter, handles.FsStream)
 	g.PUT("/form", middlewares.FsUp, uploadLimiter, handles.FsForm)
 	g.POST("/link", middlewares.AuthAdmin, handles.Link)
-	// g.POST("/add_aria2", handles.AddOfflineDownload)
-	// g.POST("/add_qbit", handles.AddQbittorrent)
-	// g.POST("/add_transmission", handles.SetTransmission)
-	// Torrent 相关接口
-	g.POST("/torrent/parse", handles.ParseTorrent)
-	g.POST("/torrent/upload_parse", handles.UploadTorrentAndParse)
-	g.POST("/torrent/rapid_upload", handles.TorrentRapidUpload)
-	g.POST("/torrent/generate", handles.GenerateTorrentForPath)
 	// Direct upload (client-side upload to storage)
 	g.POST("/get_direct_upload_info", middlewares.FsUp, handles.FsGetDirectUploadInfo)
 }

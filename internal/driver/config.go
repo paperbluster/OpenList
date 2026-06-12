@@ -22,8 +22,6 @@ type Config struct {
 	//  - LinkCacheNone: no extra info added to cache key (default)
 	//  - flags (OR-able) can add more attributes to cache key (IP, UA, ...)
 	LinkCacheMode `json:"-"`
-	// if the driver only store indices of files (e.g. UrlTree)
-	OnlyIndices bool `json:"only_indices"`
 	// prefer proxy download even if direct link is available
 	PreferProxy bool `json:"prefer_proxy"`
 }

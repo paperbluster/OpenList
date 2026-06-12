@@ -21,10 +21,8 @@ const (
 	StaticHashSalt = "https://github.com/alist-org/alist"
 
 	InvalidUsernameOrPassword = "Invalid username or password"
-	Invalid2FACode            = "Invalid 2FA code"
 	TooManyAttempts           = "Too many unsuccessful sign-in attempts have been made using an incorrect username or password, Try again later."
 	GuestCannotUpdateProfile  = "Guest user can not update profile"
-	GuestCannotGenerate2FA    = "Guest user can not generate 2FA code"
 )
 
 var LoginCache = cache.NewMemCache[int]()
@@ -47,7 +45,7 @@ type User struct {
 	// Determine permissions by bit
 	//   0:  can see hidden files
 	//   1:  can access without password
-	//   2:  can add offline download tasks
+	//   2:  (reserved, was offline download)
 	//   3:  can mkdir and upload
 	//   4:  can rename
 	//   5:  can move
@@ -62,7 +60,6 @@ type User struct {
 	//   14: can share
 	//   15: can customize share id
 	Permission int32  `json:"permission"`
-	OtpSecret  string `json:"-"`
 	Authn      string `gorm:"type:text" json:"-"`
 	AllowLdap  bool   `json:"allow_ldap" gorm:"default:true"`
 }
@@ -110,14 +107,6 @@ func CanAccessWithoutPassword(permission int32) bool {
 
 func (u *User) CanAccessWithoutPassword() bool {
 	return CanAccessWithoutPassword(u.Permission)
-}
-
-func CanAddOfflineDownloadTasks(permission int32) bool {
-	return (permission>>2)&1 == 1
-}
-
-func (u *User) CanAddOfflineDownloadTasks() bool {
-	return CanAddOfflineDownloadTasks(u.Permission)
 }
 
 func CanWriteContent(permission int32) bool {

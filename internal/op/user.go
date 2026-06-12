@@ -101,19 +101,6 @@ func UpdateUser(u *model.User) error {
 	return db.UpdateUser(u)
 }
 
-func Cancel2FAByUser(u *model.User) error {
-	u.OtpSecret = ""
-	return UpdateUser(u)
-}
-
-func Cancel2FAById(id uint) error {
-	user, err := db.GetUserById(id)
-	if err != nil {
-		return err
-	}
-	return Cancel2FAByUser(user)
-}
-
 func DelUserCache(username string) error {
 	user, err := GetUserByName(username)
 	if err != nil {

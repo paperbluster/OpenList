@@ -71,9 +71,6 @@ func UpdateUser(c *gin.Context) {
 		req.SetPassword(req.Password)
 		req.Password = ""
 	}
-	if req.OtpSecret == "" {
-		req.OtpSecret = user.OtpSecret
-	}
 	if req.Disabled && req.IsAdmin() {
 		common.ErrorStrResp(c, "admin user can not be disabled", 400)
 		return
@@ -112,20 +109,6 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	common.SuccessResp(c, user)
-}
-
-func Cancel2FAById(c *gin.Context) {
-	idStr := c.Query("id")
-	id, err := strconv.Atoi(idStr)
-	if err != nil {
-		common.ErrorResp(c, err, 400)
-		return
-	}
-	if err := op.Cancel2FAById(uint(id)); err != nil {
-		common.ErrorResp(c, err, 500)
-		return
-	}
-	common.SuccessResp(c)
 }
 
 func DelUserCache(c *gin.Context) {
