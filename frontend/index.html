@@ -25,7 +25,14 @@
         api: undefined,
         main_color: undefined,
       }
-      window.__dynamic_base__ = window.OPENLIST_CONFIG.cdn || ""
+      window.__dynamic_base__ = (function (base) {
+        // vite-plugin-dynamic-base constructs URLs as base + "/assets/..."
+        // A trailing "/" in base produces "//" (protocol-relative URL).
+        // Normalize: empty string for root, "/subpath" (no trailing /) for sub-paths.
+        if (base === "/" || base === "") return ""
+        if (base.endsWith("/")) return base.slice(0, -1)
+        return base
+      })(window.OPENLIST_CONFIG.cdn || "")
     </script>
   </head>
   <body>

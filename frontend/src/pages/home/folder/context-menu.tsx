@@ -4,7 +4,7 @@ import "solid-contextmenu/dist/style.css"
 import { HStack, Icon, Text, useColorMode, Image } from "@hope-ui/solid"
 import { operations } from "../toolbar/operations"
 import { For, Show } from "solid-js"
-import { bus, convertURL, notify, torrentParse } from "~/utils"
+import { bus, convertURL, joinBase, notify, torrentParse } from "~/utils"
 import { ObjType, UserMethods } from "~/types"
 import {
   getSettingBool,
@@ -193,7 +193,7 @@ export const ContextMenu = () => {
                   <Image
                     m="0 auto"
                     boxSize="$7"
-                    src={`${window.__dynamic_base__}/images/${player.icon}.webp`}
+                    src={joinBase("images", `${player.icon}.webp`)}
                   />
                   <Text>{player.name}</Text>
                 </HStack>

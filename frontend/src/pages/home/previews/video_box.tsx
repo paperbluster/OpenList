@@ -13,7 +13,7 @@ import { For, JSXElement, createSignal, createMemo, Show } from "solid-js"
 import { useRouter, useLink, useT, usePath, getGlobalPage } from "~/hooks"
 import { getPagination, objStore, setShouldKeepState } from "~/store"
 import { ObjType } from "~/types"
-import { convertURL, getPlatform, pathDir } from "~/utils"
+import { convertURL, getPlatform, joinBase, pathDir } from "~/utils"
 import Artplayer from "artplayer"
 import { SelectWrapper } from "~/components"
 import { BsArrowRight } from "solid-icons/bs"
@@ -235,7 +235,7 @@ export const VideoBox = (props: {
                   <Image
                     m="0 auto"
                     boxSize="$8"
-                    src={`${window.__dynamic_base__}/images/${item.icon}.webp`}
+                    src={joinBase("images", `${item.icon}.webp`)}
                   />
                 </Anchor>
               </Tooltip>

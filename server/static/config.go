@@ -29,6 +29,12 @@ func getSiteConfig() SiteConfig {
 	}
 	if siteConfig.Cdn == "" {
 		siteConfig.Cdn = strings.TrimSuffix(siteConfig.BasePath, "/")
+		// Ensure Cdn is never just "/" — the frontend vite-plugin-dynamic-base
+		// constructs URLs as `__dynamic_base__ + "/assets/..."`. If __dynamic_base__
+		// is "/", the result is "//assets/..." (protocol-relative URL).
+		if siteConfig.Cdn == "/" {
+			siteConfig.Cdn = ""
+		}
 	}
 	return siteConfig
 }
