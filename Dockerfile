@@ -40,11 +40,11 @@ COPY pkg/ ./pkg/
 COPY public/ ./public/
 COPY server/ ./server/
 # tidy 会生成 go.sum，然后 download 下载依赖
-RUN go mod tidy && go mod download
-
 # 将前端构建产物嵌入
 COPY --from=frontend-builder /frontend/dist/ ./public/dist/
-RUN CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
+RUN go mod tidy && go mod download && \
+    CGO_ENABLED=0 go build -ldflags="-w -s" -tags=jsoniter -o openlist . && \
+    rm -rf /go/pkg/mod /root/.cache/go-build
 
 # ============ Stage 3: Runtime ============
 FROM alpine:edge

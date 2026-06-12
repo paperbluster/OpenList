@@ -26,24 +26,12 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "node_modules/libheif-js/libheif-wasm/libheif.{js,wasm}",
-          dest: "static/libheif",
-        },
-        {
           src: "node_modules/@jellyfin/libass-wasm/dist/js/subtitles-octopus-worker.{js,wasm}",
           dest: "static/libass-wasm",
         },
         {
           src: "src/components/artplayer-plugin-ass/fonts/*",
           dest: "static/fonts",
-        },
-        {
-          src: "node_modules/jszip/dist/jszip.min.js",
-          dest: "static/jszip",
-        },
-        {
-          src: "node_modules/docx-preview/dist/docx-preview.min.js",
-          dest: "static/docx-preview",
         },
       ],
     }),
