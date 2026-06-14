@@ -39,15 +39,19 @@ func BuildSearchIndex(rawPath string, storageID uint, limitRate float64) error {
 	indexBuildProgress.Store(0)
 	indexBuildTotal.Store(0)
 
-	// Phase 1: count all files first to show progress
-	ctx := context.Background()
-	var counter atomic.Uint64
-	if err := RecursivelyList(ctx, rawPath, rate.Limit(limitRate), &counter); err != nil {
-		return err
-	}
-	indexBuildTotal.Store(int64(counter.Load()))
+	// Fast path: auto-build (limitRate=0) skips the counting phase
+	skipCounting := limitRate <= 0
 
-	// Phase 2: clear old index and rebuild
+	ctx := context.Background()
+	if !skipCounting {
+		var counter atomic.Uint64
+		if err := RecursivelyList(ctx, rawPath, rate.Limit(limitRate), &counter); err != nil {
+			return err
+		}
+		indexBuildTotal.Store(int64(counter.Load()))
+	}
+
+	// Clear and rebuild
 	if err := db.ClearStorageIndex(storageID); err != nil {
 		return errors.WithMessage(err, "failed to clear old index")
 	}

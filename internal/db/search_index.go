@@ -55,6 +55,14 @@ func SearchByKeyword(storageID uint, keyword string, scope int, page, perPage in
 	return nodes, total, nil
 }
 
+func HasStorageIndex(storageID uint) bool {
+	var count int64
+	if err := db.Model(&model.SearchIndex{}).Where("storage_id = ?", storageID).Limit(1).Count(&count).Error; err != nil {
+		return false
+	}
+	return count > 0
+}
+
 func ClearStorageIndex(storageID uint) error {
 	return errors.WithStack(db.Where("storage_id = ?", storageID).Delete(&model.SearchIndex{}).Error)
 }

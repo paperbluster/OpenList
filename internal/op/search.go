@@ -28,23 +28,28 @@ func SearchFiles(ctx context.Context, rawPath string, keywords string, scope int
 
 	// Try indexed search first
 	lowerKW := strings.ToLower(keywords)
-	nodes, total, err := db.SearchByKeyword(storageID, lowerKW, scope, 1, 10000)
-	if err != nil {
-		// Index query failed, fall back to recursive
+
+	// If index doesn't exist yet for this storage, trigger a background build
+	// from the storage root (not just the search path), and fall back to recursive.
+	if !db.HasStorageIndex(storageID) && !IndexBuildRunning() {
+		go func() {
+			_ = BuildSearchIndex("/", storageID, 0) // 0 = no rate limit for auto-build
+		}()
 		var results []model.SearchNode
 		searchInStorage(ctx, storage, actualPath, rawPath, lowerKW, scope, &results)
 		return results, nil
 	}
 
-	// If index is empty, trigger a background build and fall back to recursive
-	if total == 0 {
-		go func() {
-			_ = BuildSearchIndex(rawPath, storageID, 100)
-		}()
-
+	nodes, total, err := db.SearchByKeyword(storageID, lowerKW, scope, 1, 10000)
+	if err != nil {
 		var results []model.SearchNode
 		searchInStorage(ctx, storage, actualPath, rawPath, lowerKW, scope, &results)
 		return results, nil
+	}
+
+	// Index exists but is currently being rebuilt — still use it (partial results)
+	if total == 0 {
+		return nil, nil
 	}
 
 	// Filter results to only those under the search path
