@@ -6,11 +6,8 @@ import {
   BsWindow,
   BsPersonCircle,
   BsJoystick,
-  BsMedium,
   BsFingerprint,
   BsCloudUploadFill,
-  BsBucket,
-  BsHddNetwork,
   BsArrowLeftRight,
 } from "solid-icons/bs"
 import { CgDatabase, CgShare } from "solid-icons/cg"
@@ -18,7 +15,6 @@ import { OcWorkflow2 } from "solid-icons/oc"
 import { IoCopy, IoMove, IoHome, IoMagnetOutline } from "solid-icons/io"
 import { Component, lazy } from "solid-js"
 import { Group, UserRole } from "~/types"
-import { TbArchive } from "solid-icons/tb"
 
 export type SideMenuItem = SideMenuItemProps & {
   component?: Component
@@ -65,28 +61,10 @@ export const side_menu_items: SideMenuItem[] = [
         component: () => <CommonSettings group={Group.GLOBAL} />,
       },
       {
-        title: "manage.sidemenu.s3",
-        icon: BsBucket,
-        to: "/@manage/settings/s3",
-        component: lazy(() => import("./settings/S3")),
-      },
-      {
-        title: "manage.sidemenu.ftp",
-        icon: BsHddNetwork,
-        to: "/@manage/settings/ftp",
-        component: () => <CommonSettings group={Group.FTP} />,
-      },
-      {
         title: "manage.sidemenu.traffic",
         icon: BsArrowLeftRight,
         to: "/@manage/settings/traffic",
         component: () => <CommonSettings group={Group.TRAFFIC} />,
-      },
-      {
-        title: "manage.sidemenu.other",
-        icon: BsMedium,
-        to: "/@manage/settings/other",
-        component: lazy(() => import("./settings/Other")),
       },
     ],
   },
@@ -116,13 +94,6 @@ export const side_menu_items: SideMenuItem[] = [
         to: "/@manage/tasks/move",
         role: UserRole.GENERAL,
         component: lazy(() => import("./tasks/Move")),
-      },
-      {
-        title: "manage.sidemenu.decompress",
-        icon: TbArchive,
-        to: "/@manage/tasks/decompress",
-        role: UserRole.GENERAL,
-        component: lazy(() => import("./tasks/Decompress")),
       },
     ],
   },

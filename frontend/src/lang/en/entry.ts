@@ -7,7 +7,6 @@ import indexes from "./indexes.json"
 import login from "./login.json"
 import manage from "./manage.json"
 import metas from "./metas.json"
-import settings_other from "./settings_other.json"
 import settings from "./settings.json"
 import shares from "./shares.json"
 import storages from "./storages.json"
@@ -24,7 +23,6 @@ export const dict = {
   login,
   manage,
   metas,
-  settings_other,
   settings,
   shares,
   storages,

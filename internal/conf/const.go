@@ -47,7 +47,6 @@ const (
 	LinkExpiration          = "link_expiration"
 	SignAll                 = "sign_all"
 	PrivacyRegs             = "privacy_regs"
-	OcrApi                  = "ocr_api"
 	FilenameCharMapping     = "filename_char_mapping"
 	ForwardDirectLinkParams = "forward_direct_link_params"
 	IgnoreDirectLinkParams  = "ignore_direct_link_params"
@@ -63,20 +62,8 @@ const (
 	Token         = "token"
 	IndexProgress = "index_progress"
 
-	// s3
-
-
 	// 123 open offline download
 	Pan123OpenTempDir                    = "123_open_temp_dir"
-
-	// ftp
-	FTPPublicHost            = "ftp_public_host"
-	FTPPasvPortMap           = "ftp_pasv_port_map"
-	FTPMandatoryTLS          = "ftp_mandatory_tls"
-	FTPImplicitTLS           = "ftp_implicit_tls"
-	FTPTLSPrivateKeyPath     = "ftp_tls_private_key_path"
-	FTPTLSPublicCertPath     = "ftp_tls_public_cert_path"
-	SFTPDisablePasswordLogin = "sftp_disable_password_login"
 
 	// traffic
 	TaskUploadThreadsNum                  = "upload_task_threads_num"
