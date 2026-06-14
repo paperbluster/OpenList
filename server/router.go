@@ -111,6 +111,16 @@ func admin(g *gin.RouterGroup) {
 	setting.POST("/default", handles.DefaultSettings)
 	setting.POST("/reset_token", handles.ResetToken)
 
+	index := g.Group("/index")
+	index.GET("/progress", handles.GetIndexProgress)
+	index.POST("/build", handles.BuildSearchIndex)
+	index.POST("/stop", handles.StopIndexBuild)
+
+	scan := g.Group("/scan")
+	scan.GET("/progress", handles.GetManualScanProgress)
+	scan.POST("/start", handles.StartManualScan)
+	scan.POST("/stop", handles.StopManualScan)
+
 	// retain /admin/task API to ensure compatibility with legacy automation scripts
 	_task(g.Group("/task"))
 }

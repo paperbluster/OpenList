@@ -32,7 +32,13 @@ func Search(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(c, 30*time.Second)
 	defer cancel()
 
-	allResults, err := op.SearchFiles(ctx, parent, req.Keywords, req.Scope)
+	// Use separate word search (concurrent) if requested
+	var allResults []model.SearchNode
+	if req.SeparateWordSearch {
+		allResults, err = op.SearchFilesSeparate(ctx, parent, req.Keywords, req.Scope)
+	} else {
+		allResults, err = op.SearchFiles(ctx, parent, req.Keywords, req.Scope)
+	}
 	if err != nil {
 		common.ErrorResp(c, err, 500)
 		return
@@ -41,7 +47,6 @@ func Search(c *gin.Context) {
 	// Filter by user's base path
 	var filtered []model.SearchNode
 	for _, node := range allResults {
-		// Respect hide settings
 		if !strings.HasPrefix(node.Parent, user.BasePath) {
 			continue
 		}

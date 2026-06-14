@@ -1,16 +1,21 @@
 # OpenList
 
-多存储文件列表程序，支持将各类网盘和存储协议统一挂载到一个目录树下，通过 Web 界面管理。
+局域网多存储文件管理程序，将本地目录、WebDAV、远端 OpenList 统一挂载到一个目录树下，通过 Web 界面管理。
+
+## 用途
+
+- 局域网内集中管理多个 NAS / 文件服务器
+- 将分散的 WebDAV、OpenList 远端聚合为统一入口
+- 轻量部署，适合家庭/小型办公环境
 
 ## 支持的存储
 
 | 类型 | 驱动 |
 |---|---|
-| 标准协议 | FTP, SFTP, SMB/CIFS, WebDAV |
-| 对象存储 | S3 (及兼容), Azure Blob, 又拍云 USS |
-| 开放平台 | OpenList, AList v3, Cloudreve v3/v4 |
-| 网盘 | PikPak, PikPak 分享 |
-| 本地/虚拟 | 本地存储, 别名(快捷方式), 加密存储, URL 树, .strm 流媒体索引, 虚拟聚合 |
+| 本地 | 本地目录 |
+| 协议 | WebDAV |
+| 远端 | OpenList, OpenList 分享, AList v3 |
+| 虚拟 | 别名(快捷方式), 虚拟聚合, 自动索引 |
 
 ## 项目结构
 
@@ -24,7 +29,7 @@
 └── main.go         ← 入口
 ```
 
-## 快速开始（本地开发）
+## 快速开始
 
 ```bash
 # 1. 构建前端
@@ -35,100 +40,65 @@ pnpm install && pnpm build
 cd ..
 go build -ldflags="-w -s" -tags=jsoniter -o openlist .
 mkdir -p data
-./openlist server --debug
+./openlist server
 ```
 
-> 访问：**http://localhost:5244**，管理后台：**http://localhost:5244/@manage**
+访问：**http://localhost:5244**，管理后台：**http://localhost:5244/@manage**
 
 ## Docker 部署
 
-### 编译镜像
-
 ```bash
+# 编译
 docker build --network host -t openlist .
-```
 
-> **必须使用 `--network host`**，容器内访问外网依赖宿主机网络。
-
-### 启动
-
-**方式一：docker compose（推荐）**
-
-```bash
-docker compose up -d
-```
-
-**方式二：docker run（host 网络模式）**
-
-```bash
+# 启动（host 网络模式，推荐局域网使用）
 docker run -d \
   --name openlist \
   --network host \
   --restart always \
-  -v /mnt/alist:/opt/openlist/data \
+  -v /mnt/data:/opt/openlist/data \
   -e TZ=Asia/Shanghai \
   openlist
-```
 
-**方式三：docker run（桥接模式 + 端口映射）**
-
-```bash
+# 或桥接模式
 docker run -d \
   --name openlist \
   -p 5244:5244 \
   --restart always \
-  -v /mnt/alist:/opt/openlist/data \
+  -v /mnt/data:/opt/openlist/data \
   -e TZ=Asia/Shanghai \
   openlist
 ```
 
-> **挂载说明**：`/mnt/alist` 为宿主机数据目录，可按需替换；Windows 下改用 `D:/mnt/alist` 风格路径。
->
-> **常用管理命令**：
-> ```bash
-> docker logs -f openlist   # 查看日志
-> docker restart openlist   # 重启容器
-> docker stop openlist      # 停止容器
-> docker rm openlist        # 删除容器
-> docker exec -it openlist sh   # 进入容器
-> ```
-
-
-
-## 访问
-
-启动后访问：**`http://localhost:5244`**
-
-首次使用需设置管理员密码，访问管理后台：**`http://localhost:5244/@manage`**
+常用管理命令：
+```bash
+docker logs -f openlist    # 查看日志
+docker restart openlist    # 重启
+docker stop openlist       # 停止
+docker exec -it openlist sh  # 进入容器
+```
 
 ## 挂载存储
 
-1. 访问管理后台，点击左侧 `存储` → `添加`
-2. 选择驱动类型，填写必需参数（挂载路径必填，其他根据驱动提示填写）
-3. 保存后即可在主页浏览该存储
+1. 访问管理后台，点击 `存储` → `添加`
+2. 选择驱动类型，填写挂载路径和参数
+3. 保存后即可在主页浏览
 
-常见配置示例：
+常见配置：
 
 | 存储类型 | 关键参数 |
 |---|---|
 | 本地目录 | 挂载路径 + 本地文件夹路径 |
-| S3 | `AccessKey`, `SecretKey`, `Endpoint`, `Bucket` |
 | WebDAV | 挂载路径 + WebDAV 地址 + 用户名密码 |
-| SFTP | 挂载路径 + 主机地址 + 端口 + 用户名密码 |
-| FTP | 挂载路径 + 主机地址 + 端口 + 用户名密码 |
-| SMB | 挂载路径 + 共享地址 + 用户名密码 |
-| Azure Blob | 挂载路径 + AccessKey + 容器名 |
-| PiKpak | 挂载路径 + 用户名密码 |
+| OpenList 远端 | 挂载路径 + 远端地址 + 用户名密码 |
+| AList v3 远端 | 挂载路径 + 远端地址 + 用户名密码 |
 
-所有参数可通过 API 或管理界面配置，支持在运行中动态添加/修改/删除挂载。
+支持运行时动态添加/修改/删除挂载。
 
 ## 命令行
 
 ```
-./openlist server          # 前台启动
-./openlist start           # 后台守护启动
-./openlist stop            # 停止
-./openlist restart         # 重启
-./openlist admin           # 管理管理员账号
-./openlist --help          # 查看所有命令
+./openlist server      # 前台启动
+./openlist admin       # 管理管理员账号
+./openlist --help      # 查看所有命令
 ```
