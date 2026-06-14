@@ -145,3 +145,24 @@ func DeleteSetting(c *gin.Context) {
 func PublicSettings(c *gin.Context) {
 	common.SuccessResp(c, op.GetPublicSettingsMap())
 }
+
+func PublicArchiveExtensions(c *gin.Context) {
+	common.SuccessResp(c, []string{
+		".7z",
+		".bz2",
+		".cab",
+		".gz",
+		".iso",
+		".lzh",
+		".rar",
+		".tar",
+		".tar.bz2",
+		".tar.gz",
+		".tar.xz",
+		".tbz2",
+		".tgz",
+		".txz",
+		".xz",
+		".zip",
+	})
+}
