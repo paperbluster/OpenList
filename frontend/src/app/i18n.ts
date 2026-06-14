@@ -22,7 +22,7 @@ const defaultLang =
   languages.find(
     (lang) => lang.code.toLowerCase().split("-")[0] === userLang.split("-")[0],
   )?.code ||
-  "en"
+  "zh-CN"
 
 // Get initial language from localStorage or fallback to defaultLang
 export let initialLang = localStorage.getItem("lang") ?? defaultLang

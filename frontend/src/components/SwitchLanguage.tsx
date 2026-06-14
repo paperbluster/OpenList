@@ -29,7 +29,7 @@ export const SwitchLanguage = <C extends ElementType = "button">(
     switchLang(
       languages.find((l) => l.code === navigator.language)
         ? navigator.language
-        : "en",
+        : "zh-CN",
     )
   }
 
