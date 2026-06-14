@@ -4,7 +4,7 @@ import "solid-contextmenu/dist/style.css"
 import { HStack, Icon, Text, useColorMode, Image } from "@hope-ui/solid"
 import { operations } from "../toolbar/operations"
 import { For, Show } from "solid-js"
-import { bus, convertURL, joinBase, notify, torrentParse } from "~/utils"
+import { bus, convertURL, joinBase, notify } from "~/utils"
 import { ObjType, UserMethods } from "~/types"
 import {
   getSettingBool,
@@ -88,51 +88,6 @@ export const ContextMenu = () => {
         }}
       >
         <ItemContent name="decompress" />
-      </Item>
-      <Item
-        hidden={() => {
-          return (
-            isShare() ||
-            !userCan("offline_download") ||
-            !objStore.write ||
-            !oneChecked() ||
-            selectedObjs().some((o) => o.is_dir) ||
-            !selectedObjs().every((o) =>
-              o.name.toLowerCase().endsWith(".torrent"),
-            )
-          )
-        }}
-        onClick={async () => {
-          const obj = selectedObjs()[0]
-          if (!obj) return
-          try {
-            // 获取 torrent 文件的下载链接并下载内容
-            const link = rawLink(obj, false)
-            const resp = await axios.get(link, { responseType: "arraybuffer" })
-            const buffer = resp.data as ArrayBuffer
-            const bytes = new Uint8Array(buffer)
-            let binary = ""
-            for (let i = 0; i < bytes.byteLength; i++) {
-              binary += String.fromCharCode(bytes[i])
-            }
-            const base64Data = btoa(binary)
-
-            // 调用解析 API
-            const parseResp = await torrentParse(base64Data)
-            if (parseResp.code === 200) {
-              bus.emit("torrent_parsed", {
-                torrentData: base64Data,
-                info: parseResp.data,
-              })
-            } else {
-              notify.error(parseResp.message || "解析 torrent 失败")
-            }
-          } catch (err) {
-            notify.error(`解析 torrent 失败: ${err}`)
-          }
-        }}
-      >
-        <ItemContent name="offline_download_torrent" />
       </Item>
       <Show when={oneChecked()}>
         <Item

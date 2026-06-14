@@ -9,9 +9,6 @@ import {
   RenameObj,
   ArchiveMeta,
   PPageResp,
-  TorrentInfo,
-  TorrentUploadParseResult,
-  TorrentRapidUploadResult,
 } from "~/types"
 import { r } from "."
 
@@ -287,23 +284,3 @@ export const updateIndex = async (paths = [], max_depth = -1): PEmptyResp => {
   })
 }
 
-// ========== Torrent 相关 API ==========
-
-export const torrentParse = (torrent_data: string): PResp<TorrentInfo> => {
-  return r.post("/fs/torrent/parse", { torrent_data })
-}
-
-export const torrentUploadParse = (
-  file: File,
-): PResp<TorrentUploadParseResult> => {
-  const formData = new FormData()
-  formData.append("torrent", file)
-  return r.post("/fs/torrent/upload_parse", formData)
-}
-
-export const torrentRapidUpload = (
-  torrent_data: string,
-  path: string,
-): PResp<TorrentRapidUploadResult> => {
-  return r.post("/fs/torrent/rapid_upload", { torrent_data, path })
-}
