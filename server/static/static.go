@@ -100,6 +100,7 @@ func initIndex(siteConfig SiteConfig) {
 	replaceMap := map[string]string{
 		"cdn: undefined":                    fmt.Sprintf("cdn: '%s'", siteConfig.Cdn),
 		"base_path: undefined":              fmt.Sprintf("base_path: '%s'", siteConfig.BasePath),
+		"api: undefined":                    fmt.Sprintf("api: '%s'", siteConfig.BasePath),
 		`href="/manifest.json"`:             fmt.Sprintf(`href="%s"`, manifestPath),
 	}
 	conf.RawIndexHtml = replaceStrings(conf.RawIndexHtml, replaceMap)

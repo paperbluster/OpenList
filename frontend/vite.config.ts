@@ -16,7 +16,9 @@ export default defineConfig({
     solidPlugin(),
     dynamicBase({
       // dynamic public path var string, default window.__dynamic_base__
-      publicPath: "window.__dynamic_base__",
+      // Normalize: strip trailing "/" to prevent "//" (protocol-relative URL)
+      // when __dynamic_base__ is "/" or ends with "/"
+      publicPath: "(window.__dynamic_base__||'').replace(/\\/$/,'')",
       // dynamic load resources on index.html, default false. maybe change default true
       transformIndexHtml: true,
       transformIndexHtmlConfig: {
