@@ -1,0 +1,32 @@
+{
+  "add_path": "添加路径",
+  "copy_msg": "已复制分享信息",
+  "expires": "过期时间",
+  "extract_folder": "提取到文件夹",
+  "extract_folders": {
+    "back": "后方提取",
+    "front": "前方提取"
+  },
+  "files_etc": "个文件等",
+  "files_placeholder": "拖拽文件到此处",
+  "header": "分享管理",
+  "id": "分享 ID",
+  "id_placeholder": "分享 ID（留空自动生成）",
+  "input_password": "请输入访问密码",
+  "max_accessed": "最大访问次数",
+  "no_permission_tip": "你没有此分享的访问权限",
+  "order_by": "排序字段",
+  "order_bys": {
+    "modified": "修改时间",
+    "name": "名称",
+    "size": "大小"
+  },
+  "order_direction": "排序方向",
+  "order_directions": {
+    "asc": "升序",
+    "desc": "降序"
+  },
+  "pwd": "访问密码",
+  "readme": "自述文件",
+  "remark": "备注"
+}

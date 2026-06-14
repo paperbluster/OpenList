@@ -1,0 +1,14 @@
+{
+  "backup": "备份",
+  "failed_backup_item": "个备份失败",
+  "failed_restore_item": "个恢复失败",
+  "finish_backup": "备份完成",
+  "finish_restore": "恢复完成",
+  "no_file": "没有文件",
+  "restore": "恢复",
+  "start_backup": "开始备份",
+  "start_restore": "开始恢复",
+  "success_backup_item": "个备份成功",
+  "success_restore_item": "个恢复成功",
+  "wrong_encrypt_password": "加密密码错误"
+}

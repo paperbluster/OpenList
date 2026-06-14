@@ -23,8 +23,12 @@ output/
 /bin/*
 *.json
 !frontend/package.json
+!frontend/tsconfig.json
 !frontend/pnpm-lock.yaml
 !frontend/src/lang/en/*.json
+!frontend/src/lang/zh-CN/*.json
+!frontend/public/static/manifest.json
+!public/builtin_static/pdf.js/web/locale/locale.json
 /build
 /data/
 /tmp/

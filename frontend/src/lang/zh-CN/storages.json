@@ -1,0 +1,18 @@
+{
+  "common": {
+    "export": "导出",
+    "export_tips": "确认导出所有存储配置？",
+    "export_title": "导出存储配置",
+    "import": "导入",
+    "import_success": "导入成功",
+    "import_tips": "选择配置文件进行导入",
+    "import_title": "导入存储配置",
+    "status": "状态"
+  },
+  "other": {
+    "filter_by_driver": "按驱动筛选",
+    "load_all": "加载全部",
+    "start_load_success": "已开始加载所有存储",
+    "table_layout": "表格布局"
+  }
+}

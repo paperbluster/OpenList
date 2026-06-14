@@ -1,0 +1,89 @@
+{
+  "fetching_settings_failed": "获取站点设置失败",
+  "get_current_user_failed": "获取当前用户信息失败",
+  "input_password": "输入密码",
+  "load_more": "加载更多",
+  "no_images": "暂无图片",
+  "no_more": "没有更多了",
+  "footer": {
+    "powered_by": "由 OpenList 驱动"
+  },
+  "conflict_policy": {
+    "cancel_if_exists": "存在则取消",
+    "merge": "合并",
+    "overwrite_existing": "覆盖已存在文件",
+    "skip_existing": "跳过已存在文件"
+  },
+  "package_download": {
+    "downloading": "正在打包下载...",
+    "failed": "打包下载失败",
+    "fetching_struct": "正在获取目录结构...",
+    "fetching_struct_failed": "获取目录结构失败",
+    "initializing": "正在初始化...",
+    "success": "打包下载成功"
+  },
+  "preview": {
+    "auto_next": "自动播放下一个",
+    "download": "下载",
+    "failed_load_img": "图片加载失败",
+    "names": {
+      "download": "下载"
+    },
+    "open_with": "用其他应用打开",
+    "play_with": "用其他播放器播放"
+  },
+  "search": {
+    "no_result": "无搜索结果",
+    "search": "搜索"
+  },
+  "toolbar": {
+    "archive": {
+      "extract_header": "解压选项"
+    },
+    "aria2_not_set": "未配置 Aria2",
+    "batch_download": "批量下载",
+    "batch_rename": "批量重命名",
+    "choose_dst_folder": "选择目标文件夹",
+    "copy_link": "复制链接",
+    "delete": "删除",
+    "delete-tips": "是否确认删除所选项目？此操作不可撤销。",
+    "down_link": "下载链接",
+    "encode_down_link": "编码下载链接",
+    "find_replace": "查找替换",
+    "find_replace_desc": "查找指定文本并替换",
+    "input_dir_name": "输入文件夹名称",
+    "local_settings": "本地设置",
+    "mkdir": "新建文件夹",
+    "no_selected": "未选中任何项目",
+    "package_download": "打包下载",
+    "package_download_disabled": "打包下载功能未启用",
+    "playlist_download": "播放列表下载",
+    "pre_package_download-tips": "即将打包下载所选文件，是否继续？",
+    "preview_page": "预览页",
+    "recursive_move": "递归移动",
+    "recursive_move_directory-tips": "此操作将递归移动整个目录结构，是否继续？",
+    "regex_rename": "正则重命名",
+    "regex_rename_preview": "重命名预览",
+    "regex_rename_preview_new_name": "新名称",
+    "regex_rename_preview_old_name": "旧名称",
+    "regular_rename": "常规重命名",
+    "remove_empty_directory": "清理空文件夹",
+    "remove_empty_directory-tips": "是否确认清理当前目录下的所有空文件夹？",
+    "send_aria2": "发送到 Aria2",
+    "send_aria2_success": "已发送到 Aria2",
+    "sequential_renaming": "序号重命名",
+    "sequential_renaming_desc": "按顺序自动编号重命名",
+    "share": "分享"
+  },
+  "upload": {
+    "add_as_task": "添加为后台任务",
+    "back": "返回",
+    "clear_done": "清除已完成",
+    "no_files_drag": "拖拽文件到此处上传",
+    "release": "释放",
+    "try_rapid": "尝试秒传",
+    "upload_files": "上传文件",
+    "upload_folder": "上传文件夹",
+    "upload-tips": "将文件拖拽到此处或点击上传"
+  }
+}

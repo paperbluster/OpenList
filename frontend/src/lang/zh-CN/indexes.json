@@ -1,0 +1,19 @@
+{
+  "clear": "清除索引",
+  "current": "当前进度",
+  "error": "错误",
+  "idle": "空闲",
+  "index_header": "索引管理",
+  "last_done_time": "上次完成时间",
+  "max_depth": "最大深度",
+  "obj_count": "对象数量",
+  "path_to_scan": "扫描路径",
+  "paths_to_update": "更新路径",
+  "rate_limit": "速率限制",
+  "running": "运行中",
+  "scan_header": "扫描管理",
+  "start": "开始",
+  "stop": "停止",
+  "task_status": "任务状态",
+  "unknown": "未知"
+}
