@@ -9,3 +9,15 @@ frontend/node_modules
 frontend/dist
 # 排除日志
 1.txt
+# IDE / AI 助手工作区
+.claude/
+# 备份文件
+go.mod.bak
+*.bak
+# 开发源码(构建用的是同目录下 .tgz)
+frontend/package/
+# 脚本和 CI 配置(镜像内不需要)
+build.sh
+Dockerfile.ci
+docker-compose.yml
+renovate.json
