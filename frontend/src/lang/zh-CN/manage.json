@@ -9,6 +9,8 @@
   "received_msgs": "已接收的消息",
   "send": "发送",
   "sidemenu": {
+    "dashboard": "仪表盘",
+    "backup-restore": "备份恢复",
     "profile": "个人信息",
     "settings": "设置",
     "site": "站点",

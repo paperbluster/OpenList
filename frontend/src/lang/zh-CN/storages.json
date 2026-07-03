@@ -1,5 +1,6 @@
 {
   "common": {
+    "driver": "驱动",
     "export": "导出",
     "export_tips": "确认导出所有存储配置？",
     "export_title": "导出存储配置",
@@ -7,7 +8,11 @@
     "import_success": "导入成功",
     "import_tips": "选择配置文件进行导入",
     "import_title": "导入存储配置",
-    "status": "状态"
+    "mount_path": "挂载路径",
+    "order": "排序",
+    "remark": "备注",
+    "status": "状态",
+    "usage": "用量"
   },
   "other": {
     "filter_by_driver": "按驱动筛选",

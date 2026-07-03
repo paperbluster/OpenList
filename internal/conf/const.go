@@ -12,7 +12,6 @@ const (
 	// site
 	VERSION      = "version"
 	SiteTitle    = "site_title"
-	Announcement = "announcement"
 	AllowIndexed = "allow_indexed"
 	AllowMounted = "allow_mounted"
 	RobotsTxt    = "robots_txt"

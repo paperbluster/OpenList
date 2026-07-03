@@ -2,6 +2,8 @@
   "retry": "重试",
   "undone": "进行中",
   "done": "已完成",
+  "fold": "折叠",
+  "expand": "展开",
   "retry_failed": "重试失败任务",
   "clear_succeeded": "清除已完成",
   "retry_selected": "重试选中",
@@ -20,6 +22,32 @@
     "creator": "创建者",
     "state": "状态",
     "progress": "进度",
-    "operations": "操作"
+    "operations": "操作",
+    "operation": "操作",
+    "speed": "速度",
+    "status": "状态",
+    "err": "错误信息",
+    "time_elapsed": "耗时",
+    "copy": {
+      "src": "源路径",
+      "dst": "目标路径"
+    },
+    "decompress": {
+      "src": "源路径",
+      "dst": "目标路径",
+      "inner": "内部路径",
+      "password": "密码"
+    },
+    "upload": {
+      "path": "目标路径"
+    }
+  },
+  "state": {
+    "0": "等待中",
+    "1": "运行中",
+    "2": "成功",
+    "3": "取消中",
+    "4": "已取消",
+    "5": "失败"
   }
 }
