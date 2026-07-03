@@ -65,7 +65,7 @@ docker run -d \
   --name openlist \
   -p 5244:5244 \
   --restart always \
-  -v /mnt/data:/opt/openlist/data \
+  -v /mnt/alist:/opt/openlist/data \
   -e TZ=Asia/Shanghai \
   openlist
 ```
