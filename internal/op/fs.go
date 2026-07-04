@@ -181,7 +181,7 @@ func Get(ctx context.Context, storage driver.Driver, path string, excludeTempObj
 
 	// get the obj directly without list so that we can reduce the io
 	if g, ok := storage.(driver.Getter); ok {
-		obj, err := g.Get(ctx, path)
+		obj, err := g.Get(ctx, strings.TrimPrefix(path, "/"))
 		if err == nil {
 			return obj, nil
 		}

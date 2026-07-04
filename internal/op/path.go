@@ -26,5 +26,9 @@ func GetStorageAndActualPath(rawPath string) (storage driver.Driver, actualPath 
 	log.Debugln("use storage: ", storage.GetStorage().MountPath)
 	mountPath := utils.GetActualMountPath(storage.GetStorage().MountPath)
 	actualPath = utils.FixAndCleanPath(strings.TrimPrefix(rawPath, mountPath))
+	// Strip leading "/" so the path is relative to the storage root.
+	// filepath.Join treats a "/" prefix as an absolute path on Unix,
+	// which would discard the storage root path.
+	actualPath = strings.TrimPrefix(actualPath, "/")
 	return
 }

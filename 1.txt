@@ -1,206 +1,210 @@
-console.log('OPENLIST_CONFIG:', JSON.stringify(window.OPENLIST_CONFIG))
-VM1414:1 OPENLIST_CONFIG: {"cdn":"","base_path":"/","api":"/","main_color":"#1890ff"}
+dependencies:
++ @hope-ui/solid 0.6.7
++ @jellyfin/libass-wasm 4.2.4
++ @monaco-editor/loader 1.7.0
++ @solid-primitives/i18n 2.2.1
++ @solid-primitives/storage 1.3.11 (4.3.4 is available)
++ @solidjs/router 0.9.1 (0.16.1 is available)
++ @stitches/core 1.2.8
++ @viselect/vanilla 3.9.0
++ aplayer 1.10.1
++ artplayer 5.4.0
++ artplayer-plugin-danmuku 5.3.0
++ axios 1.16.1 (1.18.1 is available)
++ chardet 2.1.1 (2.2.0 is available)
++ clsx 2.1.1
++ copy-to-clipboard 3.3.3 (4.0.2 is available)
++ crypto-js 4.2.0
++ handlebars 4.7.9
++ hash-wasm 4.12.0
++ highlight.js 11.11.1
++ hls.js 1.6.16
++ lightgallery 2.9.0
++ mark.js 8.11.1
++ mitt 3.0.1
++ mpegts.js 1.8.1
++ qrcode 1.5.4
++ rehype-raw 7.0.0
++ rehype-sanitize 6.0.0
++ remark-gfm 4.0.1
++ seemly 0.3.10
++ sha256 0.2.0
++ solid-contextmenu 0.0.2
++ solid-icons 1.1.0 (1.2.0 is available)
++ solid-js 1.9.13 (1.9.14 is available)
++ solid-motionone 1.0.4
++ solid-transition-group 0.3.0
++ streamsaver 2.0.6
++ typescript-natural-sort 0.7.2
 
-fetch('/api/public/settings').then(r=>r.json()).then(d=>console.log('API response:', d)).catch(e=>console.error('API error:', e))
-Promise {<pending>}
-VM1460:1 API response: 
-{code: 200, message: 'success', data: {…}}
-code
-: 
-200
-data
-: 
-allow_indexed
-: 
-"false"
-allow_mounted
-: 
-"true"
-announcement
-: 
-"Welcome to the OpenList project!\nFor the latest updates, to contribute code, or to submit suggestions and issues, please visit our [project repository](https://github.com/OpenListTeam/OpenList)."
-audio_autoplay
-: 
-"true"
-audio_cover
-: 
-"/builtin_static/logo/logo.svg"
-default_page_size
-: 
-"30"
-favicon
-: 
-"/builtin_static/logo/logo.svg"
-filename_char_mapping
-: 
-"{\"/\": \"|\"}"
-filter_readme_scripts
-: 
-"true"
-forward_direct_link_params
-: 
-"false"
-hide_files
-: 
-"/\\/README.md/i"
-home_container
-: 
-"max_980px"
-home_icon
-: 
-"🏠"
-ignore_direct_link_params
-: 
-"sign,openlist_ts,raw"
-logo
-: 
-"/builtin_static/logo/logo.svg"
-main_color
-: 
-"#1890ff"
-non_efs_zip_encoding
-: 
-"IBM437"
-ocr_api
-: 
-"https://openlistteam-ocr-api-server.hf.space/ocr/file/json"
-package_download
-: 
-"true"
-pagination_type
-: 
-"all"
-preview_download_by_default
-: 
-"false"
-readme_autorender
-: 
-"true"
-robots_txt
-: 
-"User-agent: *\nAllow: /"
-settings_layout
-: 
-"list"
-share_archive_preview
-: 
-"false"
-share_icon
-: 
-"🎁"
-share_preview
-: 
-"false"
-share_preview_download_by_default
-: 
-"true"
-share_summary_content
-: 
-"@{{creator}} shared {{#each files}}{{#if @first}}\"{{filename this}}\"{{/if}}{{#if @last}}{{#unless (eq @index 0)}} and {{@index}} more files{{/unless}}{{/if}}{{/each}} from {{site_title}}: {{base_url}}/@s/{{id}}{{#if pwd}} , the share code is {{pwd}}{{/if}}{{#if expires}}, please access before {{dateLocaleString expires}}.{{/if}}"
-show_disk_usage_in_plain_text
-: 
-"false"
-site_title
-: 
-"OpenList"
-version
-: 
-"dev (Commit: unknown) - Frontend: rolling - Build at: unknown"
-video_autoplay
-: 
-"true"
-[[Prototype]]
-: 
-Object
-constructor
-: 
-ƒ Object()
-hasOwnProperty
-: 
-ƒ hasOwnProperty()
-isPrototypeOf
-: 
-ƒ isPrototypeOf()
-propertyIsEnumerable
-: 
-ƒ propertyIsEnumerable()
-toLocaleString
-: 
-ƒ toLocaleString()
-toString
-: 
-ƒ toString()
-valueOf
-: 
-ƒ valueOf()
-__defineGetter__
-: 
-ƒ __defineGetter__()
-__defineSetter__
-: 
-ƒ __defineSetter__()
-__lookupGetter__
-: 
-ƒ __lookupGetter__()
-__lookupSetter__
-: 
-ƒ __lookupSetter__()
-__proto__
-: 
-（…）
-get __proto__
-: 
-ƒ __proto__()
-set __proto__
-: 
-ƒ __proto__()
-message
-: 
-"success"
-[[Prototype]]
-: 
-Object
-constructor
-: 
-ƒ Object()
-hasOwnProperty
-: 
-ƒ hasOwnProperty()
-isPrototypeOf
-: 
-ƒ isPrototypeOf()
-propertyIsEnumerable
-: 
-ƒ propertyIsEnumerable()
-toLocaleString
-: 
-ƒ toLocaleString()
-toString
-: 
-ƒ toString()
-valueOf
-: 
-ƒ valueOf()
-__defineGetter__
-: 
-ƒ __defineGetter__()
-__defineSetter__
-: 
-ƒ __defineSetter__()
-__lookupGetter__
-: 
-ƒ __lookupGetter__()
-__lookupSetter__
-: 
-ƒ __lookupSetter__()
-__proto__
-: 
-（…）
-get __proto__
-: 
-ƒ __proto__()
-set __proto__
-: 
-ƒ __proto__()
-VM1460:1 Fetch 已完成加载：GET“http://192.168.5.1:5244/api/public/settings”。
-（匿名）  @ VM1460:1
+devDependencies:
++ @crowdin/cli 4.14.2 (4.14.3 is available)
++ @types/crypto-js 4.2.2
++ @types/mark.js 8.11.12
++ @types/node 24.12.4 (26.1.0 is available)
++ @types/qrcode 1.5.6
++ @types/sha256 0.2.2
++ @types/streamsaver 2.0.5
++ cross-env 10.1.0
++ lint-staged 17.0.5 (17.0.8 is available)
++ prettier 3.8.3 (3.9.4 is available)
++ rehype-stringify 10.0.1
++ remark-parse 11.0.0
++ remark-rehype 11.1.2
++ typescript 5.9.3 (6.0.3 is available)
++ unified 11.0.5
++ vite 8.0.16 (8.1.3 is available)
++ vite-plugin-dynamic-base 1.4.1
++ vite-plugin-solid 2.11.12
++ vite-plugin-static-copy 3.4.0 (4.1.1 is available)
+
+Done in 3m 48.8s using pnpm v11.5.1
+$ vite build
+vite v8.0.16 building client environment for production...
+transforming...✓ 1011 modules transformed.
+rendering chunks...
+[vite-plugin-static-copy] Copied 4 items.
+computing gzip size...
+dist/index.html                              3.01 kB │ gzip:   1.18 kB
+dist/assets/loading-BZOHaeKn.gif             4.17 kB
+dist/assets/lg-oyjwlqP2.ttf                  4.75 kB
+dist/assets/lg-CosQH4Cu.woff                 4.83 kB
+dist/assets/lg-B0dIV2BS.svg                 12.83 kB │ gzip:   4.64 kB
+dist/assets/video-x1XGuNl0.css               0.00 kB │ gzip:   0.02 kB
+dist/assets/audio-D2xTIAPD.css              12.34 kB │ gzip:   2.47 kB
+dist/assets/index-DbxPewMQ.css              18.64 kB │ gzip:   4.07 kB
+dist/assets/Folder-Ci4xnUtD.css             34.02 kB │ gzip:   8.50 kB
+dist/assets/en-Cb1udzIe.js                   0.04 kB │ gzip:   0.06 kB
+dist/assets/zh-CN-D-PZzeBc.js                0.04 kB │ gzip:   0.06 kB
+dist/assets/download-DIfBIygB.js             0.07 kB │ gzip:   0.08 kB
+dist/assets/obj-DWV_HR7P.js                  0.17 kB │ gzip:   0.15 kB
+dist/assets/entry-CbDUiTsN.js                0.19 kB │ gzip:   0.15 kB
+dist/assets/test-Dl3Kjgmi.js                 0.23 kB │ gzip:   0.19 kB
+dist/assets/Upload-DGeMNfv3.js               0.33 kB │ gzip:   0.26 kB
+dist/assets/setting-D8ytu8ip.js              0.39 kB │ gzip:   0.24 kB
+dist/assets/ResponsiveGrid-hR1DQg_6.js       0.44 kB │ gzip:   0.32 kB
+dist/assets/Move-BGrjR8Ei.js                 0.44 kB │ gzip:   0.31 kB
+dist/assets/Copy-qzFDVSyR.js                 0.45 kB │ gzip:   0.32 kB
+dist/assets/html-_H-m94U3.js                 0.64 kB │ gzip:   0.38 kB
+dist/assets/operations-B2MAv2rd.js           0.64 kB │ gzip:   0.34 kB
+dist/assets/DeletePopover-CdM8QlR2.js        0.66 kB │ gzip:   0.32 kB
+dist/assets/ri-CTlpGmoq.js                   0.81 kB │ gzip:   0.41 kB
+dist/assets/Grid-CL4xuinA.js                 0.82 kB │ gzip:   0.50 kB
+dist/assets/image-lLhxCsm_.js                0.86 kB │ gzip:   0.49 kB
+dist/assets/Password-Bo1Q4ibg.js             0.94 kB │ gzip:   0.51 kB
+dist/assets/im-Co5dzuJd.js                   0.97 kB │ gzip:   0.48 kB
+dist/assets/2fa-DfTzfk2Z.js                  1.24 kB │ gzip:   0.66 kB
+dist/assets/GridItem-FZ-Z3Rni.js             2.56 kB │ gzip:   1.23 kB
+dist/assets/Users-D8R0WpfC.js                2.63 kB │ gzip:   1.02 kB
+dist/assets/Images-D2HtDRMa.js               3.18 kB │ gzip:   1.42 kB
+dist/assets/AddOrEdit-DEtiBjLx.js            3.35 kB │ gzip:   1.17 kB
+dist/assets/Common-DTVmKQjY.js               3.69 kB │ gzip:   1.36 kB
+dist/assets/PublicKeys-BmzPNgyT.js           3.83 kB │ gzip:   1.32 kB
+dist/assets/cg-uHvfnuMj.js                   3.98 kB │ gzip:   1.16 kB
+dist/assets/Shares-XHG4r_lM.js               4.04 kB │ gzip:   1.49 kB
+dist/assets/Storages-72s_Uz1X.js             5.55 kB │ gzip:   1.81 kB
+dist/assets/List-BELypiMh.js                 5.94 kB │ gzip:   2.43 kB
+dist/assets/Profile-BAuSbJYG.js              6.06 kB │ gzip:   2.12 kB
+dist/assets/AddOrEdit-CJpEdbyB.js            6.19 kB │ gzip:   1.81 kB
+dist/assets/AddOrEdit-BR96htPP.js            6.29 kB │ gzip:   2.01 kB
+dist/assets/icon-Ct13oZSl.js                 8.06 kB │ gzip:   3.28 kB
+dist/assets/login-BSr0aTA1.js                8.08 kB │ gzip:   3.22 kB
+dist/assets/manage-BTDbAi8t.js               9.03 kB │ gzip:   3.01 kB
+dist/assets/PackageDownload-D_asvx7r.js      9.15 kB │ gzip:   3.88 kB
+dist/assets/helper-BkOwtR2Y.js              10.90 kB │ gzip:   3.56 kB
+dist/assets/helper-YxMzCTk5.js              14.87 kB │ gzip:   5.21 kB
+dist/assets/entry-AMlHMM0e.js               15.60 kB │ gzip:   6.71 kB
+dist/assets/File-CaP-wBGq.js                27.83 kB │ gzip:  10.62 kB
+dist/assets/Upload-DfOO492H.js              41.13 kB │ gzip:  16.16 kB
+dist/assets/Layout-BvZ9L7rL.js              45.18 kB │ gzip:  12.82 kB
+dist/assets/audio-tfK04TeE.js               60.83 kB │ gzip:  14.79 kB
+dist/assets/Folder-BBKXuiMv.js             113.59 kB │ gzip:  30.32 kB
+dist/assets/video_box-CtYsUqTw.js          144.51 kB │ gzip:  38.30 kB
+dist/assets/store-BNovaJ3A.js              507.91 kB │ gzip: 152.90 kB
+dist/assets/video-C9V2w90b.js              864.93 kB │ gzip: 242.54 kB
+dist/assets/index-CRV7MluJ.js            1,372.54 kB │ gzip: 445.88 kB
+
+
+go: downloading github.com/go-resty/resty/v2 v2.16.5
+go: downloading github.com/sirupsen/logrus v1.9.3
+go: downloading github.com/spf13/cobra v1.10.2
+go: downloading github.com/pkg/errors v0.9.1
+go: downloading github.com/OpenListTeam/go-cache v0.1.0
+go: downloading github.com/antchfx/htmlquery v1.3.5
+go: downloading github.com/antchfx/xpath v1.3.5
+go: downloading github.com/avast/retry-go v3.0.0+incompatible
+go: downloading github.com/OpenListTeam/reflink v0.0.0-20260520031008-ed3c0dbe8009
+go: downloading github.com/OpenListTeam/times v0.1.0
+go: downloading github.com/disintegration/imaging v1.6.2
+go: downloading golang.org/x/image v0.29.0
+go: downloading golang.org/x/net v0.48.0
+go: downloading golang.org/x/sys v0.40.0
+go: downloading github.com/OpenListTeam/tache v0.2.2
+go: downloading gorm.io/gorm v1.25.11
+go: downloading github.com/caarlos0/env/v9 v9.0.0
+go: downloading github.com/gin-gonic/gin v1.10.1
+go: downloading github.com/google/uuid v1.6.0
+go: downloading github.com/natefinch/lumberjack v2.0.0+incompatible
+go: downloading github.com/shirou/gopsutil/v4 v4.25.5
+go: downloading golang.org/x/time v0.14.0
+go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+go: downloading gorm.io/driver/sqlite v1.5.6
+go: downloading github.com/dlclark/regexp2 v1.11.5
+go: downloading github.com/json-iterator/go v1.1.12
+go: downloading github.com/maruel/natural v1.1.1
+go: downloading github.com/microcosm-cc/bluemonday v1.0.27
+go: downloading github.com/go4org/go4 v0.0.0-20260112195520-a5071408f32f
+go: downloading github.com/bmatcuk/doublestar/v4 v4.9.1
+go: downloading github.com/golang-jwt/jwt/v4 v4.5.2
+go: downloading github.com/inconshreveable/mousetrap v1.1.0
+go: downloading github.com/spf13/pflag v1.0.10
+go: downloading github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
+go: downloading github.com/gin-contrib/cors v1.7.6
+go: downloading github.com/OpenListTeam/gsync v0.1.0
+go: downloading github.com/matoous/go-nanoid/v2 v2.1.0
+go: downloading github.com/jinzhu/now v1.1.5
+go: downloading github.com/gin-contrib/sse v1.1.0
+go: downloading github.com/mattn/go-isatty v0.0.20
+go: downloading github.com/BurntSushi/toml v1.6.0
+go: downloading gopkg.in/natefinch/lumberjack.v2 v2.0.0
+go: downloading github.com/stretchr/testify v1.10.0
+go: downloading google.golang.org/protobuf v1.36.11
+go: downloading gopkg.in/yaml.v2 v2.4.0
+go: downloading github.com/lufia/plan9stats v0.0.0-20250317134145-8bc96cf8fc35
+go: downloading github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55
+go: downloading github.com/tklauser/go-sysconf v0.3.15
+go: downloading github.com/mattn/go-sqlite3 v1.14.22
+go: downloading github.com/jinzhu/inflection v1.0.0
+go: downloading golang.org/x/text v0.32.0
+go: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+go: downloading github.com/modern-go/reflect2 v1.0.2
+go: downloading github.com/aymerick/douceur v0.2.0
+go: downloading github.com/go-playground/validator/v10 v10.26.0
+go: downloading github.com/ugorji/go/codec v1.3.0
+go: downloading github.com/pelletier/go-toml/v2 v2.2.4
+go: downloading gopkg.in/yaml.v3 v3.0.1
+go: downloading github.com/bytedance/sonic v1.13.3
+go: downloading github.com/goccy/go-json v0.10.5
+go: downloading github.com/davecgh/go-spew v1.1.1
+go: downloading github.com/pmezard/go-difflib v1.0.0
+go: downloading github.com/google/go-cmp v0.7.0
+go: downloading github.com/ebitengine/purego v0.8.4
+go: downloading github.com/yusufpapurcu/wmi v1.2.4
+go: downloading github.com/tklauser/numcpus v0.10.0
+go: downloading github.com/gorilla/css v1.0.1
+go: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
+go: downloading github.com/gabriel-vasile/mimetype v1.4.9
+go: downloading github.com/go-playground/universal-translator v0.18.1
+go: downloading github.com/leodido/go-urn v1.4.0
+go: downloading golang.org/x/crypto v0.46.0
+go: downloading github.com/go-playground/assert/v2 v2.2.0
+go: downloading github.com/go-playground/locales v0.14.1
+go: downloading github.com/go-ole/go-ole v1.3.0
+go: downloading github.com/kr/pretty v0.3.1
+go: downloading github.com/rogpeppe/go-internal v1.10.0
+go: downloading github.com/cloudwego/base64x v0.1.5
+go: downloading golang.org/x/arch v0.18.0
+go: downloading github.com/bytedance/sonic/loader v0.2.4
+go: downloading github.com/twitchyliquid64/golang-asm v0.15.1
+go: downloading github.com/klauspost/cpuid/v2 v2.2.10
+go: downloading github.com/kr/text v0.2.0

@@ -30,6 +30,7 @@ func Init() {
 	Log()
 	InitDB()
 	data.InitData()
+	InitSlicesMap()
 	InitStreamLimit()
 	InitUpgradePatch()
 }

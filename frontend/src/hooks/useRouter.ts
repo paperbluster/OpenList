@@ -39,7 +39,13 @@ const useRouter = () => {
       navigate(path)
     },
     pushHref: (to: string): string => {
-      return encodePath(pathJoin(pathname(), to))
+      const current = pathname()
+      // If current path already ends with the target filename,
+      // don't double it (can happen during page transition race).
+      if (current === to || current.endsWith("/" + to)) {
+        return encodePath(current)
+      }
+      return encodePath(pathJoin(current, to))
     },
     back: () => {
       navigate(-1)
