@@ -1,5 +1,3 @@
-import { ext, recordToArray, strToRegExp } from "~/utils"
-
 const settings: Record<string, string> = {}
 
 export const setSettings = (items: Record<string, string>) => {
@@ -43,44 +41,6 @@ export const getMainColor = (): string => {
   }
 }
  */
-
-type Previews = Record<string, Record<string, string>>
-let previewsRecord: Record<string, Previews> = {}
-type PreviewsType = "external_previews" | "iframe_previews"
-
-const getPreviews = (type: PreviewsType): Previews => {
-  if (!previewsRecord[type]) {
-    try {
-      const raw = getSetting(type)
-      previewsRecord[type] = raw ? JSON.parse(raw) : {}
-    } catch (e) {
-      console.error(`failed parse ${type}, use default`, e)
-      previewsRecord[type] = {}
-    }
-  }
-  return previewsRecord[type]
-}
-
-const getPreviewsByName = (name: string, type: PreviewsType) => {
-  const extension = ext(name).toLowerCase()
-  const res: { key: string; value: string }[] = []
-  for (const key in getPreviews(type)) {
-    if (key.startsWith("/")) {
-      const reg = strToRegExp(key)
-      if (reg.test(extension)) {
-        res.push(...recordToArray(getPreviews(type)[key]))
-      }
-    } else if (key.split(",").includes(extension)) {
-      res.push(...recordToArray(getPreviews(type)[key]))
-    }
-  }
-  return res
-}
-
-export const getExternalPreviews = (name: string) =>
-  getPreviewsByName(name, "external_previews")
-export const getIframePreviews = (name: string) =>
-  getPreviewsByName(name, "iframe_previews")
 
 export const getPagination = (): {
   size: number

@@ -21,10 +21,6 @@ export const useCDN = () => {
     return `${static_path}/mermaid/mermaid.min.js`
   }
 
-  const libAssPath = () => {
-    return `${static_path}/libass-wasm`
-  }
-
   const fontsPath = () => {
     return `${static_path}/fonts`
   }
@@ -34,7 +30,6 @@ export const useCDN = () => {
     monacoPath,
     katexCSSPath,
     mermaidJSPath,
-    libAssPath,
     fontsPath,
   }
 }

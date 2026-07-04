@@ -12,12 +12,11 @@ import {
 import { useCopyLink, useT } from "~/hooks"
 import { objStore } from "~/store"
 import { FileInfo } from "./info"
-import { OpenWith } from "../file/open-with"
-import { createSignal, Show } from "solid-js"
+import { createSignal } from "solid-js"
 import { BsQrCode } from "solid-icons/bs"
 import QRCode from "qrcode"
 
-export const Download = (props: { openWith?: boolean }) => {
+export const Download = () => {
   const t = useT()
   const { copyCurrentRawLink } = useCopyLink()
   const [qrUrl, setQrUrl] = createSignal("")
@@ -61,9 +60,6 @@ export const Download = (props: { openWith?: boolean }) => {
           </PopoverContent>
         </Popover>
       </HStack>
-      <Show when={props.openWith}>
-        <OpenWith />
-      </Show>
     </FileInfo>
   )
 }

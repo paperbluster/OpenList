@@ -2,8 +2,6 @@ import path from "path"
 import { defineConfig } from "vite"
 import solidPlugin from "vite-plugin-solid"
 import { dynamicBase } from "vite-plugin-dynamic-base"
-import { viteStaticCopy } from "vite-plugin-static-copy"
-
 export default defineConfig({
   resolve: {
     alias: {
@@ -24,18 +22,6 @@ export default defineConfig({
       transformIndexHtmlConfig: {
         insertBodyAfter: true,
       },
-    }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: "node_modules/@jellyfin/libass-wasm/dist/js/subtitles-octopus-worker.{js,wasm}",
-          dest: "static/libass-wasm",
-        },
-        {
-          src: "src/components/artplayer-plugin-ass/fonts/*",
-          dest: "static/fonts",
-        },
-      ],
     }),
   ],
   base: process.env.NODE_ENV === "production" ? "/__dynamic_base__/" : "/",
