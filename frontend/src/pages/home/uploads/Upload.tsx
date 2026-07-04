@@ -101,9 +101,17 @@ const Upload = () => {
     for await (const ms of asyncPool(3, files, handleFile)) {
       console.log(ms)
     }
-    refresh()
+    // Await the refresh so the folder listing is fully up-to-date before the user
+    // interacts with the new files. Without await, the stale async chain can race
+    // against subsequent navigation (e.g. clicking a file to view it) and overwrite
+    // the file-view state back to the folder state.
+    await refresh()
     // 再次延迟刷新一次，以便能看到后端异步生成的 BT 文件（如 189/189pc 驱动的 .cas.torrent）
-    setTimeout(() => refresh(undefined, true), 5000)
+    // 但只在用户仍停留在上传目录时才刷新，避免打断正在播放的媒体文件
+    const uploadPath = pathname()
+    setTimeout(() => {
+      if (pathname() === uploadPath) refresh(undefined, true)
+    }, 5000)
   }
   const setUpload = (path: string, key: keyof UploadFileProps, value: any) => {
     setUploadFiles("uploads", (upload) => upload.path === path, key, value)

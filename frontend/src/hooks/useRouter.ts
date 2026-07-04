@@ -39,7 +39,16 @@ const useRouter = () => {
       navigate(path)
     },
     pushHref: (to: string): string => {
-      const current = pathname()
+      let current = pathname()
+      // If the current path appears to be a file (last segment has an extension),
+      // use its parent directory as the base for constructing relative URLs.
+      // This prevents corrupted paths like /a/video.mp4/subfolder.
+      // Does NOT depend on objStore.state, so it works correctly even during
+      // state transitions and race conditions.
+      const lastSegment = current.split("/").pop() || ""
+      if (lastSegment.includes(".")) {
+        current = pathDir(current)
+      }
       // If current path already ends with the target filename,
       // don't double it (can happen during page transition race).
       if (current === to || current.endsWith("/" + to)) {

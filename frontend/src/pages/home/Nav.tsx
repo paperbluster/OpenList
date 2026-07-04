@@ -7,7 +7,7 @@ import {
 } from "@hope-ui/solid"
 import { Link } from "@solidjs/router"
 import { createMemo, For, Show } from "solid-js"
-import { usePath, useRouter, useT } from "~/hooks"
+import { useRouter, useT } from "~/hooks"
 import { getSetting, local } from "~/store"
 import { encodePath, hoverColor, joinBase } from "~/utils"
 
@@ -22,7 +22,6 @@ export const Nav = () => {
     }
   })
   const t = useT()
-  const { setPathAs } = usePath()
 
   const stickyProps = createMemo<BreadcrumbProps>(() => {
     const mask: BreadcrumbProps = {
@@ -85,7 +84,6 @@ export const Nav = () => {
                 currentPage={isLast()}
                 as={isLast() ? undefined : Link}
                 href={joinBase(href)}
-                onMouseEnter={() => setPathAs(path)}
               >
                 {text()}
               </BreadcrumbLink>

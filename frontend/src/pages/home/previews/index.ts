@@ -78,9 +78,16 @@ export const getPreviews = (
     ObjType[searchParams["type"]?.toUpperCase() as keyof typeof ObjType]
   const res: PreviewComponent[] = []
   const subsequent: PreviewComponent[] = []
-  const downloadPrior =
-    (!isShare() && getSettingBool("preview_download_by_default")) ||
-    (isShare() && getSettingBool("share_preview_download_by_default"))
+  // For image/video/audio files, always prefer preview over download.
+  // For other types, respect the user setting.
+  const isMediaFile =
+    file.type === ObjType.IMAGE ||
+    file.type === ObjType.VIDEO ||
+    file.type === ObjType.AUDIO
+  const downloadPrior = isMediaFile
+    ? false
+    : (!isShare() && getSettingBool("preview_download_by_default")) ||
+      (isShare() && getSettingBool("share_preview_download_by_default"))
   // internal previews
   if (!isShare() || getSettingBool("share_preview")) {
     previews.forEach((preview) => {
